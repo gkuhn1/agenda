@@ -1,0 +1,6 @@
+= simple_form_for @user do |f|
+  = f.input :name, required: true
+  = f.input :email, label_html: { class: 'my_class' }, required: true
+  = f.input :password, label_html: { class: 'my_class' }, required: true
+  = f.input :password_confirmation, label_html: { class: 'my_class' }, required: true
+  = f.button :submit, class: 'btn btn-success'

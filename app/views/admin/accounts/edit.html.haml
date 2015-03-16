@@ -1,0 +1,11 @@
+.col-md-12
+  .box.box-danger
+    .box-header
+      %h3.box-title
+        = subtitle
+    .box-body
+      = render 'form'
+
+    = link_to 'Show', admin_account_path(@account)
+    \|
+    = link_to 'Back', admin_accounts_path

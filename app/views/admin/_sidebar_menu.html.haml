@@ -1,0 +1,30 @@
+%li.header ADMINISTRAÇÃO
+= treeview_link '<i class="fa fa-credit-card"></i> Contas'.html_safe do
+  = admin_link(admin_accounts_path, "Lista")
+  = admin_link(new_admin_account_path, "Nova conta")
+
+= treeview_link '<i class="fa fa-users"></i> Usuários'.html_safe do
+  = admin_link(admin_users_path, "Lista")
+  = admin_link(new_admin_user_path, "Novo usuário")
+
+= treeview_link '<i class="fa fa-folder"></i> Documentos'.html_safe do
+  = ""
+
+= treeview_link '<i class="fa fa-star"></i> Favoritos'.html_safe do
+  = ""
+
+
+/ %li.treeview
+/   %a{:href => "#"}
+/     %i.fa.fa-dashboard
+/     %span Dashboard
+/     %i.fa.fa-angle-left.pull-right
+/   %ul.treeview-menu
+/     %li
+/       %a{:href => "index.html"}
+/         %i.fa.fa-circle-o
+/         Dashboard v1
+/     %li
+/       %a{:href => "index2.html"}
+/         %i.fa.fa-circle-o
+/         Dashboard v2

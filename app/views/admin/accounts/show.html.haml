@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @account.name
+%p
+  %b Description:
+  = @account.description
+%p
+  %b Address:
+  = @account.address
+%p
+  %b Phone:
+  = @account.phone
+%p
+  %b Phone2:
+  = @account.phone2
+%p
+  %b Website:
+  = @account.website
+%p
+  %b Plan:
+  = @account.plan
+
+= link_to 'Edit', edit_admin_account_path(@account)
+\|
+= link_to 'Back', admin_accounts_path

@@ -1,0 +1,33 @@
+%p.login-box-msg Faça login com seu e-mail e senha
+= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {method: :post}) do |f|
+  .form-group.has-feedback
+    = f.email_field :email, autofocus: true, placeholder: "Email", class: 'form-control'
+    %span.glyphicon.glyphicon-envelope.form-control-feedback
+  .form-group.has-feedback
+    = f.password_field :password, placeholder: "Senha", autocomplete: "off", class: 'form-control'
+    %span.glyphicon.glyphicon-lock.form-control-feedback
+  - if devise_mapping.rememberable?
+    .row
+      .col-xs-8
+        .checkbox.icheck
+          = f.check_box :remember_me
+          = f.label :remember_me, 'manter conectado?'
+      / /.col
+      .col-xs-4
+        %button.btn.btn-primary.btn-block.btn-flat{:type => "submit"} Entrar
+    / /.col
+/ .social-auth-links.text-center
+/   %a.btn.btn-block.btn-social.btn-facebook.btn-flat{:href => "#"}
+/     %i.fa.fa-facebook
+/     Logar com o Facebook
+/   %a.btn.btn-block.btn-social.btn-google-plus.btn-flat{:href => "#"}
+/     %i.fa.fa-google-plus
+/     Sign in using Google+
+/ /.social-auth-links
+= render "devise/shared/links"
+
+/ /.login-box-body
+/ /.login-box
+
+
+

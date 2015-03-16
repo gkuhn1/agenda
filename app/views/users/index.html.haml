@@ -1,0 +1,14 @@
+%section.content.invoice
+  %table.table
+    %thead
+      %th Nome
+      %th Email
+      %th= link_to 'Novo', new_user_path, class:'btn btn-success'
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.name
+          %td= user.email
+          %td
+            = edit_buttom(edit_user_path(user))
+            = destroy_buttom(user)

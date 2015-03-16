@@ -1,0 +1,283 @@
+pt_BR:
+  models:
+    Account: "Conta"
+    User: "Usuário"
+
+  action:
+    new: "Adicionar"
+    edit: "Editar"
+    show: "Visualizar"
+    create: "Adicionar"
+    update: "Editar"
+    index: "Listar"
+
+  date:
+    abbr_day_names:
+    - Dom
+    - Seg
+    - Ter
+    - Qua
+    - Qui
+    - Sex
+    - Sáb
+    abbr_month_names:
+    -
+    - Jan
+    - Fev
+    - Mar
+    - Abr
+    - Mai
+    - Jun
+    - Jul
+    - Ago
+    - Set
+    - Out
+    - Nov
+    - Dez
+    day_names:
+    - Domingo
+    - Segunda
+    - Terça
+    - Quarta
+    - Quinta
+    - Sexta
+    - Sábado
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%d de %B de %Y'
+      short: ! '%d de %B'
+    month_names:
+    -
+    - Janeiro
+    - Fevereiro
+    - Março
+    - Abril
+    - Maio
+    - Junho
+    - Julho
+    - Agosto
+    - Setembro
+    - Outubro
+    - Novembro
+    - Dezembro
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: aproximadamente 1 hora
+        other: aproximadamente %{count} horas
+      about_x_months:
+        one: aproximadamente 1 mês
+        other: aproximadamente %{count} meses
+      about_x_years:
+        one: aproximadamente 1 ano
+        other: aproximadamente %{count} anos
+      almost_x_years:
+        one: quase 1 ano
+        other: quase %{count} anos
+      half_a_minute: meio minuto
+      less_than_x_minutes:
+        one: menos de um minuto
+        other: menos de %{count} minutos
+      less_than_x_seconds:
+        one: menos de 1 segundo
+        other: menos de %{count} segundos
+      over_x_years:
+        one: mais de 1 ano
+        other: mais de %{count} anos
+      x_days:
+        one: 1 dia
+        other: ! '%{count} dias'
+      x_minutes:
+        one: 1 minuto
+        other: ! '%{count} minutos'
+      x_months:
+        one: 1 mês
+        other: ! '%{count} meses'
+      x_seconds:
+        one: 1 segundo
+        other: ! '%{count} segundos'
+    prompts:
+      day: Dia
+      hour: Hora
+      minute: Minuto
+      month: Mês
+      second: Segundo
+      year: Ano
+  errors:
+    format: ! '%{attribute} %{message}'
+    messages:
+      accepted: deve ser aceito
+      blank: não pode ficar em branco
+      present: deve ficar em branco
+      confirmation: não é igual a %{attribute}
+      empty: não pode ficar vazio
+      equal_to: deve ser igual a %{count}
+      even: deve ser par
+      exclusion: não está disponível
+      greater_than: deve ser maior que %{count}
+      greater_than_or_equal_to: deve ser maior ou igual a %{count}
+      inclusion: não está incluído na lista
+      invalid: não é válido
+      less_than: deve ser menor que %{count}
+      less_than_or_equal_to: deve ser menor ou igual a %{count}
+      not_a_number: não é um número
+      not_an_integer: não é um número inteiro
+      odd: deve ser ímpar
+      record_invalid: ! 'A validação falhou: %{errors}'
+      restrict_dependent_destroy:
+        one: "Não é possível excluir o registro pois existe um %{record} dependente"
+        many: "Não é possível excluir o registro pois existem %{record} dependentes"
+      taken: já está em uso
+      too_long: ! 'é muito longo (máximo: %{count} caracteres)'
+      too_short: ! 'é muito curto (mínimo: %{count} caracteres)'
+      wrong_length: não possui o tamanho esperado (%{count} caracteres)
+      other_than: "deve ser diferente de %{count}"
+    template:
+      body: ! 'Por favor, verifique o(s) seguinte(s) campo(s):'
+      header:
+        one: ! 'Não foi possível gravar %{model}: 1 erro'
+        other: ! 'Não foi possível gravar %{model}: %{count} erros.'
+  helpers:
+    select:
+      prompt: Por favor selecione
+    submit:
+      create: Criar
+      submit: Salvar
+      update: Atualizar
+      # create: Criar %{model}
+      # submit: Salvar %{model}
+      # update: Atualizar %{model}
+  number:
+    currency:
+      format:
+        delimiter: .
+        format: ! '%u %n'
+        precision: 2
+        separator: ! ','
+        significant: false
+        strip_insignificant_zeros: false
+        unit: R$
+    format:
+      delimiter: .
+      precision: 3
+      separator: ! ','
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion:
+            one: bilhão
+            other: bilhões
+          million:
+            one: milhão
+            other: milhões
+          quadrillion:
+            one: quatrilhão
+            other: quatrilhões
+          thousand: mil
+          trillion:
+            one: trilhão
+            other: trilhões
+          unit: ''
+      format:
+        delimiter: .
+        precision: 2
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: .
+        format: "%n%"
+    precision:
+      format:
+        delimiter: .
+  support:
+    array:
+      last_word_connector: ! ' e '
+      two_words_connector: ! ' e '
+      words_connector: ! ', '
+  time:
+    am: ''
+    formats:
+      default: ! '%a, %d de %B de %Y, %H:%M:%S %z'
+      long: ! '%d de %B de %Y, %H:%M'
+      short: ! '%d de %B, %H:%M'
+    pm: ''
+
+
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+# Este arquivo deve ser colocado em config/locales/devise.pt-BR.yml
+
+devise:
+  confirmations:
+    confirmed: "Sua conta foi confirmada com sucesso."
+    send_instructions: "Você receberá um email para confirmar sua conta em alguns minutis."
+    send_paranoid_instructions: "Caso seu endereço de email já exista em nossa base, você receberá um email com instruções sobre como ativar sua conta."
+    failure:
+    already_authenticated: "Você já está logado."
+    inactive: "Sua conta ainda não foi ativada."
+    invalid: "Email ou senha inválidos."
+    locked: "Sua conta está travada."
+    last_attempt: "Você tem mais uma tentativa antes que sua conta seja travada."
+    not_found_in_database: "Email ou senha inválidos."
+    timeout: "Para sua segurança sua sessão expirou. Por favor, faça login novamente."
+    unauthenticated: "Você precisa se logar ou registrar antes de prosseguir."
+    unconfirmed: "Você precisa confirmar sua conta antes de prosseguir."
+  mailer:
+    confirmation_instructions:
+      subject: "Instruções para confirmação"
+    reset_password_instructions:
+      subject: "Instruções para reiniciar sua senha"
+    unlock_instructions:
+      subject: "Instruções para destravar sua senha"
+    omniauth_callbacks:
+      failure: "Não pudemos autenticá-lo em %{kind} por causa de \"%{reason}\"."
+      success: "Autenticado com sucesso na conta %{kind}."
+  passwords:
+    no_token: "Você não pode acessar essa página vindo do email para reiniciar sua senha. Se você está vindo do email para reiniciar sua senha, por favor, certifique-se de estar usando a URL correta."
+    send_instructions: "Você receberá um email com instruções de como reiniciar sua senha em alguns minutos."
+    send_paranoid_instructions: "Se o seu endereço de email estiver em nossa base de dados, em alguns minutos você receberá um link para recuperar sua senha em seu email."
+    updated: "Você alterou sua senha com sucesso. Você está logado."
+    updated_not_active: "Sua senha foi alterado com sucesso."
+  registrations:
+    destroyed: "Até mais! Sua conta foi cancelada com sucesso. Esperamos vê-lo novamente em breve."
+    signed_up: "Bem-vindo! Você se registrou com sucesso."
+    signed_up_but_inactive: "Você se registrou com sucesso. No entanto, não podemos logá-lo, pois você ainda não ativou sua conta."
+    signed_up_but_locked: "Você se registrou com sucesso. No entanto, não podemos logá-lo, pois sua conta está travada."
+    signed_up_but_unconfirmed: "Uma mensagem com um link de confirmação foi enviada para seu endereço de email. Por favor abra o link para ativar sua conta."
+    update_needs_confirmation: "Sua conta foi atualizada, mas precisamos verificar seu endereço de email. Por favor cheque seu email e clique no link de confirmação para confirmar seu novo endereço de email."
+    updated: "Você atualizou sua conta com sucesso."
+  sessions:
+    signed_in: "Logado com sucesso."
+    signed_out: "Saiu com sucesso."
+  unlocks:
+    send_instructions: "Você receberá um email com instruções sobre como destravar sua conta em alguns minutos."
+    send_paranoid_instructions: "Se sua conta existir, você receberá um email com instruções sobre como destravá-la em alguns minutos."
+    unlocked: "Sua conta foi destrava com sucesso. Por favor, faça login para continuar."
+  errors:
+    messages:
+      already_confirmed: "já foi confirmada, por favor faça login"
+      confirmation_period_expired: "precisa ser confirmada dentro de %{period}, por favor peça uma nova"
+      expired: "expirou, por favor solicite uma nova"
+      not_found: "não encontrada"
+      not_locked: "não estava travada"
+    not_saved:
+      one: "1 erro impediu a gravação de %{resource}:"
+      other: "%{count} erros impediram a gravação de %{resource}:"
+

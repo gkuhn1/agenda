@@ -1,0 +1,26 @@
+%aside.main-sidebar
+  / sidebar: style can be found in sidebar.less
+  %section.sidebar
+    / Sidebar user panel
+    .user-panel
+      .pull-left.image
+        %img.img-circle{:alt => "User Image", :src => image_path("user2-160x160.jpg")}/
+      .pull-left.info
+        %p Olá, #{current_user.name}
+        %a{:href => "#"}
+          %i.fa.fa-circle.text-success
+          Online
+    / search form
+    %form.sidebar-form{:action => "#", :method => "get"}
+      .input-group
+        %input.form-control{:name => "q", :placeholder => "Search...", :type => "text"}/
+        %span.input-group-btn
+          %button#search-btn.btn.btn-flat{:name => "seach", :type => "submit"}
+            %i.fa.fa-search
+    / /.search form
+    / sidebar menu: : style can be found in sidebar.less
+    %ul.sidebar-menu
+      - if context_admin?
+        = render "admin/sidebar_menu"
+      - else
+        = render "shared/sidebar_menu"

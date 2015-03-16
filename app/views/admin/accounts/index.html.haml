@@ -1,0 +1,35 @@
+.col-xs-12
+  .box
+    .box-header
+      %h3.box-title Lista de contas
+    / /.box-header
+
+    .box-body
+      %table.table.table-bordered.table-hover
+        %thead
+          %tr{:role => "row"}
+            %th Name
+            %th Description
+            %th Address
+            %th Phone
+            %th Phone2
+            %th Website
+            %th Plan
+            %th
+            %th
+            %th
+
+        %tbody
+          - @accounts.each do |account|
+            %tr
+              %td= account.name
+              %td= account.description
+              %td= account.address
+              %td= account.phone
+              %td= account.phone2
+              %td= account.website
+              %td= account.plan
+              %td= link_to 'Exibir', admin_account_path(account)
+              %td= link_to 'Editar', edit_admin_account_path(account)
+              %td= link_to 'Excluir', admin_account_path(account, :method => :delete), :data => { :confirm => 'Are you sure?' }
+
