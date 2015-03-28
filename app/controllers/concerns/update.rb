@@ -9,7 +9,7 @@ module Update
       flash[:notice] = "Registro atualizado com sucesso"
       redirect_to "/" + self.controller_path
     else
-      breadrumb_for_actions("editar")
+      add_breadcrumb("Editar")
 
       render :edit
     end

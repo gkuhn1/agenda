@@ -44,8 +44,9 @@ gem 'breadcrumbs_on_rails', '2.3.0'
 
 gem 'will_paginate', '3.0.6'
 gem 'will_paginate-bootstrap', '1.0.1'
+gem "will_paginate_mongoid"
 
-gem 'ransack', '1.5.1'
+gem 'ransack', '~> 1.6.4'
 gem 'brazilian-rails'
 
 gem 'thin', '~> 1.6.3'

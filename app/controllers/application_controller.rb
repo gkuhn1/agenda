@@ -10,15 +10,13 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
-  before_filter :account_required
-
-  after_action :breadrumb_for_actions
+  before_filter :account_required, unless: :devise_controller?
 
   layout :layout_by_resource
 
   rescue_from NoAccountSelectedException, :with => :need_to_select_an_account
 
-  helper_method :title, :subtitle, :current_account, :context_admin?
+  helper_method :title, :subtitle, :current_account, :context_admin?, :breadrumb_to_menus
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:account_update) { |u|
@@ -26,9 +24,8 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def breadrumb_for_actions(description=nil)
-    add_breadcrumb get_model.model_name.human(count: 2), "/"+self.controller_path if get_model
-    add_breadcrumb description unless description.nil?
+  def breadrumb_to_menus
+    @breadcrumb_to_menus ||= AgendaBreadcrumbBuilder.new(self, breadcrumbs, {}).compute_all_paths
   end
 
   def get_model

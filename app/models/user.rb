@@ -41,6 +41,8 @@ class User
 
   has_and_belongs_to_many :accounts
 
+  validates_presence_of :email, :name
+
   def admin?
     self.admin == true
   end

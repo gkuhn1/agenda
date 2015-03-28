@@ -8,9 +8,9 @@ class HomepagesController < ApplicationController
 
   def select_account
     @accounts = current_user.accounts
-    params[:id] = @accounts.first if @accounts.count == 1
+    params[:id] = @accounts.first.id.to_s if @accounts.count == 1
     if params[:id]
-      session[:account_id] = params[:id] if @accounts.where(id: params[:id]).first.id
+      session[:account_id] = params[:id] if @accounts.where(id: params[:id]).first
       redirect_to root_path
     end
   end

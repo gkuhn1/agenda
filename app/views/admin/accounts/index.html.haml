@@ -15,9 +15,7 @@
             %th Phone2
             %th Website
             %th Plan
-            %th
-            %th
-            %th
+            %th Ações
 
         %tbody
           - @accounts.each do |account|
@@ -29,7 +27,8 @@
               %td= account.phone2
               %td= account.website
               %td= account.plan
-              %td= link_to 'Exibir', admin_account_path(account)
-              %td= link_to 'Editar', edit_admin_account_path(account)
-              %td= link_to 'Excluir', admin_account_path(account, :method => :delete), :data => { :confirm => 'Are you sure?' }
+              %td
+                = show_buttom(admin_account_path(account))
+                = edit_buttom(edit_admin_account_path(account))
+                = destroy_buttom(admin_account_path(account, :method => :delete))
 

@@ -1,11 +1,14 @@
 class Admin::AccountsController < Admin::HomepagesController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
-  before_filter :admin_required!
+
+  add_breadcrumb "Contas", :admin_accounts_path
 
   # GET /accounts
   # GET /accounts.json
   def index
     @accounts = Account.all
+
+    add_breadcrumb "Lista"
   end
 
   # GET /accounts/1

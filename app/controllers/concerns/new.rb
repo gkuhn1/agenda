@@ -3,6 +3,6 @@ module New
 
   def new
     instance_variable_set(get_variable, get_model.new)
-    breadrumb_for_actions("novo")
+    add_breadcrumb("Adicionar")
   end
 end

@@ -1,4 +1,6 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < Admin::HomepagesController
+
+  add_breadcrumb "Usuários", :admin_users_path
 
   private
     # Never trust parameters from the scary internet, only allow the white list through.

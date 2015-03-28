@@ -1,6 +1,6 @@
 module NavHelper
   def nav_link(page, &link_text)
-    class_name = request.env['PATH_INFO'].match(page) ? 'active' : nil
+    class_name = request.env['PATH_INFO'].end_with?(page) ? 'active' : nil
 
     content_tag(:li, class: class_name) do
       link_to page do
@@ -10,7 +10,7 @@ module NavHelper
   end
 
   def admin_link(link="#", text="Novo", klass="fa fa-angle-double-right")
-    nav_link link do
+    return nav_link link do
       "<i class='#{klass}'></i> #{text}".html_safe
     end
   end
@@ -21,11 +21,16 @@ module NavHelper
       content_tag(:i, '', class: "fa pull-right fa-angle-left")
     end
 
-    content << content_tag(:ul, class: 'treeview-menu') do
+    links_html = capture_haml do
       links.call
     end
+    active = breadrumb_to_menus.select {|path| path.in?(links_html) }.any?
 
-    content_tag :li, class: 'treeview' do
+    content << content_tag(:ul, class: "treeview-menu") do
+      links_html
+    end
+
+    content_tag :li, class: "treeview #{active ? 'active' : ''}" do
       content
     end
   end

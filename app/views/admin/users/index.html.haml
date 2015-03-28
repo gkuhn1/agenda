@@ -1,0 +1,22 @@
+.col-xs-12
+  .box
+    .box-header
+      %h3.box-title Lista de usuários
+    / /.box-header
+
+    .box-body
+      %table.table.table-bordered.table-hover
+        %thead
+          %tr{:role => "row"}
+            %th Name
+            %th Email
+            %th Ações
+
+        %tbody
+          - @users.each do |user|
+            %tr
+              %td= user.name
+              %td= user.email
+              %td
+                = edit_buttom(edit_admin_user_path(user))
+                = destroy_buttom(admin_user_path(user))
