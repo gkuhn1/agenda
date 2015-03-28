@@ -1,6 +1,6 @@
 %header.main-header
-  %a.logo{:href => root_path}
-    = title
+  %a.logo{:href => root_path, title: current_account.description}
+    = current_account.name
   / Header Navbar: style can be found in header.less
   %nav.navbar.navbar-static-top{:role => "navigation"}
     / Sidebar toggle button
@@ -87,13 +87,13 @@
           / User Account: style can be found in dropdown.less
           %li.dropdown.user.user-menu
             %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
-              %img.user-image{:alt => "User Image", :src => image_path("user2-160x160.jpg")}/
+              %img.user-image{:alt => "User Image", :src => current_user.gravatar_url(:rating => 'R', :secure => true)}/
               %span.hidden-xs
                 = current_user.name
             %ul.dropdown-menu
               / User image
               %li.user-header
-                %img.img-circle{:alt => "User Image", :src => image_path("user2-160x160.jpg")}/
+                %img.img-circle{:alt => "User Image", :src => current_user.gravatar_url(:rating => 'R', :secure => true)}/
                 %p
                   = current_user.name
                   %small
@@ -104,9 +104,9 @@
                     = current_account.name
               / Menu Body
               %li.user-body
-                - current_user.accounts do |account|
+                - current_user.accounts.each do |account|
                   .col-xs-4.text-center
-                    %a{:href => "#"} account.name
+                    %a{:href => select_account_homepage_path(account)}= account.name
 
               / Menu Footer
               %li.user-footer

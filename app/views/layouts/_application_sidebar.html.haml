@@ -4,7 +4,7 @@
     / Sidebar user panel
     .user-panel
       .pull-left.image
-        %img.img-circle{:alt => "User Image", :src => image_path("user2-160x160.jpg")}/
+        %img.img-circle{:alt => "User Image", :src => current_user.gravatar_url(:rating => 'R', :secure => true)}/
       .pull-left.info
         %p Olá, #{current_user.name}
         %a{:href => "#"}

@@ -119,6 +119,7 @@ GEM
       railties (>= 3.0.0)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
+    gravtastic (3.2.6)
     haml (4.0.6)
       tilt
     haml-rails (0.9.0)
@@ -318,6 +319,7 @@ DEPENDENCIES
   devise
   email_spec (~> 1.6.0)
   factory_girl_rails (~> 4.5.0)
+  gravtastic
   haml-rails (~> 0.9.0)
   jbuilder (~> 2.0)
   jquery-rails (~> 4.0.3)
