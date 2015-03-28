@@ -18,7 +18,7 @@
         %li
           %a Clientes
         - if current_user.admin?
-          %li
+          %li{class: "#{@admin ? 'open' : ''}"}
             %a{href: admin_homepages_path} Administração
       .navbar-custom-menu
         %ul.nav.navbar-nav

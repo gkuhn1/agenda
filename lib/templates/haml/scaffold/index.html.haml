@@ -1,0 +1,24 @@
+.col-xs-12
+  .box
+    .box-header
+      %h3.box-title Lista de <%= class_name %>
+    / /.box-header
+
+    .box-body
+      %table.table.table-bordered.table-hover
+        %thead
+          %tr{:role => "row"}
+            <%- attributes.each do |attribute| -%>
+              %th <%= attribute.human_name %>
+            <%- end -%>
+            %th Ações
+
+        %tbody
+          - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+            %tr
+              <%- attributes.each do |attribute| -%>
+                %td= <%= singular_table_name %>.<%= attribute.name %>
+              <%- end -%>
+              %td
+                = edit_buttom(edit_<%= singular_table_name %>_path(<%= singular_table_name %>))
+                = destroy_buttom(<%= singular_table_name %>_path(<%= singular_table_name %>))

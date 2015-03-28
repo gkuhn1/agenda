@@ -1,18 +1,27 @@
-= simple_form_for [:admin, @account] do |f|
-  - if @account.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@account.errors.count, "error")} prohibited this account from being saved:"
-      %ul
-        - @account.errors.full_messages.each do |msg|
-          %li= msg
 
-  = f.input :name
-  = f.input :description
-  = f.input :address
-  = f.input :phone
-  = f.input :phone2
-  = f.input :website
-  = f.input :plan
+= simple_form_for [:admin, @account] do |f|
+
+  .col-md-6
+    = f.input :name
+    = f.input :description
+    = f.input :address
+    = f.input :phone
+    = f.input :phone2
+    = f.input :website
+    = f.input :plan
+
+  .col-md-6
+
+    Usuários desta conta
+
+    = f.association :users, as: :check_boxes
+
+    %ul
+      - @account.users.each do |user|
+        %li #{user.name} (#{user.id})
+
+
+  .clearfix
 
   .box-footer
     = f.button :submit, 'Enviar', {class: 'btn btn-success'}
