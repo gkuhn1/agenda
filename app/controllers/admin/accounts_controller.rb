@@ -5,11 +5,9 @@ class Admin::AccountsController < Admin::HomepagesController
 
   # GET /accounts
   # GET /accounts.json
-  def index
-    @accounts = Account.all
-
-    add_breadcrumb "Lista"
-  end
+  # def index
+  #   @accounts = Account.all
+  # end
 
   # GET /accounts/1
   # GET /accounts/1.json

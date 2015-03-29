@@ -25,4 +25,8 @@ class Account
     self.database = database_candidate
   end
 
+  def id_to_s
+    self.id.to_s
+  end
+
 end

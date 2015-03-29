@@ -1,0 +1,40 @@
+<div class="col-xs-12">
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Lista de contas</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr role="row">
+            <th>Name</th>
+            <th>Description</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Phone2</th>
+            <th>Website</th>
+            <th>Plan</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat='account in accounts'>
+            <td>{{ account.name }}</td>
+            <td>{{ account.description }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <a href="#/accounts/{{ account.id }}" class="btn btn-info"><i class="fa fa-asterisk"></i> Exibir</a>
+              <a href="#/accounts/{{ account.id }}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i> Editar</a>
+              <a href="#/accounts/{{ account.id }}?method=delete" class="btn btn-danger" data-confirm="Confirmar exclusão deste item?"><i class="fa fa-trash-o"></i> Excluir</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

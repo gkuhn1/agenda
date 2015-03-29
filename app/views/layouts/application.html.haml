@@ -1,5 +1,5 @@
 !!!
-%html
+%html{"ng-app"=>"agenda"}
   = render "head"
   %body.skin-purple
     = render "header"
@@ -24,5 +24,6 @@
           / Info boxes
           .row
             = yield
+            %div{"ui-view"=>"content"}
     .spinner.no-print.hidden
       %img{:alt => "", :src => image_path("ajax-loader.gif")}/
