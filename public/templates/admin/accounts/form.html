@@ -1,0 +1,81 @@
+<div class="col-md-12">
+  <div class="box box-danger">
+    <div class="box-header">
+      <h3 class="box-title">
+        {{ form_title }}
+      </h3>
+    </div>
+    <div class="box-body">
+      <form name="form" class="simple_form new_account" ng-submit="saveAccount(account)" novalidate>
+        <div class="col-md-6">
+
+          <div class="form-group string optional account_name" ng-class="{'has-error' : form.name.$error.server}">
+            <label for="account_name" class="string optional control-label">Nome</label>
+            <input type="text" class="string optional form-control" ng-model="account.name" name="name" server-error>
+            <p class="help-block" ng-show="form.name.$error.server">{{ errors.name }}</p>
+          </div>
+
+          <div class="form-group string optional account_description"  ng-class="{'has-error' : form.description.$error.server}">
+            <label for="account_description" class="string optional control-label">Description</label>
+            <input type="text" ng-model="account.description" class="string optional form-control"  name="description" server-error>
+            <p class="help-block" ng-show="form.description.$error.server">{{ errors.description }}</p>
+          </div>
+
+          <div class="form-group string optional account_address"  ng-class="{'has-error' : form.address.$error.server}">
+            <label for="account_address" class="string optional control-label">Address</label>
+            <input type="text" id="account_address" ng-model="account.address" class="string optional form-control" name="address" server-error>
+            <p class="help-block" ng-show="form.address.$error.server">{{ errors.address }}</p>
+          </div>
+
+          <div class="form-group tel optional account_phone"  ng-class="{'has-error' : form.phone.$error.server}">
+            <label for="account_phone" class="tel optional control-label">Phone</label>
+            <input type="tel" id="account_phone" ng-model="account.phone" class="string tel optional form-control" name="phone" server-error>
+            <p class="help-block" ng-show="form.phone.$error.server">{{ errors.phone }}</p>
+          </div>
+
+          <div class="form-group tel optional account_phone2" ng-class="{'has-error' : form.phone2.$error.server}">
+            <label for="account_phone2" class="tel optional control-label">Phone2</label>
+            <input type="tel" id="account_phone2" ng-model="account.phone2" class="string tel optional form-control" name="phone2" server-error>
+            <p class="help-block" ng-show="form.phone2.$error.server">{{ errors.phone2 }}</p>
+          </div>
+
+          <div class="form-group string optional account_website" ng-class="{'has-error' : form.website.$error.server}">
+            <label for="account_website" class="string optional control-label">Website</label>
+            <input type="text" id="account_website" ng-model="account.website" class="string optional form-control" name="website" server-error>
+            <p class="help-block" ng-show="form.website.$error.server">{{ errors.website }}</p>
+          </div>
+
+          <div class="form-group string optional account_plan" ng-class="{'has-error' : form.plan.$error.server}">
+            <label for="account_plan" class="string optional control-label">Plan</label>
+            <input type="text" id="account_plan" ng-model="account.plan" class="string optional form-control" name="plan" server-error>
+            <p class="help-block" ng-show="form.plan.$error.server">{{ errors.plan }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group" ng-class="{'has-error' : form.user_ids.$error.server}">
+            <label>Usuários desta conta</label>
+            <p class="help-block" ng-show="form.user_ids.$error.server">{{ errors.user_ids }}</p>
+            <input type="hidden" ng-model="account.user_ids" name="user_ids" server-error>
+          </div>
+          <div class="form-group check_boxes optional account_users" ng-repeat="user in users">
+            <span class="checkbox">
+              <label>
+                <input type="checkbox" value="{{ user.id }}" class="check_boxes optional" check-list="account.user_ids"> {{ user.name }}
+              </label>
+            </span>
+          </div>
+
+          Usuários selecionados {{ account.user_ids }}
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-success" name="commit">Enviar</button>
+
+          <a class="btn btn-default" href="#/accounts">Voltar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

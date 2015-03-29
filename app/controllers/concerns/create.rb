@@ -6,12 +6,14 @@ module Create
 
     instance_variable_set(get_variable, object)
 
-    if instance_variable_get(get_variable).save
-      flash[:notice] = "Registro criado com sucesso"
-      redirect_to "/" + self.controller_path
-    else
-      add_breadcrumb("Adicionar")
-      render :new
+    respond_to do |format|
+      if instance_variable_get(get_variable).save
+        format.html { redirect_to "/" + self.controller_path, notice: "Registro criado com sucesso" }
+        format.json { render :show, status: :created }
+      else
+        format.html { render :new }
+        format.json { render json: instance_variable_get(get_variable).errors, status: :unprocessable_entity }
+      end
     end
   end
 end

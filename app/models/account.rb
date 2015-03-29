@@ -13,7 +13,9 @@ class Account
 
   has_and_belongs_to_many :users
 
-  before_create :fill_out_db
+  before_validation :fill_out_db, if: 'name.present?'
+
+  validates_presence_of :name, :description, :user_ids
 
   def fill_out_db
     dc = database_candidate = self.name.parameterize

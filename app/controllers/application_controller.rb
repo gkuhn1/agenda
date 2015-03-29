@@ -3,10 +3,11 @@ class AdminRequiredException < RuntimeError; end
 
 
 class ApplicationController < ActionController::Base
-  include Index, New, Edit, Update, Create, Destroy, Search
+  include Index, Show, New, Edit, Update, Create, Destroy, Search
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  after_filter :set_csrf_cookie_for_ng
   before_action :authenticate_user!
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
@@ -17,6 +18,12 @@ class ApplicationController < ActionController::Base
   rescue_from NoAccountSelectedException, :with => :need_to_select_an_account
 
   helper_method :title, :subtitle, :current_account, :context_admin?, :breadrumb_to_menus
+
+  protect_from_forgery
+
+  def set_csrf_cookie_for_ng
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:account_update) { |u|
@@ -43,11 +50,7 @@ class ApplicationController < ActionController::Base
 
     if object.nil?
       flash[:error] = "Registro não encontrado"
-      if params[:enterpreneur_id].present?
-        redirect_to "/enterpreneurs/" + params[:enterpreneur_id] + "/" + self.controller_path and return
-      else
-        redirect_to "/" + self.controller_path and return
-      end
+      redirect_to "/" + self.controller_path and return
     end
 
     object
@@ -87,6 +90,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  protected
+
+    # In Rails 4.2 and above
+    def verified_request?
+      super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
+    end
 
   private
 

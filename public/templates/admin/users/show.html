@@ -1,0 +1,22 @@
+<div class="col-md-12">
+
+  <div class="box box-danger">
+    <div class="box-header">
+      <h3 class="box-title">
+         {{ user.name }}
+      </h3>
+    </div>
+    <div class="box-body">
+      <p id="notice"></p>
+      <p><b>E-mail:</b> {{ user.email }} </p>
+      <p><b>Administrador?:</b> {{ user.admin ? 'Sim' : 'Não' }} </p>
+
+    </div>
+
+  <div class="box-footer">
+    <a href="#/users/{{ user.id }}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i> Editar</a>
+    |
+    <a class="btn btn-default" href="#/users">Voltar</a>
+  </div>
+
+</div>

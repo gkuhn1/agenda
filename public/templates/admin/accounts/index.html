@@ -22,15 +22,15 @@
           <tr ng-repeat='account in accounts'>
             <td>{{ account.name }}</td>
             <td>{{ account.description }}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{ account.address }}</td>
+            <td>{{ account.phone }}</td>
+            <td>{{ account.phone2 }}</td>
+            <td>{{ account.website }}</td>
+            <td>{{ account.plan }}</td>
             <td>
               <a href="#/accounts/{{ account.id }}" class="btn btn-info"><i class="fa fa-asterisk"></i> Exibir</a>
               <a href="#/accounts/{{ account.id }}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i> Editar</a>
-              <a href="#/accounts/{{ account.id }}?method=delete" class="btn btn-danger" data-confirm="Confirmar exclusão deste item?"><i class="fa fa-trash-o"></i> Excluir</a>
+              <a class="btn btn-danger" ng-really-message="Confirmar exclusão deste item?" ng-really-click="destroyAccount()"><i class="fa fa-trash-o"></i> Excluir</a>
             </td>
           </tr>
         </tbody>

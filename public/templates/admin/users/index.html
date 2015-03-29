@@ -1,0 +1,29 @@
+<div class="col-xs-12">
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Lista de usuários</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr role="row">
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat='user in users'>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <a href="#/users/{{ user.id }}" class="btn btn-info"><i class="fa fa-asterisk"></i> Exibir</a>
+              <a href="#/users/{{ user.id }}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i> Editar</a>
+              <a class="btn btn-danger" ng-really-message="Confirmar exclusão deste item?" ng-really-click="destroyUser()"><i class="fa fa-trash-o"></i> Excluir</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

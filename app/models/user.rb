@@ -43,9 +43,19 @@ class User
   ## Custom fields
   field :admin,             type: Boolean, default: false
 
+  attr_accessor :generate_password
+
   has_and_belongs_to_many :accounts
 
+  before_validation :generate_password!
   validates_presence_of :email, :name
+
+
+  def generate_password!
+    if self.generate_password
+      self.password = Devise.friendly_token.first(8)
+    end
+  end
 
   def admin?
     self.admin == true

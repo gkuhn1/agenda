@@ -13,12 +13,9 @@
 //= require angular.min
 //= require angular-ui-router.min
 //= require angular-pusher.min
-//= require restangular.min
 //= require jquery
-//= require jquery.turbolinks
 //= require bootstrap-sprockets
 //= require iCheck/icheck.min
 //= require adminlte/app
-//= require turbolinks
 //= require app
 //= require_tree .

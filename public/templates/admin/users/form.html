@@ -1,0 +1,59 @@
+<div class="col-md-12">
+  <div class="box box-danger">
+    <div class="box-header">
+      <h3 class="box-title">
+        {{ form_title }}
+      </h3>
+    </div>
+    <div class="box-body">
+      <form name="form" class="simple_form new_user" ng-submit="saveUser(user)" novalidate>
+        <div class="col-md-6">
+
+          <div class="form-group string optional user_name" ng-class="{'has-error' : form.name.$error.server}">
+            <label for="user_name" class="string optional control-label">Nome</label>
+            <input type="text" class="string optional form-control" ng-model="user.name" name="name" server-error>
+            <p class="help-block" ng-show="form.name.$error.server">{{ errors.name }}</p>
+          </div>
+
+          <div class="form-group string optional user_email"  ng-class="{'has-error' : form.email.$error.server}">
+            <label for="user_email" class="string optional control-label">E-mail</label>
+            <input type="text" ng-model="user.email" class="string optional form-control"  name="email" server-error>
+            <p class="help-block" ng-show="form.email.$error.server">{{ errors.email }}</p>
+          </div>
+
+          <div class="form-group optional user_generate_password"  ng-class="{'has-error' : form.generate_password.$error.server}">
+            <div class="checkbox">
+              <label class="string optional control-label">
+                <input type="checkbox" ng-model="user.generate_password" name="generate_password" server-error> Gerar senha automaticamente?
+              </label>
+            </div>
+            <p class="help-block" ng-show="form.generate_password.$error.server">{{ errors.generate_password }}</p>
+          </div>
+
+          <div class="form-group string optional user_password" ng-show="!user.generate_password" ng-class="{'has-error' : form.password.$error.server}">
+            <label for="user_password" class="string optional control-label">Senha</label>
+            <input type="text" ng-model="user.password" class="string optional form-control"  name="password" server-error>
+            <p class="help-block" ng-show="form.password.$error.server">{{ errors.password }}</p>
+          </div>
+
+          <div class="form-group optional user_admin"  ng-class="{'has-error' : form.admin.$error.server}">
+            <div class="checkbox">
+              <label class="string optional control-label">
+                <input type="checkbox" ng-model="user.admin" name="admin" server-error> Administrador?
+              </label>
+            </div>
+            <p class="help-block" ng-show="form.admin.$error.server">{{ errors.admin }}</p>
+          </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-success" name="commit">Enviar</button>
+
+          <a class="btn btn-default" href="#/users">Voltar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
