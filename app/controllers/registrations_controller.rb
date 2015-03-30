@@ -4,9 +4,9 @@ class RegistrationsController < Devise::RegistrationsController
 
     def sign_up(resource_name, resource)
       super
+      resource.admin = true
       account = Account.new(name: resource.name)
       account.add_user(resource)
-      account.save
     end
 
     def configure_permitted_parameters
