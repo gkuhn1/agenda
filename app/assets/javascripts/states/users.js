@@ -1,71 +1,73 @@
-app.config(function($stateProvider) {
+app.config(['$stateProvider',
+  function($stateProvider) {
 
-  $stateProvider
-    .state('users', {
-      url: "/users",
-      views: {
-        content: {
-          templateUrl: "/templates/admin/users/index.html",
-          controller: "UsersCtrl"
-        },
-        menu: {templateUrl: "/templates/admin/menu.html"}
-      },
-      resolve: {
-        users: function(UserService){
-          return UserService.all();
-        }
-      }
-    })
-      .state('users_new', {
-        url: "/users/new",
+    $stateProvider
+      .state('users', {
+        url: "/users",
         views: {
           content: {
-            controller: "NewUserCtrl",
-            templateUrl: "/templates/admin/users/form.html"
+            templateUrl: "/templates/admin/users/index.html",
+            controller: "UsersCtrl"
           },
           menu: {templateUrl: "/templates/admin/menu.html"}
         },
         resolve: {
-          newUser: function(UserService) {
-            return UserService.new();
+          users: function(UserService){
+            return UserService.all();
           }
-        },
-        data: {
-          edit: false
         }
       })
-      .state('users_show', {
-        url: "/users/:id",
-        views: {
-          content: {
-            controller: 'ShowUserCtrl',
-            templateUrl: "/templates/admin/users/show.html"
+        .state('users_new', {
+          url: "/users/new",
+          views: {
+            content: {
+              controller: "NewUserCtrl",
+              templateUrl: "/templates/admin/users/form.html"
+            },
+            menu: {templateUrl: "/templates/admin/menu.html"}
           },
-          menu: {templateUrl: "/templates/admin/menu.html"}
-        },
-        resolve: {
-          user: function($stateParams, UserService) {
-            return UserService.get($stateParams.id)
-          }
-        }
-      })
-      .state('users_edit', {
-        url: "/users/:id/edit",
-        views: {
-          content: {
-            controller: "NewUserCtrl",
-            templateUrl: "/templates/admin/users/form.html"
+          resolve: {
+            newUser: function(UserService) {
+              return UserService.new();
+            }
           },
-          menu: {templateUrl: "/templates/admin/menu.html"}
-        },
-        resolve: {
-          newUser: function(UserService, $stateParams) {
-            return UserService.get($stateParams.id);
+          data: {
+            edit: false
           }
-        },
-        data: {
-          edit: true
-        }
-      })
+        })
+        .state('users_show', {
+          url: "/users/:id",
+          views: {
+            content: {
+              controller: 'ShowUserCtrl',
+              templateUrl: "/templates/admin/users/show.html"
+            },
+            menu: {templateUrl: "/templates/admin/menu.html"}
+          },
+          resolve: {
+            user: function($stateParams, UserService) {
+              return UserService.get($stateParams.id)
+            }
+          }
+        })
+        .state('users_edit', {
+          url: "/users/:id/edit",
+          views: {
+            content: {
+              controller: "NewUserCtrl",
+              templateUrl: "/templates/admin/users/form.html"
+            },
+            menu: {templateUrl: "/templates/admin/menu.html"}
+          },
+          resolve: {
+            newUser: function(UserService, $stateParams) {
+              return UserService.get($stateParams.id);
+            }
+          },
+          data: {
+            edit: true
+          }
+        })
 
-})
+  }
+]);

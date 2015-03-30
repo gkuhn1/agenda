@@ -1,5 +1,4 @@
-app.config([
-          '$stateProvider','$urlRouterProvider',
+app.config(['$stateProvider','$urlRouterProvider',
   function($stateProvider , $urlRouterProvider) {
 
     $stateProvider
@@ -14,4 +13,4 @@ app.config([
 
     $urlRouterProvider.otherwise('/');
   }
-])
+]);

@@ -11,9 +11,9 @@ app.config(['PusherServiceProvider',
 ]);
 
 
-app.config(function($httpProvider) {
+app.config(['$httpProvider', function($httpProvider) {
 
-  $httpProvider.interceptors.push(function($rootScope, $q) {
+  $httpProvider.interceptors.push(['$rootScope', '$q', function($rootScope, $q) {
     return {
       request: function(request) {
         $rootScope.$broadcast("loading_start");
@@ -33,9 +33,9 @@ app.config(function($httpProvider) {
         return $q.reject(rejection);
       }
     }
-  })
+  }])
 
-})
+}])
 
 
 app.run(

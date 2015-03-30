@@ -1,4 +1,4 @@
-app.factory('$httpq', function($http, $q) {
+app.factory('$httpq', ['$http', '$q', function($http, $q) {
   return {
     get: function() {
       var deferred = $q.defer();
@@ -10,4 +10,4 @@ app.factory('$httpq', function($http, $q) {
       return deferred.promise;
     }
   }
-});
+}]);

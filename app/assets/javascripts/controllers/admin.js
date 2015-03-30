@@ -1,10 +1,7 @@
-app.controller("AdminCtrl", function($scope) {
+app.controller("AdminCtrl", ['$scope', function($scope) {
 
   $scope.page = {};
   $scope.page.title = "Administração";
 
-})
+}])
 
-app.controller("AdminMenuCtrl", function($scope) {
-
-})
