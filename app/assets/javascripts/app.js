@@ -63,7 +63,6 @@ app.run(
       $rootScope.$on('$stateChangeSuccess', function(e, curr, prev) {
         // Hide loading message
         $rootScope.$broadcast("loading_stop");
-        $rootScope.loadingView = false;
       });
 
       $rootScope.$on('loading_start', function() {
