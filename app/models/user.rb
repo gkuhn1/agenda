@@ -48,7 +48,7 @@ class User
   has_and_belongs_to_many :accounts
 
   before_validation :generate_password!
-  validates_presence_of :email, :name
+  validates_presence_of :name
 
 
   def generate_password!

@@ -3,6 +3,13 @@ pt_BR:
     Account: "Conta"
     User: "Usuário"
 
+  mongoid:
+    attributes:
+      user:
+        email: "E-mail"
+        name: "Nome"
+        password: "Senha"
+
   action:
     new: "Adicionar"
     edit: "Editar"
@@ -110,6 +117,7 @@ pt_BR:
   errors:
     format: ! '%{attribute} %{message}'
     messages:
+      not_saved: 'Confira os errors:'
       accepted: deve ser aceito
       blank: não pode ficar em branco
       present: deve ficar em branco
@@ -280,4 +288,3 @@ devise:
     not_saved:
       one: "1 erro impediu a gravação de %{resource}:"
       other: "%{count} erros impediram a gravação de %{resource}:"
-

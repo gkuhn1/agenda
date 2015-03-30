@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users, path: 'accounts', path_names: { sign_up: "registrar", sign_in: "entrar" }
+  devise_for :users, path: 'accounts', :controllers => {:registrations => "registrations"}, path_names: { sign_up: "registrar", sign_in: "entrar" }
 
   namespace :admin do
     resources :homepages, only: :index

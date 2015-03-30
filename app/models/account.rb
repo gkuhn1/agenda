@@ -15,7 +15,7 @@ class Account
 
   before_validation :fill_out_db, if: 'name.present?'
 
-  validates_presence_of :name, :description, :user_ids
+  validates_presence_of :name, :user_ids
 
   def fill_out_db
     dc = database_candidate = self.name.parameterize
@@ -27,8 +27,10 @@ class Account
     self.database = database_candidate
   end
 
-  def id_to_s
-    self.id.to_s
+  def add_user(user)
+    self.users << user
+    user.save
+    self.save
   end
 
 end

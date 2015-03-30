@@ -1,21 +1,40 @@
-%h2 Sign up
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+
+%p.login-box-msg Faça seu cadastro abaixo
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {method: :post}) do |f|
   = devise_error_messages!
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    - if @validatable
-      %em
-        (#{@minimum_password_length} characters minimum)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .actions
-    = f.submit "Sign up"
+
+  .form-group.has-feedback
+    = f.text_field :name, autofocus: true, placeholder: "Nome completo", class: 'form-control'
+    %span.glyphicon.glyphicon-user.form-control-feedback
+
+  .form-group.has-feedback
+    = f.email_field :email, placeholder: "Email", class: 'form-control'
+    %span.glyphicon.glyphicon-envelope.form-control-feedback
+  .form-group.has-feedback
+    = f.password_field :password, placeholder: "Senha", autocomplete: "off", class: 'form-control'
+    %span.glyphicon.glyphicon-lock.form-control-feedback
+
+  .form-group.has-feedback
+    = f.password_field :password_confirmation, placeholder: "Confirmação de Senha", autocomplete: "off", class: 'form-control'
+    %span.glyphicon.glyphicon-lock.form-control-feedback
+
+  .row
+    .col-xs-8
+    .col-xs-4
+      %button.btn.btn-primary.btn-block.btn-flat{:type => "submit"} Cadastrar
+
+/ .social-auth-links.text-center
+/   %a.btn.btn-block.btn-social.btn-facebook.btn-flat{:href => "#"}
+/     %i.fa.fa-facebook
+/     Logar com o Facebook
+/   %a.btn.btn-block.btn-social.btn-google-plus.btn-flat{:href => "#"}
+/     %i.fa.fa-google-plus
+/     Sign in using Google+
+/ /.social-auth-links
 = render "devise/shared/links"
+
+/ /.login-box-body
+/ /.login-box
+
+
+
