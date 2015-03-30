@@ -103,7 +103,7 @@ test:
 production:
   sessions:
     default:
-      uri: ENV['MONGOLAB_URI']
+      uri: mongodb://heroku_app35360665:vhu086cjpjufmvk5jh4ejmmhou@ds053439.mongolab.com:53439/heroku_app35360665
       options:
         # max_retries specifies the number of times to attempt
         # an operation before giving up.
