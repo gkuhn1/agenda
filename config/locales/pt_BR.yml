@@ -9,6 +9,7 @@ pt_BR:
         email: "E-mail"
         name: "Nome"
         password: "Senha"
+        password_confirmation: "Confirmação de Senha"
 
   action:
     new: "Adicionar"
