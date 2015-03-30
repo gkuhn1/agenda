@@ -12,9 +12,9 @@ app.config(['$stateProvider',
           menu: {templateUrl: "/templates/admin/menu.html"}
         },
         resolve: {
-          users: function(UserService){
+          users: ['UserService', function(UserService){
             return UserService.all();
-          }
+          }]
         }
       })
         .state('users_new', {
@@ -27,9 +27,9 @@ app.config(['$stateProvider',
             menu: {templateUrl: "/templates/admin/menu.html"}
           },
           resolve: {
-            newUser: function(UserService) {
+            newUser: ['UserService', function(UserService) {
               return UserService.new();
-            }
+            }]
           },
           data: {
             edit: false
@@ -45,9 +45,9 @@ app.config(['$stateProvider',
             menu: {templateUrl: "/templates/admin/menu.html"}
           },
           resolve: {
-            user: function($stateParams, UserService) {
+            user: ['$stateParams', 'UserService', function($stateParams, UserService) {
               return UserService.get($stateParams.id)
-            }
+            }]
           }
         })
         .state('users_edit', {
@@ -60,9 +60,9 @@ app.config(['$stateProvider',
             menu: {templateUrl: "/templates/admin/menu.html"}
           },
           resolve: {
-            newUser: function(UserService, $stateParams) {
+            newUser: ['UserService', '$stateParams', function(UserService, $stateParams) {
               return UserService.get($stateParams.id);
-            }
+            }]
           },
           data: {
             edit: true

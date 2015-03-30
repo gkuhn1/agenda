@@ -12,9 +12,9 @@ app.config(['$stateProvider',
           menu: {templateUrl: "/templates/admin/menu.html"}
         },
         resolve: {
-          accounts: function(AccountService){
+          accounts: ['AccountService', function(AccountService){
             return AccountService.all();
-          }
+          }]
         }
       })
         .state('accounts_new', {
@@ -27,12 +27,12 @@ app.config(['$stateProvider',
             menu: {templateUrl: "/templates/admin/menu.html"}
           },
           resolve: {
-            users: function(UserService) {
+            users: ['UserService', function(UserService) {
               return UserService.all();
-            },
-            newAccount: function(AccountService) {
+            }],
+            newAccount: ['AccountService', function(AccountService) {
               return AccountService.new();
-            }
+            }]
           },
           data: {
             edit: false
@@ -48,9 +48,9 @@ app.config(['$stateProvider',
             menu: {templateUrl: "/templates/admin/menu.html"}
           },
           resolve: {
-            account: function($stateParams, AccountService) {
+            account: ['$stateParams', 'AccountService', function($stateParams, AccountService) {
               return AccountService.get($stateParams.id)
-            }
+            }]
           }
         })
         .state('accounts_edit', {
@@ -63,12 +63,12 @@ app.config(['$stateProvider',
             menu: {templateUrl: "/templates/admin/menu.html"}
           },
           resolve: {
-            users: function(UserService) {
+            users: ['UserService', function(UserService) {
               return UserService.all();
-            },
-            newAccount: function(AccountService, $stateParams) {
+            }],
+            newAccount: ['AccountService', '$stateParams', function(AccountService, $stateParams) {
               return AccountService.get($stateParams.id);
-            }
+            }]
           },
           data: {
             edit: true
