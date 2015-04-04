@@ -1,4 +1,4 @@
-class Api::V1::UsersController < Api::V1::ApplicationController
+class Api::V1::UsersController < Api::V1::ApiController
 
   add_breadcrumb "Usuários", :admin_users_path
 

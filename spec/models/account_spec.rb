@@ -44,7 +44,7 @@ describe Account, type: :model do
       account = FactoryGirl.create(:account)
       user = FactoryGirl.create(:user)
       expect(account).to receive(:save).and_call_original
-      expect(user).to receive(:save).and_call_original
+      expect(user).to receive(:save).twice.and_call_original
       account.add_user(user)
       expect(account.user_ids).to include(user.id)
     end

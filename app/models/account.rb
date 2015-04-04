@@ -17,6 +17,7 @@ class Account
 
   validates_presence_of :name, :user_ids
 
+
   def fill_out_db
     dc = database_candidate = self.name.parameterize
     count = 0
@@ -30,7 +31,7 @@ class Account
   def add_user(user)
     self.users << user
     # comentado devido ao spec estar chamando o save duas veses
-    # user.save
+    user.save
     self.save
   end
 

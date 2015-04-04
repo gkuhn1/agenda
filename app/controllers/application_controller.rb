@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_account
-    @current_account ||= Account.find(session[:account_id]) if session[:account_id]
+    @current_account ||= Account.find(session[:account_id] || params[:user_account]) if session[:account_id] || params[:user_account]
   end
 
   def context_admin?
@@ -84,9 +84,13 @@ class ApplicationController < ActionController::Base
 
   # rescues NoAccountSelectedException
   def need_to_select_an_account
-    flash[:alert] = 'Selecione uma conta antes de fazer alterações.'
+    message = 'Selecione uma conta antes de fazer alterações.'
     respond_to do |format|
-      format.html { redirect_to(select_account_homepages_path) }
+      format.html do
+        flash[:alert] = message
+        redirect_to(select_account_homepages_path)
+      end
+      format.json { render :json => {:error => message}, :status => 401}
     end
   end
 

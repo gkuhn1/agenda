@@ -1,5 +1,4 @@
-class Api::V1::AccountsController < Api::V1::ApplicationController
-  # before_action :set_account, only: [:show, :edit, :update, :destroy]
+class Api::V1::AccountsController < Api::V1::ApiController
 
   def current
     @account = current_account
