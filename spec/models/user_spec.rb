@@ -18,6 +18,17 @@ RSpec.describe User, type: :model do
       expect(user.valid?).to be(false)
       expect(user.errors[:email]).to eq(["não pode ficar em branco"])
     end
+    it "should validate email" do
+      user = User.new(:email => "aaaaaaaa")
+      expect(user.valid?).to be(false)
+      expect(user.errors[:email]).to eq(["não é válido"])
+    end
+    it "should block duplicated e-mails" do
+      FactoryGirl.create(:user, email: "g.kuhn0@gmail.com")
+      user = User.new(:email => "g.kuhn0@gmail.com")
+      expect(user.valid?).to be(false)
+      expect(user.errors[:email]).to eq(["já está em uso"])
+    end
   end
 
   context "before_validations" do

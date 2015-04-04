@@ -7,6 +7,14 @@ FactoryGirl.define do
     phone2 "MyString"
     website "MyString"
     plan 1
+
+    ignore do
+      user nil
+    end
+
+    after(:build) do |account, evaluator|
+      account.add_user(evaluator.user.nil? ? FactoryGirl.create(:user) : evaluator.user)
+    end
   end
 
 end

@@ -13,7 +13,7 @@ class Account
 
   has_and_belongs_to_many :users
 
-  before_validation :fill_out_db, if: 'name.present?'
+  before_validation :fill_out_db, if: 'name.present? and database.blank?'
 
   validates_presence_of :name, :user_ids
 
@@ -29,7 +29,8 @@ class Account
 
   def add_user(user)
     self.users << user
-    user.save
+    # comentado devido ao spec estar chamando o save duas veses
+    # user.save
     self.save
   end
 
