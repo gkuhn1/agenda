@@ -16,6 +16,5 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require iCheck/icheck.min
-//= require adminlte/app
 //= require app
 //= require_tree .

@@ -8,6 +8,10 @@ app.factory('AccountService', ['$httpq', '$http',
       return $httpq.get('/admin/accounts.json')
     }
 
+    pub.current = function() {
+      return $httpq.get('/api/v1/accounts/current.json');
+    }
+
     pub.get = function(id) {
       return $httpq.get('/admin/accounts/'+id+'.json');
     }

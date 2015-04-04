@@ -42,14 +42,19 @@ class User
 
   ## Custom fields
   field :admin,             type: Boolean, default: false
+  field :token,             type: String
 
   attr_accessor :generate_password
 
   has_and_belongs_to_many :accounts
 
   before_validation :generate_password!
-  validates_presence_of :name
+  before_validation :generate_token!
+  validates_presence_of :name, :token
 
+  def generate_token!
+    self.token = Devise.friendly_token if self.token.blank?
+  end
 
   def generate_password!
     if self.generate_password and self.encrypted_password.blank?

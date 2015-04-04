@@ -2,7 +2,7 @@ app.config(['$stateProvider',
   function($stateProvider) {
 
     $stateProvider
-      .state('accounts', {
+      .state('admin.accounts', {
         url: "/accounts",
         views: {
           content: {
@@ -17,7 +17,7 @@ app.config(['$stateProvider',
           }]
         }
       })
-        .state('accounts_new', {
+        .state('admin.accounts_new', {
           url: "/accounts/new",
           views: {
             content: {
@@ -38,7 +38,7 @@ app.config(['$stateProvider',
             edit: false
           }
         })
-        .state('accounts_show', {
+        .state('admin.accounts_show', {
           url: "/accounts/:id",
           views: {
             content: {
@@ -53,7 +53,7 @@ app.config(['$stateProvider',
             }]
           }
         })
-        .state('accounts_edit', {
+        .state('admin.accounts_edit', {
           url: "/accounts/:id/edit",
           views: {
             content: {

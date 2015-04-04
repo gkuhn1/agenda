@@ -8,6 +8,10 @@ app.factory('UserService', ['$httpq', '$http',
       return $httpq.get('/admin/users.json')
     }
 
+    pub.current = function() {
+      return $httpq.get('/admin/users/current.json');
+    }
+
     pub.get = function(id) {
       return $httpq.get('/admin/users/'+id+'.json');
     }
