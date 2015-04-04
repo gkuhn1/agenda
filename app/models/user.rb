@@ -57,9 +57,7 @@ class User
   end
 
   def generate_password!
-    if self.generate_password and self.encrypted_password.blank?
-      self.password = Devise.friendly_token.first(8)
-    end
+    self.password = Devise.friendly_token.first(8) if self.generate_password and self.encrypted_password.blank?
   end
 
   def admin?

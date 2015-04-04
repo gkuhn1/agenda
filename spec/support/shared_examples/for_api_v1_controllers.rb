@@ -13,6 +13,8 @@ RSpec.shared_examples "api v1 controller" do
     end
     it "should autenticate and select account" do
       get action, auth_params.merge(:format => 'json')
+      expect(response.code).to eq("200")
+      expect(assigns(:current_account)).to eq(account)
     end
   end
 

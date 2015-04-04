@@ -39,4 +39,16 @@ RSpec.describe User, type: :model do
       expect(user.token).not_to eq(nil)
     end
   end
+
+  context "admin?" do
+    pending
+  end
+
+  context "generate_password!" do
+    pending
+  end
+
+  context "generate_token!" do
+    pending
+  end
 end
