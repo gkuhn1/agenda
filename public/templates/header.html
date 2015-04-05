@@ -146,14 +146,8 @@
               </li>
               <!-- Menu Body -->
               <li class="user-body">
-                <div class="col-xs-4 text-center">
-                  <a href="/homepages/55060f26676b750ec5000000/select_account">Salão do Guilherme</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="/homepages/55163ef7676b752d38000000/select_account">Nova conta</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="/homepages/55185f66676b750f72680000/select_account">Conta completa</a>
+                <div class="col-xs-4 text-center" ng-repeat="account in accounts">
+                  <a href ng-click="changeCurrentAccount(account)">{{ account.name }}</a>
                 </div>
               </li>
               <!-- Menu Footer -->
@@ -162,7 +156,7 @@
                   <a href="/accounts/edit" class="btn btn-default btn-flat">Minhas informações</a>
                 </div>
                 <div class="pull-right">
-                  <a href="/accounts/sign_out" class="btn btn-default btn-flat">Sair</a>
+                  <a href ui-sref="app.logout" class="btn btn-default btn-flat">Sair</a>
                 </div>
               </li>
             </ul>

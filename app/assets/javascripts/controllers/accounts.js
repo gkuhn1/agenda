@@ -1,4 +1,5 @@
-app.controller("AccountsCtrl", ['$scope', '$rootScope', 'accounts', 'AccountService',
+angular.module('agenda.accounts', ['agenda.grandfather'])
+.controller("AccountsCtrl", ['$scope', '$rootScope', 'accounts', 'AccountService',
   function($scope, $rootScope, accounts, AccountService) {
 
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
@@ -10,9 +11,9 @@ app.controller("AccountsCtrl", ['$scope', '$rootScope', 'accounts', 'AccountServ
     }
 
   }
-]);
+])
 
-app.controller("NewAccountCtrl", ['$scope', '$state', '$rootScope', 'AccountService', 'newAccount', 'users',
+.controller("NewAccountCtrl", ['$scope', '$state', '$rootScope', 'AccountService', 'newAccount', 'users',
   function($scope, $state, $rootScope, AccountService, newAccount, users) {
 
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
@@ -40,9 +41,9 @@ app.controller("NewAccountCtrl", ['$scope', '$state', '$rootScope', 'AccountServ
         ;
     }
   }
-]);
+])
 
-app.controller("ShowAccountCtrl", ['$scope', '$rootScope', 'account',
+.controller("ShowAccountCtrl", ['$scope', '$rootScope', 'account',
   function($scope, $rootScope, account) {
 
     $rootScope.page = {title: "Administração", subtitle: "Contas > " + account.name};

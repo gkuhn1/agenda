@@ -1,30 +1,24 @@
-app.config(['$stateProvider','$urlRouterProvider',
+angular.module('agenda.states-home', ['agenda.grandfather'])
+.config(['$stateProvider','$urlRouterProvider',
   function($stateProvider , $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-      .state('home', {
+      .state('app.home', {
         url: "/",
         views: {
-          wrapper: {
+          'wrapper@': {
             controller: 'HomeCtrl',
             templateUrl: "/templates/application.html"
           },
-          header: {
+          'header@': {
             controller: 'HeaderCtrl',
             templateUrl: "/templates/header.html"
           },
-          'sidebar@home': {
+          'sidebar@app.home': {
+            controller: 'SidebarCtrl',
             templateUrl: "/templates/sidebar.html"
           }
-        },
-        resolve: {
-          current_account: ['AccountService', function(AccountService){
-            return AccountService.current();
-          }],
-          current_user: ['UserService', function(UserService){
-            return UserService.current();
-          }]
         }
       })
 

@@ -1,17 +1,46 @@
-var app = angular.module('agenda', ['ui.router', 'doowb.angular-pusher']);
+angular.module('agenda', [
+  // Services
+  'agenda.authservice',
+  'agenda.userservice',
+  'agenda.accountservice',
+
+  // Controllers
+  'agenda.accounts',
+  'agenda.admin',
+  'agenda.home',
+  'agenda.login',
+  'agenda.users',
+
+  // States
+  'agenda.grandfather',
+  'agenda.states-home',
+  'agenda.states-error',
+  'agenda.states-login',
+  'agenda.states-users',
+  'agenda.states-accounts',
+
+  'agenda.states-admin',
+
+  // Components
+  'httpq',
+  'agenda.checklist',
+  'agenda.ng-really-click',
+  'agenda.server-error',
+  'doowb.angular-pusher'
+])
 
 // CONFIGS
 
-app.config(['PusherServiceProvider',
+.config(['PusherServiceProvider',
   function(PusherServiceProvider) {
     PusherServiceProvider
     .setToken('41811f1ba9ee13be83cd')
     .setOptions({});
   }
-]);
+])
 
 
-app.config(['$httpProvider', function($httpProvider) {
+.config(['$httpProvider', function($httpProvider) {
 
   $httpProvider.interceptors.push(['$rootScope', '$q', function($rootScope, $q) {
     return {
@@ -38,9 +67,8 @@ app.config(['$httpProvider', function($httpProvider) {
 }])
 
 
-app.run(
-  [          '$rootScope', '$state', '$stateParams',
-    function ($rootScope,   $state,   $stateParams) {
+.run(['$rootScope', '$state', '$stateParams', 'Auth',
+    function ($rootScope,   $state,   $stateParams,  Auth) {
 
       // It's very handy to add references to $state and $stateParams to the $rootScope
       // so that you can access them from any scope within your applications.For example,
@@ -55,9 +83,11 @@ app.run(
         return $state.current.name.indexOf(include) > -1
       }
 
-      $rootScope.$on('$stateChangeStart', function(e, curr, prev) {
+      $rootScope.$on('$stateChangeStart', function (event, to, toParams, from, fromParams) {
         // Show a loading message until promises are not resolved
         $rootScope.$broadcast("loading_start");
+
+        Auth.authorize(event, to, toParams, from, fromParams);
       });
 
       $rootScope.$on('$stateChangeSuccess', function(e, curr, prev) {
@@ -73,6 +103,14 @@ app.run(
         $rootScope.loadingView = false;
       });
 
+      $rootScope.$on('currentAccountSelected', function(event, account) {
+        console.log('current_account selected', account);
+        $state.go('app.home', {}, {reload: true});
+      })
+
+      $rootScope.$on('currentUserSelected', function(event, user) {
+        console.log('current_user selected', user);
+      })
+
     }
-  ]
-)
+])

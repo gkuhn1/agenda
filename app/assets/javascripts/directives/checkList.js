@@ -7,7 +7,7 @@
 * http://plnkr.co/edit/3YNLsyoG4PIBW6Kj7dRK?p=preview
 */
 
-app.directive('checkList', function() {
+angular.module('agenda.checklist', []).directive('checkList', function() {
   return {
     scope: {
       list: '=checkList',

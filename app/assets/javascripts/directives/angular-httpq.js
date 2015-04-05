@@ -1,4 +1,4 @@
-app.factory('$httpq', ['$http', '$q', function($http, $q) {
+angular.module('httpq', []).factory('$httpq', ['$http', '$q', function($http, $q) {
   return {
     get: function() {
       var deferred = $q.defer();

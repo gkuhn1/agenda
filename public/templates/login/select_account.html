@@ -1,0 +1,23 @@
+
+<div class='login-box'>
+  <div class='login-logo'>
+    <a href='root_path'>
+      <b>
+        Agenda
+      </b>
+    </a>
+  </div>
+  <!-- /.login-logo -->
+  <div class='login-box-body'>
+
+    <p class="login-box-msg">Selecione uma conta</p>
+
+    <div ng-repeat="account in accounts">
+      <a ng-click="select_account(account)" class="btn btn-block btn-success btn-sm">
+        {{ account.name }}
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </a>
+    </div>
+
+  </div>
+</div>

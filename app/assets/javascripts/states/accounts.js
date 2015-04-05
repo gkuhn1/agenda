@@ -1,4 +1,5 @@
-app.config(['$stateProvider',
+angular.module('agenda.states-accounts', ['agenda.grandfather'])
+.config(['$stateProvider',
   function($stateProvider) {
 
     $stateProvider

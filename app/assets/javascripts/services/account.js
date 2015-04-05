@@ -1,4 +1,4 @@
-app.factory('AccountService', ['$httpq', '$http',
+angular.module('agenda.accountservice', ['httpq']).factory('AccountService', ['$httpq', '$http',
   function ($httpq, $http) {
 
     var pub = {};

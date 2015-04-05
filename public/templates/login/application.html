@@ -10,27 +10,25 @@
   <!-- /.login-logo -->
   <div class='login-box-body'>
     <p class='login-box-msg'>Faça login com seu e-mail e senha</p>
-    <form novalidate="novalidate" class="simple_form new_user" id="new_user" action="/accounts/entrar" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="jWdcdHSu5AWJ/NGeeVwF5f+B7UCeK+GE8I3oKzICyXwuPOv9PsNDRPAwWwmulavqtMQNHZcR9Mc08j/vXYUZMA==" />  <div class='form-group has-feedback'>
-        <input autofocus="autofocus" placeholder="Email" class="form-control" type="email" value="" name="user[email]" id="user_email" />
+    <form name="login_form" novalidate="novalidate" class="simple_form new_user" id="new_user" ng-class="{'has-error' : login_form.email.$error.server}" ng-submit="login(credential)">
+
+      <p class="help-block" ng-show="login_form.email.$error.server">{{ error }}</p>
+
+      <div class='form-group has-feedback'>
+        <input autofocus="autofocus" placeholder="Email" class="form-control" type="email" value="" name="email" id="user_email" ng-model="credential.email" server-error>
         <span class='glyphicon glyphicon-envelope form-control-feedback'></span>
       </div>
       <div class='form-group has-feedback'>
-        <input placeholder="Senha" autocomplete="off" class="form-control" type="password" name="user[password]" id="user_password" />
+        <input placeholder="Senha" autocomplete="off" class="form-control" type="password" name="password" id="user_password" ng-model="credential.password" />
         <span class='glyphicon glyphicon-lock form-control-feedback'></span>
       </div>
       <div class='row'>
-        <div class='col-xs-8'>
-          <div class='checkbox icheck'>
-            <input name="user[remember_me]" type="hidden" value="0" /><input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me" />
-            <label for="user_remember_me">manter conectado?</label>
-          </div>
+        <div class="col-xs-8">
         </div>
-        <!-- /.col -->
         <div class='col-xs-4'>
           <button class='btn btn-primary btn-block btn-flat' type='submit'>Entrar</button>
         </div>
       </div>
-      <!-- /.col -->
     </form>
     <!-- .social-auth-links.text-center -->
     <!-- %a.btn.btn-block.btn-social.btn-facebook.btn-flat{:href => "#"} -->
@@ -40,10 +38,12 @@
     <!-- %i.fa.fa-google-plus -->
     <!-- Sign in using Google+ -->
     <!-- /.social-auth-links -->
-    <a class='text-center' href='/accounts/registrar'>Criar uma conta</a>
+
+    <a class='text-center' ui-sref='accounts.register'>Criar uma conta</a>
     <br>
-    <a href='/accounts/password/new'>Esqueceu sua senha?</a>
+    <a ui-sref='accounts.register'>Esqueceu sua senha?</a>
     <br>
+
     <!-- /.login-box-body -->
     <!-- /.login-box -->
   </div>

@@ -1,4 +1,4 @@
-app.directive('serverError', function() {
+angular.module('agenda.server-error', []).directive('serverError', function() {
   return {
     restrict: 'A',
     require: '?ngModel',

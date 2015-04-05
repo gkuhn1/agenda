@@ -1,4 +1,5 @@
-app.factory('UserService', ['$httpq', '$http',
+angular.module('agenda.userservice', ['httpq'])
+.factory('UserService', ['$httpq', '$http',
   function ($httpq, $http) {
 
     var pub = {};

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       resources :users do
         collection do
           get :current
+          post :login
         end
       end
     end
