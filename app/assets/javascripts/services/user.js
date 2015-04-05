@@ -9,7 +9,7 @@ app.factory('UserService', ['$httpq', '$http',
     }
 
     pub.current = function() {
-      return $httpq.get('/admin/users/current.json');
+      return $httpq.get('/api/v1/users/current.json');
     }
 
     pub.get = function(id) {
