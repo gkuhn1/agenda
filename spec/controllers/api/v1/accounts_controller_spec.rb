@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::AccountsController, type: :controller do
 
-  it_behaves_like "api v1 controller" do
-    let(:action) {:current}
-  end
+  it_behaves_like "api v1 controller"
 
   let(:account) { FactoryGirl.create(:account) }
   let(:user) { account.users.first }
@@ -58,14 +56,36 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
   end
 
   context "#update" do
-    it "should require an current account" do
+
+    let(:account_params) { {id: account.id, account: FactoryGirl.attributes_for(:account, name: "Novo nome").merge(user_ids: [user.id])} }
+
+    it_behaves_like "require current_account" do
+      let(:action) {:update}
+      let(:extra_params) { account_params }
     end
-    it "should require an current user" do
+
+    it_behaves_like "require current_user" do
+      let(:action) {:update}
+      let(:extra_params) { account_params }
     end
   end
 
   context "#current" do
     it "@account should be current_account" do
+      get :current, auth_params
+      expect(assigns(:account)).to eq(account)
+    end
+
+    it_behaves_like "require current_account" do
+      let(:action) {:current}
+      let(:method) {:get}
+      let(:success_status) {"200"}
+    end
+
+    it_behaves_like "require current_user" do
+      let(:action) {:current}
+      let(:method) {:get}
+      let(:success_status) {"200"}
     end
   end
 
