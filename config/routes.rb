@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users, path: 'accounts', :controllers => {:registrations => "registrations"}, path_names: { sign_up: "registrar", sign_in: "entrar" }
+  devise_for :users
 
   namespace :admin do
     resources :homepages, only: :index
@@ -11,12 +11,12 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: "json" } do
     namespace :v1 do
-      resources :accounts, only: :current do
+      resources :accounts do
         collection do
           get :current
         end
       end
-      resources :users, only: :current do
+      resources :users do
         collection do
           get :current
         end

@@ -1,10 +1,11 @@
 module Destroy
-  extend ActiveSupport::Concern
+
+  def self.included(base)
+    base.send :include, BaseConcernController
+  end
 
   def destroy
-    object = get_object or return
-
-    object.destroy
+    get_object.destroy
 
     respond_to do |format|
       format.html { redirect_to "/" + self.controller_path, notice: "Registro excluído com sucesso" }

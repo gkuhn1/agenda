@@ -1,8 +1,15 @@
+Agenda
+======
 
-[![Code Climate](https://codeclimate.com/github/JeffVieira/tcc/badges/gpa.svg)](https://codeclimate.com/github/JeffVieira/tcc)
+* Ruby version: 2.1.2
+
+* Run Specs suite:
+<pre>rake spec</pre>
+
+* Run Specs with coverage:
+<pre>COVERAGE=true rake spec</pre>
+
+* Deployment instructions
+<pre>git push heroku master</pre>
 
 
-[![Test Coverage](https://codeclimate.com/github/JeffVieira/tcc/badges/coverage.svg)](https://codeclimate.com/github/JeffVieira/tcc)
-
-
-https://codeship.com/projects/YOUR_PROJECT_UUID/status?branch=master

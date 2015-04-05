@@ -1,5 +1,8 @@
 module Show
-  extend ActiveSupport::Concern
+
+  def self.included(base)
+    base.send :include, BaseConcernController
+  end
 
   def show
     object = get_object or return

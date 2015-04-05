@@ -13,4 +13,8 @@ class Api::V1::UsersController < Api::V1::ApiController
       params.require(:user).permit(:id, :name, :email, :admin,
         :password, :password_confirmation, :generate_password)
     end
+
+    def get_collection
+      current_account.users
+    end
 end

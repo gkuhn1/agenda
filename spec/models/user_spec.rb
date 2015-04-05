@@ -41,14 +41,54 @@ RSpec.describe User, type: :model do
   end
 
   context "admin?" do
-    pending
+    it "should return true if user.admin is true" do
+      user = FactoryGirl.build(:user, :admin => true)
+      expect(user.admin?).to be(true)
+    end
+    it "should return false if user.admin is false" do
+      user = FactoryGirl.build(:user, :admin => false)
+      expect(user.admin?).to be(false)
+    end
   end
 
   context "generate_password!" do
-    pending
+    let(:user) {FactoryGirl.build(:user, :admin => true)}
+    it "should generate a new password if password is empty and generate_password flag is true" do
+      user.generate_password = true
+      user.password = nil
+      user.generate_password!
+      expect(user.encrypted_password).not_to eq(nil)
+    end
+    it "should not generate if password already exists" do
+      user.generate_password = true
+      user.password = "test"
+      encrypted = user.encrypted_password
+      user.generate_password!
+      expect(user.encrypted_password).to eq(encrypted)
+    end
+    it "should not generate if generate_password flag is false" do
+      encrypted = user.encrypted_password
+      user.generate_password!
+      expect(user.encrypted_password).to eq(encrypted)
+    end
   end
 
   context "generate_token!" do
-    pending
+    let(:user) {FactoryGirl.build(:user, :admin => true)}
+    it "should generate a new token if token is blank" do
+      user.token = ""
+      user.generate_token!
+      expect(user.token).not_to eq("")
+    end
+    it "should not generate if token is blank" do
+      user.token = "123"
+      user.generate_token!
+      expect(user.token).to eq("123")
+    end
+    it "should generate if token is nil" do
+      user.token = nil
+      user.generate_token!
+      expect(user.token).not_to eq(nil)
+    end
   end
 end

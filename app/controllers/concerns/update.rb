@@ -1,5 +1,8 @@
 module Update
-  extend ActiveSupport::Concern
+
+  def self.included(base)
+    base.send :include, BaseConcernController
+  end
 
   def update
     object = get_object or return
@@ -11,7 +14,7 @@ module Update
         format.json { render :show, status: :ok }
       else
         format.html { render :edit }
-        format.json { render json: instance_variable_get(get_variable).errors, status: :unprocessable_entity }
+        format.json { render json: {errors: instance_variable_get(get_variable).errors}, status: :unprocessable_entity }
       end
     end
 

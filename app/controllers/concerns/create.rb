@@ -1,5 +1,8 @@
 module Create
-  extend ActiveSupport::Concern
+
+  def self.included(base)
+    base.send :include, BaseConcernController
+  end
 
   def create
     object = get_model.new(self.send(self.controller_name.singularize + "_params"))
@@ -12,7 +15,7 @@ module Create
         format.json { render :show, status: :created }
       else
         format.html { render :new }
-        format.json { render json: instance_variable_get(get_variable).errors, status: :unprocessable_entity }
+        format.json { render json: {errors: instance_variable_get(get_variable).errors}, status: :unprocessable_entity }
       end
     end
   end

@@ -17,3 +17,31 @@ end
 def set_accept(accept = 'application/json')
   request.env['ACCEPT'] = accept
 end
+
+SUCCESS_STATUS_ACTIONS = {
+  index: "200",
+  show: "200",
+  new: "200",
+  create: "201",
+  edit: "200",
+  update: "200",
+  destroy: "204",
+}
+
+def success_status_for_action(action)
+  SUCCESS_STATUS_ACTIONS[action.to_sym]
+end
+
+METHOD_ACTIONS = {
+  index: :get,
+  show: :get,
+  new: :get,
+  create: :post,
+  edit: :get,
+  update: :post,
+  destroy: :delete,
+}
+
+def method_for_action(action)
+  METHOD_ACTIONS[action.to_sym]
+end

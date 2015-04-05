@@ -8,7 +8,7 @@ FactoryGirl.define do
     website "MyString"
     plan 1
 
-    ignore do
+    transient do
       user nil
     end
 

@@ -6,7 +6,7 @@ class Api::V1::ApiController < ApplicationController
 
   # This is our new function that comes before Devise's one
   before_filter :respond_only_json
-  before_filter :authenticate_user_from_token!
+  before_filter :authenticate_user_from_token!, :require_current_account
   # skips Devise's authentication
   skip_before_filter :authenticate_user!
 
@@ -35,20 +35,24 @@ class Api::V1::ApiController < ApplicationController
 
   private
 
+  def require_current_account
+    user_account     = params[:user_account].presence
+    @current_account = user_account && current_user && current_user.accounts.find(user_account)
+  rescue
+    raise NoAccountSelectedException
+  end
+
   def authenticate_user_from_token!
     user_email   = params[:user_email].presence
-    user_account = params[:user_account].presence
     user         = user_email && User.find_by(email: user_email)
-    account      = user_account && user && user.accounts.find(user_account)
 
 
 
     # Notice how we use Devise.secure_compare to compare the token
     # in the database with the token given in the params, mitigating
     # timing attacks.
-    if user && Devise.secure_compare(user.token, params[:user_token]) && account
+    if user && Devise.secure_compare(user.token, params[:user_token])
       sign_in user, store: false
-      @current_account = account
     else
       raise Api::V1::NoAuthenticatedException
     end

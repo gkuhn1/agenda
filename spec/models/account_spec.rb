@@ -46,7 +46,7 @@ describe Account, type: :model do
       expect(account).to receive(:save).and_call_original
       expect(user).to receive(:save).twice.and_call_original
       account.add_user(user)
-      expect(account.user_ids).to include(user.id)
+      expect(account.user_ids).to include(user._id)
     end
   end
 end

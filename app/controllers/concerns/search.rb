@@ -1,8 +1,8 @@
-module Search
-  extend ActiveSupport::Concern
+# module Search
+#   extend ActiveSupport::Concern
 
-  def search
-    index
-    render :index
-  end
-end
+#   def search
+#     index
+#     render :index
+#   end
+# end

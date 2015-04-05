@@ -1,16 +1,18 @@
 class Api::V1::AccountsController < Api::V1::ApiController
 
+  skip_before_filter :require_current_account, only: :create
+  skip_before_filter :account_required, only: :create
+
   def current
     @account = current_account
     render :show
   end
 
+  def get_collection
+    current_user.accounts
+  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_account
-      @account = Account.find(params[:id]) if params[:id]
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
