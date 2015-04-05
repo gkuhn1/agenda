@@ -20,6 +20,16 @@ angular.module('agenda.states-login', ['agenda.grandfather'])
         }
       })
 
+      .state('public.register', {
+        url: "/register",
+        views: {
+          'wrapper@': {
+            controller: 'RegisterCtrl',
+            templateUrl: "/templates/login/register.html"
+          }
+        }
+      })
+
       .state('app.select_account', {
         url: "/login/select_account",
         views: {

@@ -10,8 +10,8 @@ angular.module('agenda.home', ['agenda.grandfather'])
   }
 ])
 
-.controller("HeaderCtrl", ['$rootScope', '$scope', 'Auth', 'current_account', 'current_user',
-  function($rootScope, $scope, Auth, current_account, current_user) {
+.controller("HeaderCtrl", ['$rootScope', '$scope', 'Auth',
+  function($rootScope, $scope, Auth) {
 
     console.log('HeaderCtrl');
 
@@ -19,7 +19,7 @@ angular.module('agenda.home', ['agenda.grandfather'])
     $scope.page.title = "Home";
 
     $scope.accounts = Auth.current_user().accounts;
-    $scope.current_account = current_account;
+    $scope.current_account = Auth.current_account();
     $scope.current_user = Auth.current_user();
 
     console.log($scope.current_account);

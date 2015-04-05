@@ -20,6 +20,44 @@ describe Account, type: :model do
     end
   end
 
+  context ".build_user_from_attributes" do
+    it "should build an user if user_attributes is set" do
+      account = Account.new(:name => "MyAccount", user_attributes: FactoryGirl.attributes_for(:user))
+      account.build_user_from_attributes
+      expect(account.instance_variable_get("@user_from_attributes")).not_to eq(nil)
+      expect(account.errors).to be_empty
+    end
+
+    it "should do noting if user_attribtes is not set" do
+      account = Account.new(:name => "MyAccount")
+      account.build_user_from_attributes
+      expect(account.instance_variable_get("@user_from_attributes")).to be(nil)
+      expect(account.errors).to be_empty
+    end
+
+    it "should return errors if user_attributes has errors" do
+      account = Account.new(:name => "MyAccount", user_attributes: {:name=>"My User 1", :email=>"invalid", :password=>"mypassword"})
+      account.build_user_from_attributes
+      expect(account.instance_variable_get("@user_from_attributes")).not_to eq(nil)
+      expect(account.errors.to_h).to eq({:email=>"não é válido"})
+    end
+  end
+
+  context ".create_user_from_attributes" do
+    it "should save user if user exists" do
+      account = FactoryGirl.build(:account)
+      user = FactoryGirl.build(:user)
+      account.instance_variable_set("@user_from_attributes", user)
+      account.create_user_from_attributes
+      expect(account.user_ids).to include(user._id)
+    end
+    it "should do nothing if user doesn't exists" do
+      account = FactoryGirl.build(:account)
+      account.create_user_from_attributes
+      expect(account.user_ids.count).to eq(1)
+    end
+  end
+
   context ".fill_out_db" do
     it "should set database based on name" do
       account = Account.new(:name => "MyAccount")

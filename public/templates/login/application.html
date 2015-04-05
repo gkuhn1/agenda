@@ -22,6 +22,7 @@
         <input placeholder="Senha" autocomplete="off" class="form-control" type="password" name="password" id="user_password" ng-model="credential.password" />
         <span class='glyphicon glyphicon-lock form-control-feedback'></span>
       </div>
+
       <div class='row'>
         <div class="col-xs-8">
         </div>
@@ -39,9 +40,9 @@
     <!-- Sign in using Google+ -->
     <!-- /.social-auth-links -->
 
-    <a class='text-center' ui-sref='accounts.register'>Criar uma conta</a>
+    <a class='text-center' href ui-sref='public.register'>Criar uma conta</a>
     <br>
-    <a ui-sref='accounts.register'>Esqueceu sua senha?</a>
+    <a href ui-sref='accounts.register'>Esqueceu sua senha?</a>
     <br>
 
     <!-- /.login-box-body -->

@@ -11,12 +11,7 @@ angular.module('agenda.login', ['agenda.grandfather'])
       console.log(data)
       $scope.login_form["email"].$setValidity('server', true);
       $scope.error = "";
-      Auth.select_current_user(data);
-      if (Auth.current_user().accounts.length == 1) {
-        Auth.select_current_account(Auth.current_user().accounts[0]);
-      } else {
-        $state.go('app.select_account');
-      }
+      Auth.handle_login($state, data);
     }
     var error = function (data) {
       $scope.login_form["email"].$setValidity('server', false);
@@ -37,4 +32,43 @@ angular.module('agenda.login', ['agenda.grandfather'])
   }
 
 }])
+
+.controller("RegisterCtrl", ['$rootScope', '$scope', '$state', 'Auth', 'AccountService', 'UserService',
+  function($rootScope, $scope, $state, Auth, AccountService, UserService) {
+
+    $rootScope.login = true;
+
+    $scope.errors = {};
+    $scope.account = {};
+
+    $scope.register = function(account) {
+      console.log('register', account, $scope.form_error);
+      $scope.errors = {};
+
+      if (!account.name || !account.user_attributes.email || !account.user_attributes.password || !account.user_attributes.password_confirmation)
+        $scope.form_error = "Todos os campos devem ser preenchidos";
+      else {
+        $scope.form_error = null;
+
+        var success = function(data) {
+          Auth.login({email: account.user_attributes.email, password: account.user_attributes.password}).success(function(data){
+            Auth.handle_login($state, data);
+          })
+        }
+
+        var error = function(data) {
+          console.log(data.errors)
+          angular.forEach(data.errors, function(errors, field) {
+            console.log(field);
+            $scope.form[field].$setValidity('server', false);
+            $scope.errors[field] = errors.join(', ');
+          })
+        }
+
+        AccountService.save(account, false).success(success).error(error);
+      }
+    }
+
+  }
+])
 

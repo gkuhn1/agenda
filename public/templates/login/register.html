@@ -1,0 +1,71 @@
+
+<div class='login-box'>
+  <div class='login-logo'>
+    <a href='root_path'>
+      <b>
+        Agenda
+      </b>
+    </a>
+  </div>
+
+  <div class="login-box-body">
+    <p class="login-box-msg">Criar nova conta</p>
+
+    <form name="form" novalidate="novalidate" class="simple_form" ng-class="{'has-error' : form_error}" ng-submit="register(account)">
+
+      <p class="help-block" ng-show="form_error">{{ form_error }}</p>
+
+      <div class="form-group has-feedback" ng-class="{'has-error' : form.name.$error.server}">
+        <input autofocus="autofocus" type="text" class="form-control" placeholder="Nome para a conta" name="name" ng-model="account.name" server-error>
+        <span class="glyphicon glyphicon glyphicon-cloud form-control-feedback"></span>
+        <p class="help-block" ng-show="form.name.$error.server">{{ errors.name }}</p>
+      </div>
+
+      <div class="form-group has-feedback" ng-class="{'has-error' : form.user_name.$error.server}">
+        <input autofocus="autofocus" type="text" class="form-control" placeholder="Seu nome" name="user_name" ng-model="account.user_attributes.name" server-error>
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <p class="help-block" ng-show="form.user_name.$error.server">{{ errors.user_name }}</p>
+      </div>
+
+      <div class='form-group has-feedback' ng-class="{'has-error' : form.user_email.$error.server}">
+        <input placeholder="Email" class="form-control" type="text" name="user_email" ng-model="account.user_attributes.email" server-error>
+        <span class='glyphicon glyphicon-envelope form-control-feedback'></span>
+        <p class="help-block" ng-show="form.user_email.$error.server">{{ errors.user_email }}</p>
+      </div>
+
+      <div class='form-group has-feedback' ng-class="{'has-error' : form.user_password.$error.server}">
+        <input placeholder="Senha" autocomplete="off" class="form-control" type="password" name="user_password" id="user_password" ng-model="account.user_attributes.password" server-error>
+        <span class='glyphicon glyphicon-lock form-control-feedback'></span>
+        <p class="help-block" ng-show="form.user_password.$error.server">{{ errors.user_password }}</p>
+      </div>
+
+      <div class="form-group has-feedback" ng-class="{'has-error' : form.user_password_confirmation.$error.server}">
+        <input placeholder="Confirmação de senha" autocomplete="off" class="form-control" type="password" name="user_password_confirmation" id="user_password" ng-model="account.user_attributes.password_confirmation" server-error>
+        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        <p class="help-block" ng-show="form.user_password_confirmation.$error.server">{{ errors.user_password_confirmation }}</p>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-8">
+          <small>Ao se registrar você estará concordando com os termos de uso</small>
+        </div><!-- /.col -->
+
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Registar!</button>
+        </div><!-- /.col -->
+
+      </div>
+    </form>
+
+    <!--
+    <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using Facebook</a>
+      <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign up using Google+</a>
+    </div>
+
+    -->
+
+    <a href ui-sref="public.login" class="text-center">Já possuo uma conta!</a>
+  </div>
+</div>

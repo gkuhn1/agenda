@@ -52,6 +52,7 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
 
   context "#create" do
     let(:auth_params_no_account) { {format: 'json', user_email: user.email, user_token: user.token} }
+    let(:auth_params_no_user) { {format: 'json'} }
     let(:account_params) { {account: FactoryGirl.attributes_for(:account).merge(user_ids: [user.id])} }
 
     it "should not require current_account" do
@@ -59,9 +60,9 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
       expect(response.code).to eq("201")
     end
 
-    it_behaves_like "require current_user" do
-      let(:action) {:create}
-      let(:extra_params) { account_params }
+    it "should not require current_user" do
+      post :create, auth_params_no_user.merge(account_params)
+      expect(response.code).to eq("201")
     end
   end
 

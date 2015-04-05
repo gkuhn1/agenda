@@ -4,7 +4,7 @@ angular.module('agenda.authservice', ['ui.router'])
 
     var errorState = 'app.error';
     var loginState = 'public.login';
-    var storageUserKey = 'userData';
+    var storageUserKey = 'currentUser';
     var storageCurrentAccountKey = 'currentAccount';
     var is_loaded = false;
 
@@ -62,6 +62,15 @@ angular.module('agenda.authservice', ['ui.router'])
 
     pub.login = function(credentials) {
       return $http.post("/api/v1/users/login", credentials);
+    }
+
+    pub.handle_login = function($state, data) {
+      pub.select_current_user(data);
+      if (pub.current_user().accounts.length == 1) {
+        pub.select_current_account(pub.current_user().accounts[0]);
+      } else {
+        $state.go('app.select_account');
+      }
     }
 
     pub.logout = function() {
