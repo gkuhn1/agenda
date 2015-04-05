@@ -32,8 +32,10 @@ angular.module('agenda.home', ['agenda.grandfather'])
   }
 ])
 
-.controller("SidebarCtrl", ['$rootScope',
-  function($rootScope) {
+.controller("SidebarCtrl", ['$rootScope', '$scope', 'Auth',
+  function($rootScope, $scope, Auth) {
+
+    $scope.current_user = Auth.current_user();
 
     console.log("SidebarCtrl");
 

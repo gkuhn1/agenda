@@ -39,7 +39,7 @@ describe Account, type: :model do
       account = Account.new(:name => "MyAccount", user_attributes: {:name=>"My User 1", :email=>"invalid", :password=>"mypassword"})
       account.build_user_from_attributes
       expect(account.instance_variable_get("@user_from_attributes")).not_to eq(nil)
-      expect(account.errors.to_h).to eq({:email=>"não é válido"})
+      expect(account.errors.to_h).to eq({:user_email=>"não é válido"})
     end
   end
 

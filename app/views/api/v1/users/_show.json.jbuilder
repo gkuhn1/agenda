@@ -1,1 +1,1 @@
-json.extract! user, :name, :id, :email, :admin, :token, :accounts
+json.extract! user, :name, :id, :email, :admin, :token, :accounts, :gravatar_url

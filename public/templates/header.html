@@ -123,7 +123,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">
-              <img src="https://secure.gravatar.com/avatar/d99b817adea81f400d8638bbe997ac0b.png?r=R" class="user-image" alt="User Image">
+              <img src="{{ current_user.gravatar_url }}" class="user-image" alt="User Image">
               <span class="hidden-xs">
                 {{ current_user.name }}
               </span>
@@ -131,7 +131,7 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="https://secure.gravatar.com/avatar/d99b817adea81f400d8638bbe997ac0b.png?r=R" class="img-circle" alt="User Image">
+                <img src="{{ current_user.gravatar_url }}" class="img-circle" alt="User Image">
                 <p>
                   {{ current_user.name }}
                   <small>
