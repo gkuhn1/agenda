@@ -40,6 +40,16 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
     end
   end
 
+  context "#new" do
+    it_behaves_like "require current_account" do
+      let(:action) {:new}
+    end
+
+    it_behaves_like "require current_user" do
+      let(:action) {:new}
+    end
+  end
+
   context "#create" do
     let(:auth_params_no_account) { {format: 'json', user_email: user.email, user_token: user.token} }
     let(:account_params) { {account: FactoryGirl.attributes_for(:account).merge(user_ids: [user.id])} }
@@ -55,6 +65,19 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
     end
   end
 
+  context "#edit" do
+    it_behaves_like "require current_account" do
+      let(:action) {:edit}
+      let(:extra_params) { {id: account.id} }
+    end
+
+    it_behaves_like "require current_user" do
+      let(:action) {:edit}
+      let(:extra_params) { {id: account.id} }
+    end
+  end
+
+
   context "#update" do
 
     let(:account_params) { {id: account.id, account: FactoryGirl.attributes_for(:account, name: "Novo nome").merge(user_ids: [user.id])} }
@@ -67,6 +90,18 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
     it_behaves_like "require current_user" do
       let(:action) {:update}
       let(:extra_params) { account_params }
+    end
+  end
+
+  context "#destroy" do
+    it_behaves_like "require current_account" do
+      let(:action) {:destroy}
+      let(:extra_params) { {id: account.id} }
+    end
+
+    it_behaves_like "require current_user" do
+      let(:action) {:destroy}
+      let(:extra_params) { {id: account.id} }
     end
   end
 

@@ -79,6 +79,12 @@ describe Index, type: :controller do
       expect(controller).to receive(:get_model).and_return(User)
       expect(controller.send(:get_collection)).to eq(User)
     end
+
+    it "should return nil if get_model returned nil" do
+      controller = MockIndexController.new
+      allow(controller).to receive(:controller_name).and_return('users1')
+      expect(controller.send(:get_collection)).to eq(nil)
+    end
   end
 
 end

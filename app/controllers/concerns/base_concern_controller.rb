@@ -20,7 +20,8 @@ module BaseConcernController
   end
 
   def get_object
-    get_collection.find(params[:id])
+    collection = get_collection
+    collection.nil? ? nil : collection.find(params[:id])
   end
 
   def get_collection
