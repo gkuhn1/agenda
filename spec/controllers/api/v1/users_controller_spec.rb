@@ -104,6 +104,34 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
   end
 
+  context "#login" do
+    let(:auth_params_no_account_and_user) { {format: 'json', email: user.email, password: "mypassword"} }
+
+    it "should not require current_account nor current_user" do
+      post :login, auth_params_no_account_and_user
+      expect(response.code).to eq("200")
+    end
+
+    it "should return user informations if loggin_success" do
+      post :login, auth_params_no_account_and_user
+      expect(response.code).to eq("200")
+      expect(assigns(:user)).not_to be(nil)
+    end
+
+    it "should return Dados inválidos error if emails does not exists" do
+      post :login, auth_params_no_account_and_user.merge(email: "email_inexistente@user.com")
+      expect(response.code).to eq("422")
+      expect(response.body).to eq({error: "Dados inválidos"}.to_json)
+    end
+
+    it "should return Dados Inválidos error if password is incorrect" do
+      post :login, auth_params_no_account_and_user.merge(password: "password_errado")
+      expect(response.code).to eq("422")
+      expect(response.body).to eq({error: "Dados inválidos"}.to_json)
+    end
+
+  end
+
 
   context "#current" do
     it "@user should be current_user" do
