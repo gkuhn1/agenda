@@ -45,14 +45,12 @@ class Api::V1::ApiController < ApplicationController
     # before filter
   def authenticate
     authenticate_or_request_with_http_basic do |user_token, account_id, options|
-      binding.pry
       @current_user = User.find_by(token: user_token) if user_token
       @current_account = Account.find(account_id) if account_id
     end
   end
 
   def authenticate_user_from_token!
-    binding.pry
     user_email   = params[:user_email].presence
     user         = user_email && User.find_by(email: user_email)
 
