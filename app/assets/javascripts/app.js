@@ -46,6 +46,17 @@ angular.module('agenda', [
     return {
       request: function(request) {
         $rootScope.$broadcast("loading_start");
+        var user = angular.fromJson(localStorage.getItem('currentUser'));
+        var account = angular.fromJson(localStorage.getItem('currentAccount'));
+        var auth_string = "";
+
+        if (user)
+          auth_string = user.token + ":";
+        if (account)
+          auth_string += (account.id || account._id);
+
+        request.headers.Authorization = 'Basic ' + btoa(auth_string);
+        console.log(request);
         return request;
       },
       response: function(response) {

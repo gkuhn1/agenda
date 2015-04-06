@@ -3,31 +3,24 @@ angular.module('agenda.states-users', ['agenda.grandfather'])
   function($stateProvider) {
 
     $stateProvider
-      .state('users', {
+      .state('app.header.admin-sidebar.home.users', {
         url: "/users",
-        views: {
-          content: {
-            templateUrl: "/templates/admin/users/index.html",
-            controller: "UsersCtrl"
-          },
-          menu: {templateUrl: "/templates/admin/menu.html"}
-        },
+        templateUrl: "/templates/admin/users/index.html",
+        controller: "UsersCtrl",
         resolve: {
           users: ['UserService', function(UserService){
             return UserService.all();
           }]
         }
       })
-        .state('users_new', {
-          url: "/users/new",
-          views: {
-            content: {
-              controller: "NewUserCtrl",
-              templateUrl: "/templates/admin/users/form.html"
-            },
-            menu: {templateUrl: "/templates/admin/menu.html"}
-          },
+        .state('app.header.admin-sidebar.home.users.new', {
+          url: "/new",
+          controller: "NewUserCtrl",
+          templateUrl: "/templates/admin/users/form.html",
           resolve: {
+            users: ['UserService', function(UserService) {
+              return UserService.all();
+            }],
             newUser: ['UserService', function(UserService) {
               return UserService.new();
             }]
@@ -36,32 +29,25 @@ angular.module('agenda.states-users', ['agenda.grandfather'])
             edit: false
           }
         })
-        .state('users_show', {
-          url: "/users/:id",
-          views: {
-            content: {
-              controller: 'ShowUserCtrl',
-              templateUrl: "/templates/admin/users/show.html"
-            },
-            menu: {templateUrl: "/templates/admin/menu.html"}
-          },
+        .state('app.header.admin-sidebar.home.users.show', {
+          url: "/:id",
+          controller: 'ShowUserCtrl',
+          templateUrl: "/templates/admin/users/show.html",
           resolve: {
-            user: ['$stateParams', 'UserService', function($stateParams, UserService) {
+            account: ['$stateParams', 'UserService', function($stateParams, UserService) {
               return UserService.get($stateParams.id)
             }]
           }
         })
-        .state('users_edit', {
-          url: "/users/:id/edit",
-          views: {
-            content: {
-              controller: "NewUserCtrl",
-              templateUrl: "/templates/admin/users/form.html"
-            },
-            menu: {templateUrl: "/templates/admin/menu.html"}
-          },
+        .state('app.header.admin-sidebar.home.users.edit', {
+          url: "/:id/edit",
+          controller: "NewUserCtrl",
+          templateUrl: "/templates/admin/users/form.html",
           resolve: {
-            newUser: ['UserService', '$stateParams', function(UserService, $stateParams) {
+            users: ['UserService', function(UserService) {
+              return UserService.all();
+            }],
+            newAccount: ['UserService', '$stateParams', function(UserService, $stateParams) {
               return UserService.get($stateParams.id);
             }]
           },

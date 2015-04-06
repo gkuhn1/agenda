@@ -7,7 +7,7 @@ angular.module('agenda.accountservice', ['httpq']).factory('AccountService', ['$
 
     // load
     pub.all = function() {
-      return $httpq.get(base_url+'.json')
+      return $httpq.get(base_url+'.json', {param1: "1", param2: "2"})
     }
 
     pub.current = function() {

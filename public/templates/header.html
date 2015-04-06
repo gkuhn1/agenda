@@ -23,7 +23,7 @@
           <a href>Clientes</a>
         </li>
         <li ng-show="current_user.admin">
-          <a href ui-sref="app.header.sidebar.admin">Administração</a>
+          <a href ui-sref='app.header.admin-sidebar.home'>Administração</a>
         </li>
       </ul>
       <div class="navbar-custom-menu">
@@ -152,9 +152,9 @@
               </li>
               <!-- Menu Footer -->
               <li class="user-footer">
-                <div class="pull-left">
+                <!-- <div class="pull-left">
                   <a href="/accounts/edit" class="btn btn-default btn-flat">Minhas informações</a>
-                </div>
+                </div> -->
                 <div class="pull-right">
                   <a href ui-sref="app.logout" class="btn btn-default btn-flat">Sair</a>
                 </div>

@@ -35,16 +35,16 @@
       <li class="treeview" ng-class="{ active : $state.inc('accounts') || tv_account }" ng-init="tv_account = tv_account || false" ng-click="tv_account = !tv_account">
         <a><span><i class="fa fa-credit-card"></i> Contas</span><i class="fa pull-right fa-angle-left"></i></a>
         <ul class="treeview-menu" ng-class="{ 'menu-open' : $state.inc('accounts') || tv_account }">
-          <li ng-class="{ active : $state.includes('accounts') }" ng-click="$event.stopPropagation()"><a href="#/accounts"><i class="fa fa-angle-double-right"></i> Lista</a></li>
-          <li ng-class="{ active : $state.includes('accounts_new') }" ng-click="$event.stopPropagation()"><a href="#/accounts/new"><i class="fa fa-angle-double-right"></i> Nova conta</a></li>
+          <li ui-sref-active-eq="active" ng-click="$event.stopPropagation()"><a href ui-sref="app.header.admin-sidebar.home.accounts"><i class="fa fa-angle-double-right"></i> Lista</a></li>
+          <li ui-sref-active-eq="active" ng-click="$event.stopPropagation()"><a href ui-sref="app.header.admin-sidebar.home.accounts.new"><i class="fa fa-angle-double-right"></i> Nova conta</a></li>
         </ul>
       </li>
 
       <li class="treeview" ng-class="{ active : $state.inc('users') || tv_user }" ng-init="tv_user = tv_user || false" ng-click="tv_user = !tv_user">
         <a><span><i class="fa fa-users"></i> Usuários</span><i class="fa pull-right fa-angle-left"></i></a>
         <ul class="treeview-menu" ng-class="{ 'menu-open' : $state.inc('users') || tv_user }">
-          <li ng-class="{ active : $state.includes('users') }" ng-click="$event.stopPropagation()"><a href="#/users"><i class="fa fa-angle-double-right"></i> Lista</a></li>
-          <li ng-class="{ active : $state.includes('users_new') }" ng-click="$event.stopPropagation()"><a href="#/users/new"><i class="fa fa-angle-double-right"></i> Novo usuário</a></li>
+          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users') }" ng-click="$event.stopPropagation()"><a href ui-sref="app.header.admin-sidebar.home.users"><i class="fa fa-angle-double-right"></i> Lista</a></li>
+          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users_new') }" ng-click="$event.stopPropagation()"><a href ui-sref="app.header.admin-sidebar.home.users.new"><i class="fa fa-angle-double-right"></i> Novo usuário</a></li>
         </ul>
       </li>
 
@@ -52,3 +52,5 @@
 
   </section>
 </aside>
+
+<ui-view />

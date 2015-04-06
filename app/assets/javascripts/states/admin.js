@@ -3,7 +3,11 @@ angular.module('agenda.states-admin', ['agenda.grandfather'])
   function($stateProvider) {
 
     $stateProvider
-      .state('app.header.sidebar.admin', {
+      .state('app.header.admin-sidebar', {
+        abstract: true,
+        templateUrl: "/templates/admin/sidebar.html"
+      })
+      .state('app.header.admin-sidebar.home', {
         url: "/admin",
         controller: 'AdminHomeCtrl',
         templateUrl: "/templates/admin/home.html"

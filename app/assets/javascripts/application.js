@@ -16,5 +16,9 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require iCheck/icheck.min
+//= require routing-config
+//= require_tree ./services
+//= require_tree ./controllers
+//= require_tree ./states
+//= require_tree ./directives
 //= require app
-//= require_tree .

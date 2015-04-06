@@ -1,4 +1,4 @@
-angular.module('agenda.authservice', ['ui.router'])
+angular.module('agenda.authservice', [])
 .factory('Auth', ['$rootScope', '$http', '$q', '$state',
   function ($rootScope, $http, $q, $state) {
 
@@ -107,4 +107,18 @@ angular.module('agenda.authservice', ['ui.router'])
     return pub;
 
   }
-]);
+])
+
+// .factory("authInterceptor", ['Auth', function(Auth) {
+//   return {
+//     request: function(request) {
+//       console.log("aqui", request);
+//       return request;
+//     }
+//   }
+// }])
+
+// .config(function ($httpProvider) {
+//   console.log('interceptors');
+//   $httpProvider.interceptors.push('authInterceptor');
+// })
