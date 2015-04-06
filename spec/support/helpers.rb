@@ -14,6 +14,14 @@ def login_user(user=nil, account=nil)
   session[:account_id] = account.id if account
 end
 
+def api_authenticate(user, account)
+  env = {}
+  env['HTTP_ACCEPT'] = "application/json"
+  env['CONTENT_TYPE'] = "application/json"
+  env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user.try(:token) || "", account.try(:id) || "")
+  env
+end
+
 def set_accept(accept = 'application/json')
   request.env['ACCEPT'] = accept
 end

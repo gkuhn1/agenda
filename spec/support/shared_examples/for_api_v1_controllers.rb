@@ -3,7 +3,6 @@ RSpec.shared_examples "api v1 controller" do
   let(:action) {:index}
   let(:account) { FactoryGirl.create(:account) }
   let(:user) { account.users.first }
-  let(:auth_params) { {user_email: user.email, user_token: user.token, user_account: account.id} }
 
 
   context "authentication" do
@@ -12,7 +11,7 @@ RSpec.shared_examples "api v1 controller" do
       expect(response.code).to eq("404")
     end
     it "should autenticate and select account" do
-      get action, auth_params.merge(:format => 'json')
+      get action, {:format => 'json'}, api_authenticate(user, account)
       expect(response.code).to eq("200")
       expect(assigns(:current_account)).to eq(account)
     end
@@ -20,15 +19,15 @@ RSpec.shared_examples "api v1 controller" do
 
   context "format" do
     it "should accept json" do
-      get action, auth_params.merge(:format => 'json')
+      get action, {:format => 'json'}, api_authenticate(user, account)
       expect(response.code).to eq("200")
     end
     it "should return 406 not acceptable for html" do
-      get action, auth_params.merge(:format => 'html')
+      get action, {:format => 'html'}, api_authenticate(user, account)
       expect(response.code).to eq("406")
     end
     it "should return 406 not acceptable for xml" do
-      get action, auth_params.merge(:format => 'xml')
+      get action, {:format => 'xml'}, api_authenticate(user, account)
       expect(response.code).to eq("406")
     end
   end

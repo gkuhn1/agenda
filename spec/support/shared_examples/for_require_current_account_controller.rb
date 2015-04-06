@@ -17,14 +17,14 @@ RSpec.shared_examples "require current_account" do
 
   context "with current_account" do
     it "should return success_status if success" do
-      self.send(method, action, auth_params.merge(extra_params))
+      self.send(method, action, extra_params, api_authenticate(user, account))
       expect(response.code).to eq(success_status)
     end
   end
 
   context "without current_account" do
     it "should return 404 error" do
-      self.send(method, action, auth_params_no_account.merge(extra_params) )
+      self.send(method, action, extra_params, api_authenticate(user, nil) )
       expect(response.code).to eq("404")
       expect(response.body).to eq({error: "Selecione uma conta antes de fazer alterações."}.to_json)
     end
@@ -32,7 +32,8 @@ RSpec.shared_examples "require current_account" do
 
   context "without valid account" do
     it "should return 404 error" do
-      self.send(method, action, auth_params_invalid_account.merge(extra_params) )
+      account.id = '123123'
+      self.send(method, action, extra_params, api_authenticate(user, account) )
       expect(response.code).to eq("404")
       expect(response.body).to eq({error: "Not Found"}.to_json)
     end
@@ -40,7 +41,7 @@ RSpec.shared_examples "require current_account" do
 
   context "with other user valid account" do
     it "should return 404 error" do
-      self.send(method, action, auth_params_other_user_account.merge(extra_params) )
+      self.send(method, action, extra_params, api_authenticate(user, account2) )
       expect(response.code).to eq("404")
       expect(response.body).to eq({error: "Selecione uma conta antes de fazer alterações."}.to_json)
     end
