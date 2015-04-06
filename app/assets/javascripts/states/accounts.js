@@ -3,14 +3,13 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
   function($stateProvider) {
 
     $stateProvider
-      .state('admin.accounts', {
-        url: "/accounts",
+      .state('app.sysadmin.home.accounts', {
+        url: "accounts",
         views: {
-          content: {
+          'content@app.sysadmin.home': {
             templateUrl: "/templates/admin/accounts/index.html",
             controller: "AccountsCtrl"
-          },
-          menu: {templateUrl: "/templates/admin/menu.html"}
+          }
         },
         resolve: {
           accounts: ['AccountService', function(AccountService){
@@ -18,14 +17,13 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
           }]
         }
       })
-        .state('admin.accounts_new', {
-          url: "/accounts/new",
+        .state('app.sysadmin.home.accounts.new', {
+          url: "new",
           views: {
-            content: {
+            'content@app.sysadmin.home': {
               controller: "NewAccountCtrl",
               templateUrl: "/templates/admin/accounts/form.html"
-            },
-            menu: {templateUrl: "/templates/admin/menu.html"}
+            }
           },
           resolve: {
             users: ['UserService', function(UserService) {
@@ -39,14 +37,13 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
             edit: false
           }
         })
-        .state('admin.accounts_show', {
-          url: "/accounts/:id",
+        .state('app.sysadmin.home.accounts.show', {
+          url: ":id",
           views: {
-            content: {
+            'content@app.sysadmin.home': {
               controller: 'ShowAccountCtrl',
               templateUrl: "/templates/admin/accounts/show.html"
-            },
-            menu: {templateUrl: "/templates/admin/menu.html"}
+            }
           },
           resolve: {
             account: ['$stateParams', 'AccountService', function($stateParams, AccountService) {
@@ -54,14 +51,13 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
             }]
           }
         })
-        .state('admin.accounts_edit', {
-          url: "/accounts/:id/edit",
+        .state('app.sysadmin.home.accounts.edit', {
+          url: ":id/edit",
           views: {
-            content: {
+            'content@app.sysadmin.home': {
               controller: "NewAccountCtrl",
               templateUrl: "/templates/admin/accounts/form.html"
-            },
-            menu: {templateUrl: "/templates/admin/menu.html"}
+            }
           },
           resolve: {
             users: ['UserService', function(UserService) {

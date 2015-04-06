@@ -4,22 +4,20 @@ angular.module('agenda.states-home', ['agenda.grandfather'])
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-      .state('app.home', {
+      .state('app.header', {
+        abstract: true,
+        templateUrl: "/templates/header.html",
+        controller : 'HeaderCtrl'
+      })
+      .state('app.header.sidebar', {
+        abstract: true,
+        templateUrl: "/templates/sidebar.html",
+        controller: 'SidebarCtrl'
+      })
+      .state('app.header.sidebar.home', {
         url: "/",
-        views: {
-          'wrapper@': {
-            controller: 'HomeCtrl',
-            templateUrl: "/templates/application.html"
-          },
-          'header@': {
-            controller: 'HeaderCtrl',
-            templateUrl: "/templates/header.html"
-          },
-          'sidebar@app.home': {
-            controller: 'SidebarCtrl',
-            templateUrl: "/templates/sidebar.html"
-          }
-        }
+        controller: 'HomeCtrl',
+        templateUrl: "/templates/application.html"
       })
 
   }

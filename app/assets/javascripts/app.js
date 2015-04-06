@@ -87,6 +87,15 @@ angular.module('agenda', [
         // Show a loading message until promises are not resolved
         $rootScope.$broadcast("loading_start");
 
+        var selectAccountState = 'app.select_account';
+        if (Auth.current_account() === null && Auth.current_user() !== null && to.name != selectAccountState) {
+          // Se current account for null deve redirecionar para a busca de conta
+          event.preventDefault();
+          $rootScope.$broadcast("loading_stop");
+          console.info("redirecting to" + selectAccountState);
+          $state.go(selectAccountState, {}, {});
+        }
+
         Auth.authorize(event, to, toParams, from, fromParams);
       });
 
@@ -105,7 +114,7 @@ angular.module('agenda', [
 
       $rootScope.$on('currentAccountSelected', function(event, account) {
         console.log('current_account selected', account);
-        $state.go('app.home', {}, {reload: true});
+        $state.go('app.header.sidebar.home', {}, {reload: true});
       })
 
       $rootScope.$on('currentUserSelected', function(event, user) {

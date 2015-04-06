@@ -22,8 +22,7 @@
 
   %body.skin-purple{"ng-class"=>"{ 'login-page' : login }"}
 
-    %div{"ui-view" => "header"}
-    %div{"ui-view" => "wrapper"}
+    %div{"ui-view"=>true}
 
     .loader.no-print{'ng-show'=>"loadingView"}
       %ul#loading

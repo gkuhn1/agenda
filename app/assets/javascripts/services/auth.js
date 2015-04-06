@@ -4,6 +4,7 @@ angular.module('agenda.authservice', ['ui.router'])
 
     var errorState = 'app.error';
     var loginState = 'public.login';
+    var homeState = 'app.header.sidebar.home';
     var storageUserKey = 'currentUser';
     var storageCurrentAccountKey = 'currentAccount';
     var is_loaded = false;
@@ -74,8 +75,8 @@ angular.module('agenda.authservice', ['ui.router'])
     }
 
     pub.logout = function() {
-      console.log("logout!!!!");
-      localStorage.removeItem(storageUserKey);
+      console.info("logout!!!!");
+      localStorage.clear();
       priv.refresh_user_data();
     }
 
@@ -96,7 +97,9 @@ angular.module('agenda.authservice', ['ui.router'])
         console.info("access denied ->", to.data.access)
         event.preventDefault();
         $rootScope.$emit('$statePermissionError');
-        $state.go(loginState, {}, {reload: true,inherit: false});
+        var errorStateTo = to.name == loginState ? homeState : loginState;
+        console.log($state, errorStateTo);
+        $state.go(errorStateTo, {}, {reload: true,inherit: false});
       }
 
     }

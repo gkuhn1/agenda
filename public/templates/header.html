@@ -14,16 +14,16 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li>
-          <a href="/">Dashboard</a>
+          <a href ui-sref="app.home">Dashboard</a>
         </li>
         <li>
-          <a>Calendário</a>
+          <a href>Calendário</a>
         </li>
         <li>
-          <a>Clientes</a>
+          <a href>Clientes</a>
         </li>
-        <li class="">
-          <a ui-sref="home.admin">Administração</a>
+        <li ng-show="current_user.admin">
+          <a href ui-sref="app.header.sidebar.admin">Administração</a>
         </li>
       </ul>
       <div class="navbar-custom-menu">
@@ -166,3 +166,5 @@
     </div>
   </nav>
 </header>
+
+<ui-view />
