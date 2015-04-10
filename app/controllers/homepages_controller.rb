@@ -1,9 +1,7 @@
 class HomepagesController < ApplicationController
 
-  skip_before_filter :account_required, only: [:select_account, :index]
-  skip_before_action :authenticate_user!, only: :index
+  skip_before_filter :authenticate, :account_required, :user_required, only: :index
 
-  # Dashboard
   def index
   end
 
