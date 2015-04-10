@@ -8,12 +8,15 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   let(:user) { account.users.first }
   let(:user2) { FactoryGirl.create(:user) }
   let(:user3) { FactoryGirl.create(:user) }
-  let(:auth_params) { {format: 'json', user_email: user.email, user_token: user.token, user_account: account.id} }
+  let(:auth_params) { {} }
+  let(:password) { "mypassword" }
+  let(:password_errado) { "mypassword_errado" }
 
   context "#index" do
     it "should return all users from current_account" do
       [user, user2, user3]
       account.add_user(user3)
+      api_authenticate(user, account)
 
       get :index, auth_params
       expect(assigns(:users).count).to eq(2)
@@ -105,27 +108,32 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   context "#login" do
-    let(:auth_params_no_account_and_user) { {format: 'json', email: user.email, password: "mypassword"} }
+
+    let(:auth_params) { {email: user.email, password: password} }
+
+    before(:each) do
+      set_content_type
+    end
 
     it "should not require current_account nor current_user" do
-      post :login, auth_params_no_account_and_user
+      post :login, auth_params
       expect(response.code).to eq("200")
     end
 
     it "should return user informations if loggin_success" do
-      post :login, auth_params_no_account_and_user
+      post :login, auth_params
       expect(response.code).to eq("200")
       expect(assigns(:user)).not_to be(nil)
     end
 
     it "should return Dados inválidos error if emails does not exists" do
-      post :login, auth_params_no_account_and_user.merge(email: "email_inexistente@user.com")
+      post :login, auth_params.merge(email: "email_inexistente@user.com")
       expect(response.code).to eq("422")
       expect(response.body).to eq({error: "Dados inválidos"}.to_json)
     end
 
     it "should return Dados Inválidos error if password is incorrect" do
-      post :login, auth_params_no_account_and_user.merge(password: "password_errado")
+      post :login, auth_params.merge(password: password_errado)
       expect(response.code).to eq("422")
       expect(response.body).to eq({error: "Dados inválidos"}.to_json)
     end
@@ -135,7 +143,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
   context "#current" do
     it "@user should be current_user" do
-      get :current, auth_params
+      api_authenticate(user, account)
+      get :current
       expect(assigns(:user)).to eq(user)
     end
 

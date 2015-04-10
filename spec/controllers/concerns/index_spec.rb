@@ -12,7 +12,7 @@ describe Index, type: :controller do
 
   let(:account) { FactoryGirl.create(:account) }
   let(:user) { account.users.first }
-  let(:auth_params) { {format: 'json', user_email: user.email, user_token: user.token, user_account: account.id} }
+  let(:auth_params) { {} }
 
   context "#action" do
 
@@ -28,6 +28,10 @@ describe Index, type: :controller do
           end
         end
       }
+    end
+
+    before(:each) do
+      api_authenticate(user, account)
     end
 
     it "should return all users from current_account" do

@@ -1,8 +1,6 @@
 class Api::V1::UsersController < Api::V1::ApiController
 
-  skip_before_filter :require_current_account, only: :login
-  skip_before_filter :account_required, only: :login
-  skip_before_filter :authenticate_user_from_token!, only: :login
+  skip_before_filter :authenticate, :account_required, :user_required, only: :login
 
 
   def login

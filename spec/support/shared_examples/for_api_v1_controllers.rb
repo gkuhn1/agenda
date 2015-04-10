@@ -7,11 +7,13 @@ RSpec.shared_examples "api v1 controller" do
 
   context "authentication" do
     it "should require autentication" do
-      get action, :format => 'json'
-      expect(response.code).to eq("404")
+      api_authenticate(nil, nil)
+      get action
+      expect(response.code).to eq("401")
     end
     it "should autenticate and select account" do
-      get action, {:format => 'json'}, api_authenticate(user, account)
+      api_authenticate(user, account)
+      get action
       expect(response.code).to eq("200")
       expect(assigns(:current_account)).to eq(account)
     end
@@ -19,15 +21,20 @@ RSpec.shared_examples "api v1 controller" do
 
   context "format" do
     it "should accept json" do
-      get action, {:format => 'json'}, api_authenticate(user, account)
+      api_authenticate(user, account)
+      get action
       expect(response.code).to eq("200")
     end
     it "should return 406 not acceptable for html" do
-      get action, {:format => 'html'}, api_authenticate(user, account)
+      api_authenticate(user, account)
+      set_content_type("text/html")
+      get action
       expect(response.code).to eq("406")
     end
     it "should return 406 not acceptable for xml" do
-      get action, {:format => 'xml'}, api_authenticate(user, account)
+      api_authenticate(user, account)
+      set_content_type("text/xml")
+      get action
       expect(response.code).to eq("406")
     end
   end

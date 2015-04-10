@@ -1,4 +1,5 @@
 class NoAccountSelectedException < RuntimeError; end
+class NoUserSelectedException < RuntimeError; end
 class AdminRequiredException < RuntimeError; end
 
 
@@ -8,12 +9,17 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   after_filter :set_csrf_cookie_for_ng
-  before_action :authenticate_user!
+  # before_action :authenticate_user! #method for devise
+  before_filter :authenticate
+  before_filter :user_required, :account_required
 
-  before_filter :configure_permitted_parameters, if: :devise_controller?
-  before_filter :account_required, unless: :devise_controller?
+  rescue_from NoAccountSelectedException, with: :permission_denied
+  rescue_from NoUserSelectedException, with: :permission_denied
+  rescue_from AdminRequiredException, with: :permission_denied
+  rescue_from ActionController::UnknownFormat, with: :not_acceptable
+  rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
 
-  rescue_from NoAccountSelectedException, :with => :need_to_select_an_account
+  attr_accessor :current_account
 
   helper_method :title, :subtitle, :current_account, :context_admin?, :breadrumb_to_menus
 
@@ -23,32 +29,49 @@ class ApplicationController < ActionController::Base
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
 
-  def current_account
-    @current_account ||= Account.find(session[:account_id] || params[:user_account]) if session[:account_id] || params[:user_account]
-  end
-
   # Exceptions
   def account_required
     raise NoAccountSelectedException if current_account.nil?
   end
 
-  def admin_required!
-    raise AdminRequiredException unless current_user.admin?
+  def user_required
+    raise NoUserSelectedException if current_user.nil?
   end
 
-  # rescues NoAccountSelectedException
-  def need_to_select_an_account
-    message = 'Selecione uma conta antes de fazer alterações.'
-    respond_to do |format|
-      format.json { render :json => {:error => message}, :status => 404}
-    end
+  def admin_required!
+    raise AdminRequiredException if !(current_user and current_user.admin?)
   end
 
   protected
 
+    # rescues
+    def not_acceptable
+      render :json => {:error => 'Not Acceptable'}, :status => 406
+    end
+
+    def not_found
+      render :json => {:error => 'Not Found'}, :status => 404
+    end
+
+    def permission_denied
+      render :json => {:error => 'Unauthorized'}, :status => 401
+    end
+
     # In Rails 4.2 and above
     def verified_request?
       super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
+    end
+
+  private
+
+    # before filter
+    def authenticate
+      authenticate_with_http_basic do |user_token, account_id, options|
+        @current_user = User.find_by(token: user_token) if user_token
+        @current_account = current_user.accounts.where(id: account_id).first if current_user and account_id
+      end
+    rescue Mongoid::Errors::DocumentNotFound
+      raise NoUserSelectedException
     end
 
 end

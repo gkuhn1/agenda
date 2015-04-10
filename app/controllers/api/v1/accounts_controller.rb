@@ -1,8 +1,6 @@
 class Api::V1::AccountsController < Api::V1::ApiController
 
-  skip_before_filter :require_current_account, only: :create
-  skip_before_filter :account_required, only: :create
-  skip_before_filter :authenticate_user_from_token!, only: :create
+  skip_before_filter :authenticate, :account_required, :user_required, only: :create
 
   def current
     @account = current_account

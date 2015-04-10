@@ -8,11 +8,12 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
   let(:user) { account.users.first }
   let(:account2) { FactoryGirl.create(:account, user: user) }
   let(:account3) { FactoryGirl.create(:account) }
-  let(:auth_params) { {format: 'json', user_email: user.email, user_token: user.token, user_account: account.id} }
+  let(:auth_params) { {} }
 
   context "#index" do
     it "should return all accounts from current_user" do
       [account2, account3]
+      api_authenticate(user, account)
       get :index, auth_params
       expect(response.code).to eq("200")
       expect(assigns(:accounts).count).to eq(2)
@@ -51,16 +52,18 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
   end
 
   context "#create" do
-    let(:auth_params_no_account) { {format: 'json', user_email: user.email, user_token: user.token} }
-    let(:auth_params_no_user) { {format: 'json'} }
+    let(:auth_params_no_account) { {} }
+    let(:auth_params_no_user) { {} }
     let(:account_params) { {account: FactoryGirl.attributes_for(:account).merge(user_ids: [user.id])} }
 
     it "should not require current_account" do
+      api_authenticate
       post :create, auth_params_no_account.merge(account_params)
       expect(response.code).to eq("201")
     end
 
     it "should not require current_user" do
+      api_authenticate
       post :create, auth_params_no_user.merge(account_params)
       expect(response.code).to eq("201")
     end
@@ -108,6 +111,7 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
 
   context "#current" do
     it "@account should be current_account" do
+      api_authenticate(user, account)
       get :current, auth_params
       expect(assigns(:account)).to eq(account)
     end

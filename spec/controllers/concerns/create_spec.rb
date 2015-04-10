@@ -5,7 +5,7 @@ describe Create, type: :controller do
 
   let(:account) {FactoryGirl.create(:account)}
   let(:user) { account.users.first }
-  let(:auth_params) { {format: 'json', user_email: user.email, user_token: user.token, user_account: account.id} }
+  let(:auth_params) { {} }
 
   before :each do
     auth_params
@@ -21,6 +21,10 @@ describe Create, type: :controller do
       end
     end
   }}
+
+  before(:each) do
+    api_authenticate(user, account)
+  end
 
   it "should create user and return code 201 created" do
     expect { post :create, auth_params.merge(user: FactoryGirl.attributes_for(:user)) }.to change(User, :count).by(1)
