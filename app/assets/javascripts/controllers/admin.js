@@ -1,9 +1,11 @@
 angular.module('agenda.admin', ['agenda.grandfather'])
 
-.controller("AdminHomeCtrl", ['$scope',
-  function($scope) {
+.controller("AdminHomeCtrl", ['$scope', 'dashboard_data',
+  function($scope, dashboard_data) {
 
     console.info("AdminHomeCtrl");
+
+    $scope.panels = dashboard_data.panels;
 
   }
 ])

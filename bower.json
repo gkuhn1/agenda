@@ -1,0 +1,20 @@
+{
+  "name": "tcc-agenda",
+  "version": "0.0.1",
+  "authors": [
+    "Guilherme Kuhn <g.kuhn0@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/javascripts",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-input-masks": "~1.4.2",
+    "angular-ladda": "~0.2.2"
+  }
+}

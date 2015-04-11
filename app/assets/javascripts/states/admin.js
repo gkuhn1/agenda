@@ -10,28 +10,13 @@ angular.module('agenda.states-admin', ['agenda.grandfather'])
       .state('app.header.admin-sidebar.home', {
         url: "/admin",
         controller: 'AdminHomeCtrl',
-        templateUrl: "/templates/admin/home.html"
+        templateUrl: "/templates/admin/home.html",
+        resolve: {
+          dashboard_data: ['AdminService', function(AdminService) {
+            return AdminService.get_dashboard_data();
+          }]
+        }
       })
-      // .state('app.sysadmin.home', {
-      //   url: "/admin",
-        // views: {
-        //   'wrapper@': {
-        //     templateUrl: "/templates/application.html"
-        //   },
-        //   'header@': {
-        //     controller: 'HeaderCtrl',
-        //     templateUrl: "/templates/header.html"
-        //   },
-        //   'content@app.sysadmin.home': {
-        //     controller: 'AdminHomeCtrl',
-        //     templateUrl: "/templates/admin/home.html"
-        //   },
-        //   'sidebar@app.sysadmin.home': {
-        //     controller: 'AdminSidebarCtrl',
-        //     templateUrl: "/templates/admin/sidebar_menu.html"
-        //   }
-        // }
-      // })
 
   }
 ]);

@@ -32,7 +32,7 @@
 
           <div class="form-group string optional user_password" ng-show="!user.generate_password" ng-class="{'has-error' : form.password.$error.server}">
             <label for="user_password" class="string optional control-label">Senha</label>
-            <input type="text" ng-model="user.password" class="string optional form-control"  name="password" server-error>
+            <input type="password" ng-model="user.password" class="string optional form-control"  name="password" server-error>
             <p class="help-block" ng-show="form.password.$error.server">{{ errors.password }}</p>
           </div>
 
@@ -49,9 +49,14 @@
         </div>
         <div class="clearfix"></div>
         <div class="box-footer">
-          <button type="submit" class="btn btn-success" name="commit">Enviar</button>
-
-          <a class="btn btn-default" href="#/users">Voltar</a>
+          <div class="row">
+            <div class="col-md-2">
+              <a class="btn btn-default" href ui-sref="app.header.admin-sidebar.home.users"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+            </div>
+            <div class="col-md-10" style="text-align: right;">
+              <button type="submit" class="btn btn-success" name="commit" ladda="laddaLoading"><i class="glyphicon glyphicon-ok"></i> Enviar</button>
+            </div>
+          </div>
         </div>
       </form>
     </div>

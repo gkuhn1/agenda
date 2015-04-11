@@ -18,8 +18,8 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
           controller: "NewAccountCtrl",
           templateUrl: "/templates/admin/accounts/form.html",
           resolve: {
-            users: ['UserService', function(UserService) {
-              return UserService.all();
+            users: ['UserAdminService', function(UserAdminService) {
+              return UserAdminService.all();
             }],
             newAccount: ['AccountService', function(AccountService) {
               return AccountService.new();
@@ -44,8 +44,8 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
           controller: "NewAccountCtrl",
           templateUrl: "/templates/admin/accounts/form.html",
           resolve: {
-            users: ['UserService', function(UserService) {
-              return UserService.all();
+            users: ['UserAdminService', function(UserAdminService) {
+              return UserAdminService.all();
             }],
             newAccount: ['AccountService', '$stateParams', function(AccountService, $stateParams) {
               return AccountService.get($stateParams.id);

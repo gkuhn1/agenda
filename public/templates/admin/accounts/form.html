@@ -29,13 +29,13 @@
 
           <div class="form-group tel optional account_phone"  ng-class="{'has-error' : form.phone.$error.server}">
             <label for="account_phone" class="tel optional control-label">Phone</label>
-            <input type="tel" id="account_phone" ng-model="account.phone" class="string tel optional form-control" name="phone" server-error>
+            <input type="tel" id="account_phone" ng-model="account.phone" class="string tel optional form-control" name="phone" server-error ui-br-phone-number>
             <p class="help-block" ng-show="form.phone.$error.server">{{ errors.phone }}</p>
           </div>
 
           <div class="form-group tel optional account_phone2" ng-class="{'has-error' : form.phone2.$error.server}">
             <label for="account_phone2" class="tel optional control-label">Phone2</label>
-            <input type="tel" id="account_phone2" ng-model="account.phone2" class="string tel optional form-control" name="phone2" server-error>
+            <input type="tel" id="account_phone2" ng-model="account.phone2" class="string tel optional form-control" name="phone2" server-error ui-br-phone-number>
             <p class="help-block" ng-show="form.phone2.$error.server">{{ errors.phone2 }}</p>
           </div>
 
@@ -71,9 +71,14 @@
         </div>
         <div class="clearfix"></div>
         <div class="box-footer">
-          <button type="submit" class="btn btn-success" name="commit">Enviar</button>
-
-          <a class="btn btn-default" href="#/accounts">Voltar</a>
+          <div class="row">
+            <div class="col-md-2">
+              <a class="btn btn-default" href ui-sref="app.header.admin-sidebar.home.accounts"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+            </div>
+            <div class="col-md-10" style="text-align: right;">
+              <button type="submit" class="btn btn-success" name="commit" ladda="laddaLoading"><i class="glyphicon glyphicon-ok"></i> Enviar</button>
+            </div>
+          </div>
         </div>
       </form>
     </div>

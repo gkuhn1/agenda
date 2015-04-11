@@ -12,13 +12,30 @@
 //
 //= require angular.min
 //= require angular-ui-router.min
-//= require angular-pusher.min
+
 //= require jquery
 //= require bootstrap-sprockets
 //= require iCheck/icheck.min
 //= require routing-config
+
+// Angular extras
+//= require angular-pusher.min
+//= require angular-input-masks/angular-input-masks.br
+//= require ladda/js/spin
+//= require ladda/js/ladda
+//= require angular-ladda/dist/angular-ladda
+
+// Angular app
 //= require_tree ./services
 //= require_tree ./controllers
 //= require_tree ./states
 //= require_tree ./directives
 //= require app
+
+function contentWrapperHeight(e) {
+  $('.content-wrapper').css('minHeight', $(window).height()-$('header.main-header').height());
+}
+
+$(document).ready(function() {
+  $(window).resize(contentWrapperHeight);
+})

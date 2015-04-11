@@ -8,8 +8,8 @@ angular.module('agenda.states-users', ['agenda.grandfather'])
         templateUrl: "/templates/admin/users/index.html",
         controller: "UsersCtrl",
         resolve: {
-          users: ['UserService', function(UserService){
-            return UserService.all();
+          users: ['UserAdminService', function(UserAdminService){
+            return UserAdminService.all();
           }]
         }
       })
@@ -18,11 +18,11 @@ angular.module('agenda.states-users', ['agenda.grandfather'])
           controller: "NewUserCtrl",
           templateUrl: "/templates/admin/users/form.html",
           resolve: {
-            users: ['UserService', function(UserService) {
-              return UserService.all();
+            users: ['UserAdminService', function(UserAdminService) {
+              return UserAdminService.all();
             }],
-            newUser: ['UserService', function(UserService) {
-              return UserService.new();
+            newUser: ['UserAdminService', function(UserAdminService) {
+              return UserAdminService.new();
             }]
           },
           data: {
@@ -34,8 +34,8 @@ angular.module('agenda.states-users', ['agenda.grandfather'])
           controller: 'ShowUserCtrl',
           templateUrl: "/templates/admin/users/show.html",
           resolve: {
-            account: ['$stateParams', 'UserService', function($stateParams, UserService) {
-              return UserService.get($stateParams.id)
+            user: ['UserAdminService', '$stateParams', function(UserAdminService, $stateParams) {
+              return UserAdminService.get($stateParams.id);
             }]
           }
         })
@@ -44,11 +44,11 @@ angular.module('agenda.states-users', ['agenda.grandfather'])
           controller: "NewUserCtrl",
           templateUrl: "/templates/admin/users/form.html",
           resolve: {
-            users: ['UserService', function(UserService) {
-              return UserService.all();
+            users: ['UserAdminService', function(UserAdminService) {
+              return UserAdminService.all();
             }],
-            newAccount: ['UserService', '$stateParams', function(UserService, $stateParams) {
-              return UserService.get($stateParams.id);
+            newUser: ['UserAdminService', '$stateParams', function(UserAdminService, $stateParams) {
+              return UserAdminService.get($stateParams.id);
             }]
           },
           data: {

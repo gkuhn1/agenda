@@ -20,7 +20,7 @@
 
     = csrf_meta_tags
 
-  %body.skin-purple{"ng-class"=>"{ 'login-page' : login }"}
+  %body.skin-purple{"ng-class"=>"{ 'login-page' : login, 'sidebar-collapse' : !sidebarOpen }", "ng-init"=>"sidebarOpen = sidebarOpen || true"}
 
     %div{"ui-view"=>true}
 

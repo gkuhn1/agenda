@@ -2,25 +2,30 @@ angular.module('agenda.userservice', ['httpq'])
 .factory('UserService', ['$httpq', '$http',
   function ($httpq, $http) {
 
-    var base_url = '/api/v1/users';
+    var pub = {
+      base_url: '/api/v1/users'
+    };
 
-    var pub = {};
+    pub.set_url = function(url) {
+      pub.base_url = url;
+    }
 
     // load
     pub.all = function() {
-      return $httpq.get(base_url+'.json')
+      console.log(pub.base_url+'.json')
+      return $httpq.get(pub.base_url+'.json')
     }
 
     pub.current = function() {
-      return $httpq.get(base_url+'/current.json');
+      return $httpq.get(pub.base_url+'/current.json');
     }
 
     pub.get = function(id) {
-      return $httpq.get(base_url+'/'+id+'.json');
+      return $httpq.get(pub.base_url+'/'+id+'.json');
     }
 
     pub.new = function() {
-      return $httpq.get(base_url+'/new.json')
+      return $httpq.get(pub.base_url+'/new.json')
     }
 
     pub.save = function(user, edit) {
@@ -32,18 +37,31 @@ angular.module('agenda.userservice', ['httpq'])
     }
 
     pub.create = function(user) {
-      return $http.post(base_url+'/users.json', {user: user});
+      return $http.post(pub.base_url+'/users.json', {user: user});
     }
 
     pub.update = function(user) {
-     return $http.put(base_url+'/'+user.id+'.json', {user: user});
+     return $http.put(pub.base_url+'/'+user.id+'.json', {user: user});
     }
 
     pub.destroy = function(id) {
-      return $http.delete(base_url+'/'+id+'.json');
+      return $http.delete(pub.base_url+'/'+id+'.json');
     }
 
 
     return pub;
   }
-]);
+])
+
+.factory('UserAdminService', ['UserService',
+  function(UserService){
+
+    var extended = {};
+    angular.copy(UserService, extended)
+    extended.set_url('/admin/users');
+    return extended;
+
+  }
+])
+
+;

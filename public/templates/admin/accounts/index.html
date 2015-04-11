@@ -1,40 +1,34 @@
-<div class="col-xs-12">
-  <div class="box">
-    <div class="box-header">
-      <h3 class="box-title">Lista de contas</h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-      <table class="table table-bordered table-hover">
-        <thead>
-          <tr role="row">
-            <th>Name</th>
-            <th>Description</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Phone2</th>
-            <th>Website</th>
-            <th>Plan</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat='account in accounts'>
-            <td>{{ account.name }}</td>
-            <td>{{ account.description }}</td>
-            <td>{{ account.address }}</td>
-            <td>{{ account.phone }}</td>
-            <td>{{ account.phone2 }}</td>
-            <td>{{ account.website }}</td>
-            <td>{{ account.plan }}</td>
-            <td>
-              <a href="#/accounts/{{ account.id }}" class="btn btn-info"><i class="fa fa-asterisk"></i> Exibir</a>
-              <a href="#/accounts/{{ account.id }}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i> Editar</a>
-              <a class="btn btn-danger" ng-really-message="Confirmar exclusão deste item?" ng-really-click="destroyAccount()"><i class="fa fa-trash-o"></i> Excluir</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<div ui-view>
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Lista de contas</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered table-hover table-ellipsis">
+          <thead>
+            <tr role="row">
+              <th>Name</th>
+              <th>Description</th>
+              <th>Website</th>
+              <th style="min-width: 60px;">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat='account in accounts'>
+              <td title="{{ account.name }}" style="max-width: 200px;">{{ account.name }}</td>
+              <td title="{{ account.description }}" style="max-width: 350px;">{{ account.description }}</td>
+              <td title="{{ account.website }}" style="max-width: 200px;">{{ account.website }}</td>
+              <td>
+                <a href ui-sref="app.header.admin-sidebar.home.accounts.show(account)"><i class="fa fa-asterisk"></i></a>
+                <a href ui-sref="app.header.admin-sidebar.home.accounts.edit(account)"><i class="fa fa-pencil"></i></a>
+                <a href ng-really-message="Confirmar exclusão deste item?" ng-really-click="destroyAccount()"><i class="fa fa-trash-o"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

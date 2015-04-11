@@ -7,7 +7,7 @@ angular.module('agenda.accounts', ['agenda.grandfather'])
 
     $scope.destroyAccount = function() {
       AccountService.destroy(this.account.id)
-      $scope.accounts.splice($scope.accounts.indexOf(this.account), 1);
+      $scope.accounts.splice($scope.accounts.indexOfById(this.account), 1);
     }
 
   }
@@ -16,29 +16,43 @@ angular.module('agenda.accounts', ['agenda.grandfather'])
 .controller("NewAccountCtrl", ['$scope', '$state', '$rootScope', 'AccountService', 'newAccount', 'users',
   function($scope, $state, $rootScope, AccountService, newAccount, users) {
 
+    console.log("NewAccountCtrl")
+
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
 
     $rootScope.page.subtitle += " > Nova Conta";
 
+    $scope.laddaLoading = false;
     $scope.form_title = "Adicionar Conta";
     $scope.account = newAccount;
     $scope.users = users;
     $scope.errors = {};
 
+    console.log();
+
     $scope.saveAccount = function(account) {
+      $scope.laddaLoading = true;
       $scope.errors = {};
       AccountService.save(account, $state.current.data.edit)
         .success(function(data) {
-          $state.go('accounts');
+          updateAccount(data);
+          $state.go('^');
         })
         .error(function(data) {
-          console.log('error');
           angular.forEach(data, function(errors, field) {
             $scope.form[field].$setValidity('server', false);
             $scope.errors[field] = errors.join(', ');
           })
         })
+        .finally(function() {
+          $scope.laddaLoading = false;
+        })
         ;
+    }
+
+    var updateAccount = function(data) {
+      var idx = $scope.$parent.accounts.indexOfById(data);
+      $scope.$parent.accounts[idx] = data;
     }
   }
 ])

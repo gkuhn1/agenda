@@ -14,9 +14,14 @@
     </div>
 
   <div class="box-footer">
-    <a href="#/users/{{ user.id }}/edit" class="btn btn-warning"><i class="fa fa-pencil"></i> Editar</a>
-    |
-    <a class="btn btn-default" href="#/users">Voltar</a>
+    <div class="row">
+      <div class="col-md-2">
+        <a class="btn btn-default" href ui-sref="app.header.admin-sidebar.home.users"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+      </div>
+      <div class="col-md-10" style="text-align: right;">
+        <a class="btn btn-warning" href ui-sref="app.header.admin-sidebar.home.users.edit(user)"><i class="fa fa-pencil"></i> Editar</a>
+      </div>
+    </div>
   </div>
 
 </div>

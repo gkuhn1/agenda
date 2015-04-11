@@ -13,8 +13,8 @@ angular.module('agenda.users', ['agenda.grandfather'])
   }
 ])
 
-.controller("NewUserCtrl", ['$scope', '$state', '$rootScope', 'UserService', 'newUser',
-  function($scope, $state, $rootScope, UserService, newUser) {
+.controller("NewUserCtrl", ['$scope', '$state', '$rootScope', 'Auth', 'UserService', 'newUser',
+  function($scope, $state, $rootScope, Auth, UserService, newUser) {
 
     $rootScope.page = {title: "Administração", subtitle: "Usuários"};
 
@@ -29,7 +29,8 @@ angular.module('agenda.users', ['agenda.grandfather'])
       $scope.errors = {};
       UserService.save(user, $state.current.data.edit)
         .success(function(data) {
-          $state.go('users');
+          updateUser(data);
+          $state.go('^');
         })
         .error(function(data) {
           angular.forEach(data, function(errors, field) {
@@ -38,6 +39,15 @@ angular.module('agenda.users', ['agenda.grandfather'])
           })
         })
         ;
+    }
+
+    var updateUser = function(data) {
+      var idx = $scope.$parent.users.indexOfById(data);
+      $scope.$parent.users[idx] = data;
+      console.log(data.id, Auth.current_user().id);
+      if (data.id == Auth.current_user().id) {
+        Auth.select_current_user(data);
+      }
     }
 
   }

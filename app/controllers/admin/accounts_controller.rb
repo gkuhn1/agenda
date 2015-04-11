@@ -1,8 +1,5 @@
-class Admin::AccountsController < Admin::HomepagesController
+class Admin::AccountsController < Admin::AdminController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
-
-  add_breadcrumb "Contas", :admin_accounts_path
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

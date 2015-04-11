@@ -19,9 +19,9 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::UnknownFormat, with: :not_acceptable
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
 
-  attr_accessor :current_account
+  attr_accessor :current_account, :current_user
 
-  helper_method :title, :subtitle, :current_account, :context_admin?, :breadrumb_to_menus
+  helper_method :title, :subtitle, :current_account, :current_user, :context_admin?, :breadrumb_to_menus
 
   protect_from_forgery
 
@@ -66,6 +66,7 @@ class ApplicationController < ActionController::Base
 
     # before filter
     def authenticate
+      # authenticate_or_request_with_http_basic do |user_token, account_id, options|
       authenticate_with_http_basic do |user_token, account_id, options|
         @current_user = User.find_by(token: user_token) if user_token
         @current_account = current_user.accounts.where(id: account_id).first if current_user and account_id

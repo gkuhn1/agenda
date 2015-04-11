@@ -36,6 +36,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    apipie-rails (0.3.4)
+      json
     arel (6.0.0)
     autoprefixer-rails (5.1.8)
       execjs
@@ -265,6 +267,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  apipie-rails (~> 0.3.4)
   bootstrap-sass (~> 3.3.3)
   breadcrumbs_on_rails (= 2.3.0)
   country_select (~> 2.1.1)

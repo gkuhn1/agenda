@@ -10,8 +10,8 @@ angular.module('agenda.home', ['agenda.grandfather'])
   }
 ])
 
-.controller("HeaderCtrl", ['$rootScope', '$scope', 'Auth',
-  function($rootScope, $scope, Auth) {
+.controller("HeaderCtrl", ['$rootScope', '$scope', '$timeout', 'Auth',
+  function($rootScope, $scope, $timeout, Auth) {
 
     console.log('HeaderCtrl');
 
@@ -19,14 +19,23 @@ angular.module('agenda.home', ['agenda.grandfather'])
     $scope.page.title = "Home";
 
     $scope.accounts = Auth.current_user().accounts;
-    $scope.current_account = Auth.current_account();
-    $scope.current_user = Auth.current_user();
+    // $scope.current_account = Auth.current_account();
+    // $scope.current_user = Auth.current_user();
 
-    console.log($scope.current_account);
+    // console.log($scope.current_account);
+
+    // função para ajustar a contentwrapper para a altura correta da tela do usuário
+    $timeout(function() {
+      contentWrapperHeight();
+    })
 
     $scope.changeCurrentAccount = function(account) {
       console.log("change_account()");
       Auth.select_current_account(account);
+    }
+
+    $scope.toggleSidebar = function() {
+      $rootScope.sidebarOpen = !$rootScope.sidebarOpen;
     }
 
   }

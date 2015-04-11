@@ -8,7 +8,7 @@
 @import "datepicker/datepicker3";
 @import "daterangepicker/daterangepicker-bs3";
 @import "bootstrap-wysihtml5/bootstrap3-wysihtml5.min";
-
+@import "ladda/dist/ladda-themeless.min";
 
 @import "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
 @import "//code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css";
@@ -16,6 +16,7 @@
 
 
 html, body { height: 100%; }
+
 .loader {
   background: #CCC;
   height: 100%;
@@ -53,3 +54,11 @@ html, body { height: 100%; }
 .bar:nth-child(8) { animation-delay: .8s; }
 .bar:nth-child(9) { animation-delay: .9s; }
 .bar:nth-child(10) { animation-delay: 1s; }
+
+
+table.table-ellipsis > tbody > tr > td {
+  max-width: 40%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

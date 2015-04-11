@@ -3,6 +3,7 @@ angular.module('agenda', [
   'agenda.authservice',
   'agenda.userservice',
   'agenda.accountservice',
+  'agenda.adminservice',
 
   // Controllers
   'agenda.accounts',
@@ -26,7 +27,9 @@ angular.module('agenda', [
   'agenda.checklist',
   'agenda.ng-really-click',
   'agenda.server-error',
-  'doowb.angular-pusher'
+  'doowb.angular-pusher',
+  'ui.utils.masks',
+  'angular-ladda'
 ])
 
 // CONFIGS
@@ -78,8 +81,8 @@ angular.module('agenda', [
 }])
 
 
-.run(['$rootScope', '$state', '$stateParams', 'Auth',
-    function ($rootScope,   $state,   $stateParams,  Auth) {
+.run(['$rootScope', '$state', '$stateParams', '$timeout', 'Auth',
+    function ($rootScope,   $state,   $stateParams, $timeout,  Auth) {
 
       // It's very handy to add references to $state and $stateParams to the $rootScope
       // so that you can access them from any scope within your applications.For example,
@@ -113,6 +116,10 @@ angular.module('agenda', [
       $rootScope.$on('$stateChangeSuccess', function(e, curr, prev) {
         // Hide loading message
         $rootScope.$broadcast("loading_stop");
+        contentWrapperHeight();
+
+        $rootScope.current_account = Auth.current_account();
+        $rootScope.current_user = Auth.current_user();
       });
 
       $rootScope.$on('loading_start', function() {
@@ -120,7 +127,9 @@ angular.module('agenda', [
       });
 
       $rootScope.$on('loading_stop', function() {
-        $rootScope.loadingView = false;
+        $timeout(function() {
+          $rootScope.loadingView = false;
+        });
       });
 
       $rootScope.$on('currentAccountSelected', function(event, account) {
@@ -130,7 +139,18 @@ angular.module('agenda', [
 
       $rootScope.$on('currentUserSelected', function(event, user) {
         console.log('current_user selected', user);
+        $rootScope.current_user = Auth.current_user();
       })
 
     }
 ])
+
+Array.prototype.findById = function(elem) {
+  if (elem.id !== undefined) elem = elem.id;
+  return $.grep(this, function(element, index){ return element.id == elem; })[0];
+}
+
+Array.prototype.indexOfById = function(elem) {
+  if (elem.id !== undefined) elem = elem.id;
+  return this.map(function(el) { return el.id }).indexOf(elem);
+}

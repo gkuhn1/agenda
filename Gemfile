@@ -52,6 +52,8 @@ gem 'ransack', '~> 1.6.4'
 
 gem 'thin', '~> 1.6.3'
 
+gem 'apipie-rails', '~> 0.3.4'
+
 group :development, :test do
 
   gem 'rspec'

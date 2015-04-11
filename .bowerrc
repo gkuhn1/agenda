@@ -1,0 +1,5 @@
+{
+  "directory": "vendor/assets/javascripts",
+  "analytics": false,
+  "timeout": 120000
+}
