@@ -1,22 +1,22 @@
 Apipie.configure do |config|
-  config.app_name                = "Tcc"
-  config.api_base_url            = "/api"
+  config.app_name                = "API Agenda"
+  config.api_base_url            = "/api/v1"
   config.doc_base_url            = "/apipie"
   # where is your API defined?
-  config.api_controllers_matcher = "#{Rails.root}/app/controllers/**/*.rb"
+  config.api_controllers_matcher = "#{Rails.root}/app/controllers/api/**/*.rb"
 end
 
 
-class Apipie::Application
+# class Apipie::Application
 
-  alias_method :orig_load_controller_from_file, :load_controller_from_file
+#   alias_method :orig_load_controller_from_file, :load_controller_from_file
 
-  def load_controller_from_file(controller_file)
-    begin
-      orig_load_controller_from_file(controller_file)
-    rescue LoadError => e
-      controller_file.gsub(/\A.*\/app\/controllers\//,"").gsub(/\.\w*\Z/,"").gsub("concerns/","").camelize.constantize
-    end
-  end
+#   def load_controller_from_file(controller_file)
+#     begin
+#       orig_load_controller_from_file(controller_file)
+#     rescue LoadError => e
+#       controller_file.gsub(/\A.*\/app\/controllers\//,"").gsub(/\.\w*\Z/,"").gsub("concerns/","").camelize.constantize
+#     end
+#   end
 
-end
+# end
