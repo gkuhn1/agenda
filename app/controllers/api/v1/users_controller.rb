@@ -193,7 +193,6 @@ HTTP Status: 422
   param :email, String, "Email do usuário cadastrado", :required => true
   param :password, String, "Senha do usuário para login", :required => true
   def login
-    binding.pry
     @user = User.where(email: params[:email]).first
     return render :show if @user and @user.valid_password?(params[:password])
     render :json => {:error => "Dados inválidos"}, :status => 422
