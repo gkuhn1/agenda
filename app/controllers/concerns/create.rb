@@ -2,6 +2,8 @@ module Create
 
   def self.included(base)
     base.send :include, BaseConcernController
+    base.send :include, ActiveSupport::Callbacks
+    base.send :define_callbacks, :create_render
   end
 
   def create
@@ -11,12 +13,15 @@ module Create
 
     respond_to do |format|
       if instance_variable_get(get_variable).save
-        format.html { redirect_to "/" + self.controller_path, notice: "Registro criado com sucesso" }
-        format.json { render :show, status: :created }
+        run_callbacks :create_render do
+          format.html { redirect_to "/" + self.controller_path, notice: "Registro criado com sucesso" }
+          format.json { render :show, status: :created }
+        end
       else
         format.html { render :new }
         format.json { render json: {errors: instance_variable_get(get_variable).errors}, status: :unprocessable_entity }
       end
     end
   end
+
 end

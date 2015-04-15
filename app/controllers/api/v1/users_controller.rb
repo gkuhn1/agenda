@@ -2,6 +2,12 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   skip_before_filter :authenticate, :account_required, :user_required, only: :login
 
+  resource_description do
+    short  'Recursos para manipulação de usuários da conta autenticada'
+    name 'Usuários'
+    formats ['json']
+  end
+
   # Index
   api :GET, '/users', 'Lista usuários da conta logada'
   description <<-EOS
@@ -96,8 +102,62 @@ class Api::V1::UsersController < Api::V1::ApiController
     super
   end
 
+  api :POST, '/users', 'Cria um novo usuário associado a conta autenticada'
+  description <<-EOS
+===Requisição
+  Cria um novo usuário com as informações passadas, retornando código HTTP 200 OK em caso de sucesso ou 422 em caso de erro de validação dos dados, com a descrição dos errors
+
+==== Exemplo de requisição para atualização de dados de usuário
+  {
+    "name": "Zeca Pereira Atualizado",
+    "email": "zeca@novoemail.com",
+  }
+
+====Retorno com Sucesso:
+Dados do usuário criado
+  {
+    "id": "552997ca676b750e74000000",
+    "name": "Zeca Pereira Atualizado",
+    "email": "zeca@novoemail.com",
+    "admin": false,
+    "token": "LAe9NGUCEQHizLxd3CDK",
+    "accounts": [{
+        "id": "552997ca676b750e74010000",
+        "name": "Salão do Zeca",
+        "description": null,
+        "address": null,
+        "phone": null,
+        "phone2": null,
+        "website": null,
+        "plan": null,
+        "created_at": "2015-04-11T18:53:14.347-03:00",
+        "updated_at": "2015-04-11T18:53:14.347-03:00",
+        "user_ids": ["552997ca676b750e74000000"]
+    }],
+    "gravatar_url": "https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG"
+  }
+
+====Retorno com erro por dados incorretos:
+HTTP Status: 422
+  {
+    "errors": {
+        "email": ["já está em uso"]
+    }
+  }
+  EOS
+  param :name, String, "Nome completo do usuário", :required => true
+  param :email, String, "Endereço de e-mail válido", :required => true
+  param :password, String, "Senha que o usuário irá utilizar para logar no aplicativo", :required => false
+  param :password_confirmation, String, "Confirmação de senha", :required => false
+  param :generate_password, Boolean, "Gerar um password aleatório para o usuário e enviar para o e-mail cadastrado.", :required => false, :default => false
   def create
     super
+  end
+
+  set_callback :create_render, :before, :add_new_user_to_current_account
+  def add_new_user_to_current_account
+    current_account.add_user(@user)
+    @user.reload
   end
 
   # New
@@ -136,6 +196,51 @@ class Api::V1::UsersController < Api::V1::ApiController
     super
   end
 
+  api :PUT, '/users/:user_id', 'Atualiza as informações de um usuário'
+  description <<-EOS
+===Requisição
+  Atualiza as informações do usuário, retornando código HTTP 200 OK em caso de sucesso ou 422 em caso de erro de validação dos dados, com a descrição dos errors
+
+==== Exemplo de requisição para atualização de dados de usuário
+  {
+    "name": "Zeca Pereira Atualizado",
+    "email": "zeca@novoemail.com",
+  }
+
+====Retorno com Sucesso:
+  {
+    "id": "552997ca676b750e74000000",
+    "name": "Zeca Pereira Atualizado",
+    "email": "zeca@novoemail.com",
+    "admin": false,
+    "token": "LAe9NGUCEQHizLxd3CDK",
+    "accounts": [{
+        "id": "552997ca676b750e74010000",
+        "name": "Salão do Zeca",
+        "description": null,
+        "address": null,
+        "phone": null,
+        "phone2": null,
+        "website": null,
+        "plan": null,
+        "created_at": "2015-04-11T18:53:14.347-03:00",
+        "updated_at": "2015-04-11T18:53:14.347-03:00",
+        "user_ids": ["552997ca676b750e74000000"]
+    }],
+    "gravatar_url": "https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG"
+  }
+
+====Retorno com erro por dados incorretos:
+HTTP Status: 422
+  {
+    "errors": {
+        "email": ["não é válido"]
+    }
+  }
+  EOS
+  param :name, String, "Nome completo do usuário", :required => false
+  param :email, String, "Endereço de e-mail válido", :required => false
+  param :token, String, "Token de autenticação", :required => false
   def update
     super
   end
@@ -166,11 +271,11 @@ Para acesso a este endpoint não é necessária autenticação
 ====Retorno com Sucesso: Dados do usuário logado
 HTTP Status: 200
   {
-    "id": "552997ca676b750e74000000",
-    "name": "Zeca Pereira",
-    "email": "zeca@agenda.com",
+    "id": "552dbb03676b7517c9020000",
+    "name": "Zeca Pereira Atualizado",
+    "email": "novo2@gmail.com",
     "admin": false,
-    "token": "LAe9NGUCEQHizLxd3CDK",
+    "token": "wLpJt7oDiqpNkShRBzP2",
     "accounts": [{
         "id": "552997ca676b750e74010000",
         "name": "Salão do Zeca",
@@ -182,9 +287,9 @@ HTTP Status: 200
         "plan": null,
         "created_at": "2015-04-11T18:53:14.347-03:00",
         "updated_at": "2015-04-11T18:53:14.347-03:00",
-        "user_ids": ["552997ca676b750e74000000"]
+        "user_ids": ["552997ca676b750e74000000","552dbb03676b7517c9020000"]
     }],
-    "gravatar_url": "https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG"
+    "gravatar_url": "https://secure.gravatar.com/avatar/9743a57ddb072edd7d17abe86c3d8e73.png?r=PG"
   }
 ==== Retorno de erro:
 HTTP Status: 422
@@ -198,7 +303,7 @@ HTTP Status: 422
     render :json => {:error => "Dados inválidos"}, :status => 422
   end
 
-  # login
+  # current
   api :POST, '/users/current', 'Busca as informações do usuário autenticado por basic auth'
   description <<-EOS
 ===Requisição
@@ -239,7 +344,7 @@ HTTP Status: 401
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:id, :name, :email, :admin,
+      params.require(:user).permit(:id, :name, :email,
         :password, :password_confirmation, :generate_password)
     end
 

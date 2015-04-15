@@ -4,12 +4,31 @@ pt_BR:
     User: "Usuário"
 
   mongoid:
+    models:
+      user:
+        one: Usuário
+        other: Usuários
+      account:
+        one: Conta
+        other: Contas
     attributes:
       user:
         email: "E-mail"
         name: "Nome"
         password: "Senha"
         password_confirmation: "Confirmação de Senha"
+
+
+  apipie:
+    resources: "Recursos"
+    resource: Recurso
+    description: "Descrição"
+    supported_formats: Formatos aceitos
+    params: Parâmetros
+    param_name: "Nome"
+    required: Obrigatório
+    optional: Opcional
+    api_documentation: Documentação da API - Agenda
 
   action:
     new: "Adicionar"

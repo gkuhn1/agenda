@@ -2,6 +2,12 @@ class Api::V1::AccountsController < Api::V1::ApiController
 
   skip_before_filter :authenticate, :account_required, :user_required, only: :create
 
+  resource_description do
+    short  'Recursos para manipulação de contas do usuário autenticada'
+    name 'Contas'
+    formats ['json']
+  end
+
   # Index
   api :GET, '/accounts', 'Lista accounts do usuário logado'
   description <<-EOS

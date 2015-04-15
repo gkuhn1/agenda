@@ -3,18 +3,21 @@ class Api::V1::ApiController < ApplicationController
 
   resource_description do
     short  'Autenticação da conta do usuário'
-    desc <<-EOS
-      * Valida as credenciais de uma conta do usuário
-      * Não recebe parâmetros
-      * Autenticação utilizando token da conta do usuário
-      EOS
+    name "Autenticação"
     formats ['json']
   end
 
   api :GET, '/', 'Endpoint de testes de autenticação'
   desc <<-EOS
+  * Valida as credenciais de uma conta do usuário
+  * Não recebe parâmetros
 ====Requisição
-  'curl -u "[user_token]:[account.id]" -X GET -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/api/v1 --basic'
+
+Exemplo de chamada API autenticada (onde 7ezUPAqq8T1ny0w1bSXr é o authentication_token do usuário e 55060f26676b750ec5000000 é o identificador da conta a ser autenticada):
+
+Exemplo de Requisição utilizando o comando curl
+
+  'curl -u "7ezUPAqq8T1ny0w1bSXr:55060f26676b750ec5000000" -X GET -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/api/v1 --basic'
 ====Retorno com Sucesso:
 =====Cabeçalho
     HTTP/1.1 200 OK
