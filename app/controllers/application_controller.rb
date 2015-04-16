@@ -5,9 +5,6 @@ class AdminRequiredException < RuntimeError; end
 
 class ApplicationController < ActionController::Base
   include Index, Show, New, Edit, Update, Create, Destroy
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  after_filter :set_csrf_cookie_for_ng
   # before_action :authenticate_user! #method for devise
   before_filter :authenticate
   before_filter :user_required, :account_required
@@ -24,10 +21,18 @@ class ApplicationController < ActionController::Base
 
   # protect_from_forgery
   # protect_from_forgery with: :exception
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  # after_filter :set_csrf_cookie_for_ng
 
-  def set_csrf_cookie_for_ng
-    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
-  end
+  # def set_csrf_cookie_for_ng
+  #   cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+  # end
+
+  # In Rails 4.2 and above
+  # def verified_request?
+  #   super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
+  # end
 
   # Exceptions
   def account_required
@@ -55,11 +60,6 @@ class ApplicationController < ActionController::Base
 
     def permission_denied
       render :json => {:error => 'Unauthorized'}, :status => 401
-    end
-
-    # In Rails 4.2 and above
-    def verified_request?
-      super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
     end
 
   private

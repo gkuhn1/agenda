@@ -16,7 +16,7 @@ end
 
 def api_authenticate(user=nil, account=nil)
   set_content_type()
-  @request.headers['AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user.try(:token) || "", account.try(:id) || "")
+  @request.headers['AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user.try(:token) || "", account.try(:id) || "") if user and account
 end
 
 def set_accept(accept = 'application/json')

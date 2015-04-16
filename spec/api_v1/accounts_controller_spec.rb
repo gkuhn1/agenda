@@ -67,6 +67,28 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
       post :create, auth_params_no_user.merge(account_params)
       expect(response.code).to eq("201")
     end
+
+    context "with user_attributes presents" do
+
+      it "should create an user if user_attributes is present" do
+        api_authenticate
+        account_params = {account: FactoryGirl.attributes_for(:account).merge(user_attributes: FactoryGirl.attributes_for(:user))}
+        expect{ post :create, account_params }.to change(User, :count).by(1) and change(Account, :count).by(1)
+      end
+
+      it "should return errors if user_attributes has errors" do
+        api_authenticate
+        account_params = {account: FactoryGirl.attributes_for(:account) }
+        account_params[:account][:user_attributes] = {name: ""}
+        post :create, account_params
+        expect(assigns(:account).errors.to_h).to eq({
+          :user_email=>"não pode ficar em branco",
+          :user_password=>"não pode ficar em branco",
+          :user_name=>"não pode ficar em branco"})
+      end
+
+    end
+
   end
 
   context "#edit" do
