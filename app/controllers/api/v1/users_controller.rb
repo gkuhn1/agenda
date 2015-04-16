@@ -107,7 +107,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 ===Requisição
   Cria um novo usuário com as informações passadas, retornando código HTTP 200 OK em caso de sucesso ou 422 em caso de erro de validação dos dados, com a descrição dos errors
 
-==== Exemplo de requisição para atualização de dados de usuário
+==== Exemplo de requisição para criação de dados de usuário
   {
     "name": "Zeca Pereira Atualizado",
     "email": "zeca@novoemail.com",
