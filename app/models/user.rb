@@ -47,10 +47,22 @@ class User
   attr_accessor :generate_password
 
   has_and_belongs_to_many :accounts
+  has_one :calendar
 
   before_validation :generate_password!
   before_validation :generate_token!
   validates_presence_of :name, :token
+
+  # after_create :create_calendar
+
+  # alias_method :super_calendar, :calendar
+  # def calendar
+  #   super_calendar || create_calendar!
+  # end
+
+  def create_calendar!
+    Calendar.create(user: self) if @calendar.nil?
+  end
 
   def generate_token!
     self.token = Devise.friendly_token if self.token.blank?

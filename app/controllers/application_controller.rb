@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
   # Exceptions
   def account_required
     raise NoAccountSelectedException if current_account.nil?
+    Thread.current[:account] = current_account
   end
 
   def user_required

@@ -15,6 +15,7 @@ def login_user(user=nil, account=nil)
 end
 
 def api_authenticate(user=nil, account=nil)
+  Thread.current[:account] = account if account
   set_content_type()
   @request.headers['AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user.try(:token) || "", account.try(:id) || "") if user and account
 end

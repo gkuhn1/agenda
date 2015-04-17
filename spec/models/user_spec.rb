@@ -91,4 +91,15 @@ RSpec.describe User, type: :model do
       expect(user.token).not_to eq(nil)
     end
   end
+
+  context "create_calendar" do
+    let(:user) {FactoryGirl.build(:user, :admin => true)}
+    xit "should create calendar right after create user" do
+      expect { user.save }.to change(Calendar, :count).by(1)
+    end
+    xit "should not create a new calendar if user already has one" do
+      user.save!
+      expect { user.save }.to change(Calendar, :count).by(0)
+    end
+  end
 end

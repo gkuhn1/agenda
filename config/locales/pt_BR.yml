@@ -3,7 +3,17 @@ pt_BR:
     Account: "Conta"
     User: "Usuário"
 
+  errors: &errors
+    format:  '%{attribute} %{message}'
+    messages:
+      validations:
+        message: There was validation errors on %{document}
+        summary: "Errors:\n    %{errors}"
+        resolution: Check the instances for this model looking for missing fields or wrong values.
+
   mongoid:
+    errors:
+      <<: *errors
     models:
       user:
         one: Usuário

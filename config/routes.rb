@@ -24,6 +24,7 @@ Rails.application.routes.draw do
           post :login
         end
       end
+      resources :calendars
     end
   end
 
