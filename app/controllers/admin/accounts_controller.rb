@@ -9,7 +9,7 @@ class Admin::AccountsController < Admin::AdminController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.require(:account).permit(:name, :description, :address, :phone, :phone2, :website, :plan, user_ids: [])
+      params.require(:account).permit(:id, :name, :description, :address, :phone, :phone2, :website, :plan, user_ids: [])
     end
 
 end

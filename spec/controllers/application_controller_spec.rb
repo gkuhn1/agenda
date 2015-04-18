@@ -36,4 +36,24 @@ RSpec.describe ApplicationController, type: :controller do
     end
   end
 
+  context "#unprocessable_entity" do
+    controller(ApplicationController) do
+      skip_before_filter :authenticate, :account_required, :user_required, only: :create
+      def create
+        params.require(:task).permit(:id, :title, :description, :where, :start_at, :end_at)
+      end
+    end
+
+    it "should return 422 if task is empty" do
+      post :create, {:task => {}}
+      expect(response.code).to eq('422')
+      expect(response.body).to eq({:error => 'Unprocessable Entity'}.to_json)
+    end
+    it "should return 422 if task is not informed" do
+      post :create, {}
+      expect(response.code).to eq('422')
+      expect(response.body).to eq({:error => 'Unprocessable Entity'}.to_json)
+    end
+  end
+
 end

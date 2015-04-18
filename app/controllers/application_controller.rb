@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   rescue_from NoUserSelectedException, with: :permission_denied
   rescue_from AdminRequiredException, with: :permission_denied
   rescue_from ActionController::UnknownFormat, with: :not_acceptable
+  rescue_from ActionController::ParameterMissing, with: :unprocessable_entity
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
 
   attr_accessor :current_account, :current_user
@@ -50,6 +51,10 @@ class ApplicationController < ActionController::Base
   protected
 
     # rescues
+    def unprocessable_entity
+      render :json => {:error => 'Unprocessable Entity'}, :status => 422
+    end
+
     def not_acceptable
       render :json => {:error => 'Not Acceptable'}, :status => 406
     end

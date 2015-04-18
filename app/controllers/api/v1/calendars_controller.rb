@@ -127,7 +127,7 @@ HTTP Status: 404
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def calendar_params
-      params.require(:calendar).permit(:system_notify, :email_notify)
+      params.require(:calendar).permit(:id, :system_notify, :email_notify)
     end
 
 end

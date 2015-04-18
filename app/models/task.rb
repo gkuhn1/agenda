@@ -14,11 +14,17 @@ class Task
     1 => "Criado"
   }
 
-  validates_presence_of :title, :status, :start_at, :end_at, :calendar
-  validates :status, :inclusion => {:in => STATUS.keys, :message => 'situação desconhecida.' }, if: 'errors[:status].blank?'
+  validates_presence_of :title, :start_at, :end_at, :calendar
+  validates :status, :inclusion => {:in => STATUS.keys, :message => 'situação desconhecida.' }
+
+  before_validation :set_status
 
   def status!
     STATUS[self.status]
+  end
+
+  def set_status
+    self.status = 1 if self.status.nil?
   end
 
 end

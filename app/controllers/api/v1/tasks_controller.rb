@@ -40,17 +40,14 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
 ===Requisição
 ====Retorno com Sucesso:
   {
-    "id": "552fd6a3676b7520e2000000",
-    "name": null,
+    "id": "5532e21d676b7518ca010000",
+    "title": null,
     "description": null,
-    "address": null,
-    "phone": null,
-    "phone2": null,
-    "website": null,
-    "plan": null,
-    "created_at": null,
-    "updated_at": null,
-    "user_ids": []
+    "where": null,
+    "status": null,
+    "status_description": null,
+    "start_at": null,
+    "end_at": null
   }
 ====Retorno com Erro:
   HTTP Status: 401
@@ -68,14 +65,29 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
 
 
 ===== Exemplo de requisição para criação de dados de agenda com usuário já cadastrado
-  TODO
-
-===== Exemplo de requisição para criação de dados de agenda com parâmetros para cadastrar um novo usuário
-  TODO
+  {
+    "task": {
+      "id": "5532e21d676b7518ca010000",
+      "title": "Corte de cabelo Masculino",
+      "description": null,
+      "where": "Salão",
+      "start_at": "2015-04-18T10:00:00",
+      "end_at": "2015-04-18T10:15:00"
+    }
+  }
 
 ====Retorno com Sucesso:
 Dados da agenda criada
-  TODO
+  {
+    "id": "5532e323676b7518ca020000",
+    "title": "Corte de cabelo Masculino",
+    "description": null,
+    "where": "Salão",
+    "status": 1,
+    "status_description": "Criado",
+    "start_at": "2015-04-18T10:00:00.000-03:00",
+    "end_at": "2015-04-18T10:15:00.000-03:00"
+  }
 
 ====Retorno com erro por dados incorretos:
 HTTP Status: 422
@@ -183,7 +195,7 @@ TODO
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      t_params = params.require(:task).permit(:title, :description, :where, :status, :start_at, :end_at)
+      t_params = params.require(:task).permit(:id, :title, :description, :where, :start_at, :end_at)
       t_params[:calendar] = current_calendar
       t_params
     end

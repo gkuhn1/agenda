@@ -8,10 +8,10 @@ RSpec.describe Task, type: :model do
       expect(task.valid?).to be(false)
       expect(task.errors[:title]).to eq(["não pode ficar em branco"])
     end
-    it "sould require an status" do
+    it "should set status to 1 if blank" do
       task = FactoryGirl.build(:task, status: nil)
-      expect(task.valid?).to be(false)
-      expect(task.errors[:status]).to eq(["não pode ficar em branco"])
+      expect(task.valid?).to be(true)
+      expect(task.status).to eq(1)
     end
     it "should requite an start_at" do
       task = FactoryGirl.build(:task, start_at: nil)
