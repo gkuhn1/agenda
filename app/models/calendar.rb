@@ -2,7 +2,7 @@ class Calendar
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  store_in database: ->{ Thread.current[:account].database }
+  store_in database: ->{ Mongoid.current_database }
 
   field :is_public, type: Mongoid::Boolean, default: false
   field :system_notify, type: Mongoid::Boolean, default: true

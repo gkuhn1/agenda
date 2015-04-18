@@ -6,11 +6,12 @@ RSpec.shared_examples "require current_account" do
   let(:method) { method_for_action(action) }
   let(:success_status) { success_status_for_action(action) }
 
-  let(:account) { FactoryGirl.create(:account) }
-  let(:user) { account.users.first }
+  let(:account) { @account || FactoryGirl.create(:account) }
+  let(:user) { @user || account.users.first }
   let(:user2) { FactoryGirl.create(:user) }
   let(:account2) { FactoryGirl.create(:account) }
 
+  mock_database
 
   context "with current_account" do
     it "should return success_status if success" do

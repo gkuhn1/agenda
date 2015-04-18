@@ -1,9 +1,10 @@
 RSpec.shared_examples "api v1 controller" do
 
   let(:action) {:index}
-  let(:account) { FactoryGirl.create(:account) }
-  let(:user) { account.users.first }
+  let(:account) { @account || FactoryGirl.create(:account) }
+  let(:user) { @user || account.users.first }
 
+  mock_database
 
   context "authentication" do
     it "should require autentication" do

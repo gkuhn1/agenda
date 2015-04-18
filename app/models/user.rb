@@ -3,6 +3,8 @@ class User
   include Mongoid::Timestamps
   include Gravtastic
 
+  store_in database: ->{ Mongoid.default_database }
+
   is_gravtastic
 
   # Include default devise modules. Others available are:
@@ -61,7 +63,7 @@ class User
   # end
 
   def create_calendar!
-    Calendar.create(user: self) if @calendar.nil?
+    Calendar.create(user: self) if self.calendar.nil?
   end
 
   def generate_token!

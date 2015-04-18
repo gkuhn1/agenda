@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   # before_action :authenticate_user! #method for devise
   before_filter :authenticate
   before_filter :user_required, :account_required
+  after_filter :reset_database
 
   rescue_from NoAccountSelectedException, with: :permission_denied
   rescue_from NoUserSelectedException, with: :permission_denied
@@ -37,7 +38,7 @@ class ApplicationController < ActionController::Base
   # Exceptions
   def account_required
     raise NoAccountSelectedException if current_account.nil?
-    Thread.current[:account] = current_account
+    switch_database
   end
 
   def user_required
@@ -74,6 +75,14 @@ class ApplicationController < ActionController::Base
       end
     rescue Mongoid::Errors::DocumentNotFound
       raise NoUserSelectedException
+    end
+
+    def switch_database
+      Mongoid.set_current_database(current_account.database)
+    end
+
+    def reset_database
+      Mongoid.destroy_current_database
     end
 
 end

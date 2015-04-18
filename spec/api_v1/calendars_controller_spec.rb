@@ -2,19 +2,19 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::CalendarsController, type: :controller do
 
-  it_behaves_like "api v1 controller"
-
   let(:account) { FactoryGirl.create(:account) }
   let(:user) { account.users.first }
   let(:account2) { FactoryGirl.create(:account, user: user) }
   let(:account3) { FactoryGirl.create(:account) }
-  let(:auth_params) { {} }
-
-  before(:each) {
-    Thread.current[:account] = account
-  }
 
   let(:calendar) { FactoryGirl.create(:calendar, user: user) }
+
+  before(:each) {
+    @account = account
+    @user = user
+  }
+
+  it_behaves_like "api v1 controller"
 
   context "#index" do
     it_behaves_like "require current_account" do
@@ -30,12 +30,12 @@ RSpec.describe Api::V1::CalendarsController, type: :controller do
   context "#show" do
     it_behaves_like "require current_account" do
       let(:action) {:show}
-      let(:extra_params) { {id: account.id} }
+      let(:extra_params) { {id: calendar.id} }
     end
 
     it_behaves_like "require current_user" do
       let(:action) {:show}
-      let(:extra_params) { {id: account.id} }
+      let(:extra_params) { {id: calendar.id} }
     end
   end
 
@@ -66,12 +66,12 @@ RSpec.describe Api::V1::CalendarsController, type: :controller do
   context "#edit" do
     it_behaves_like "require current_account" do
       let(:action) {:edit}
-      let(:extra_params) { {id: account.id} }
+      let(:extra_params) { {id: calendar.id} }
     end
 
     it_behaves_like "require current_user" do
       let(:action) {:edit}
-      let(:extra_params) { {id: account.id} }
+      let(:extra_params) { {id: calendar.id} }
     end
   end
 

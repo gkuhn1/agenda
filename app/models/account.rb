@@ -2,6 +2,8 @@ class Account
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  store_in database: ->{ Mongoid.default_database }
+
   field :name, type: String
   field :description, type: String
   field :database, type: String

@@ -92,14 +92,15 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context "create_calendar" do
-    let(:user) {FactoryGirl.build(:user, :admin => true)}
-    xit "should create calendar right after create user" do
-      expect { user.save }.to change(Calendar, :count).by(1)
+  context "create_calendar!" do
+    let(:user) {FactoryGirl.create(:user, :admin => true)}
+    mock_database
+    it "should create new calendar if does not exists" do
+      expect { user.create_calendar! }.to change(Calendar, :count).by(1)
     end
-    xit "should not create a new calendar if user already has one" do
-      user.save!
-      expect { user.save }.to change(Calendar, :count).by(0)
+    it "should not create a new calendar if user already has one" do
+      user.create_calendar!
+      expect { user.create_calendar! }.to change(Calendar, :count).by(0)
     end
   end
 end

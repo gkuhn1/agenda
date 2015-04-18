@@ -6,18 +6,23 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
 end
 
-
-def login_user(user=nil, account=nil)
-  @request.env["devise.mapping"] = Devise.mappings[:user]
-  @user = user || FactoryGirl.create(:user)
-  sign_in @user
-  session[:account_id] = account.id if account
+def mock_database(database=Mongoid.default_database)
+  before(:each) do
+    allow(Mongoid).to receive(:current_database) { database }
+  end
 end
 
 def api_authenticate(user=nil, account=nil)
-  Thread.current[:account] = account if account
   set_content_type()
   @request.headers['AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user.try(:token) || "", account.try(:id) || "") if user and account
+end
+
+def switch_database(account)
+  Mongoid.set_current_database(account.database)
+end
+
+def clear_database
+  Mongoid.destroy_current_database
 end
 
 def set_accept(accept = 'application/json')
