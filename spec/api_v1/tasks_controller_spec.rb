@@ -9,22 +9,18 @@ RSpec.describe Api::V1::TasksController, type: :controller do
 
   let(:calendar) { FactoryGirl.create(:calendar, user: user) }
   let(:calendar2) { FactoryGirl.create(:calendar, user: user2) }
-  let(:calendar_tasks) do
-    [
-      FactoryGirl.create(:task, calendar: calendar),
-      FactoryGirl.create(:task, calendar: calendar),
-      FactoryGirl.create(:task, calendar: calendar),
-      FactoryGirl.create(:task, calendar: calendar),
-    ]
-  end
-  let(:calendar2_tasks) do
-    [
-      FactoryGirl.create(:task, calendar: calendar2),
-      FactoryGirl.create(:task, calendar: calendar2),
-      FactoryGirl.create(:task, calendar: calendar2),
-      FactoryGirl.create(:task, calendar: calendar2),
-    ]
-  end
+  let(:calendar_tasks) {[
+    FactoryGirl.create(:task, calendar: calendar),
+    FactoryGirl.create(:task, calendar: calendar),
+    FactoryGirl.create(:task, calendar: calendar),
+    FactoryGirl.create(:task, calendar: calendar),
+  ]}
+  let(:calendar2_tasks) {[
+    FactoryGirl.create(:task, calendar: calendar2),
+    FactoryGirl.create(:task, calendar: calendar2),
+    FactoryGirl.create(:task, calendar: calendar2),
+    FactoryGirl.create(:task, calendar: calendar2),
+  ]}
 
   before(:each) {
     api_authenticate(user, account)
