@@ -6,23 +6,23 @@ RSpec.configure do |config|
   config.extend ControllerMacros, :type => :controller
 end
 
-def mock_database(database=Mongoid.default_database)
-  before(:each) do
-    allow(Mongoid).to receive(:current_database) { database }
-  end
-end
+# def mock_database(database=Mongoid.default_database)
+#   before(:each) do
+#     allow(Mongoid).to receive(:current_database) { database }
+#   end
+# end
+
+# def switch_database(account)
+#   Mongoid.set_current_database(account.database)
+# end
+
+# def clear_database
+#   Mongoid.destroy_current_database
+# end
 
 def api_authenticate(user=nil, account=nil)
   set_content_type()
   @request.headers['AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user.try(:token) || "", account.try(:id) || "") if user and account
-end
-
-def switch_database(account)
-  Mongoid.set_current_database(account.database)
-end
-
-def clear_database
-  Mongoid.destroy_current_database
 end
 
 def set_accept(accept = 'application/json')

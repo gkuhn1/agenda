@@ -2,8 +2,6 @@ class Account
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  store_in database: ->{ Mongoid.default_database }
-
   field :name, type: String
   field :description, type: String
   field :database, type: String
@@ -59,7 +57,7 @@ class Account
   end
 
   def calendars
-    Calendar.where(id: self.users.map(&:calendar).map(&:id))
+    Calendar.in(id: self.users.map(&:calendar).compact.map(&:id))
   end
 
 end

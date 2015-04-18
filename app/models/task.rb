@@ -1,8 +1,6 @@
 class Task
   include Mongoid::Document
 
-  store_in database: ->{ Mongoid.current_database }
-
   field :title, type: String
   field :description, type: String
   field :where, type: String

@@ -8,6 +8,7 @@ gem 'rails', '4.2.0'
 # gem 'pg'
 # Use mongoid as database
 gem 'mongoid', '~> 4.0.2'
+# gem 'mongoid', path: '/rails/mongoid'
 
 gem 'sass-rails', '~> 5.0.1'
 gem 'bootstrap-sass', '~> 3.3.3'

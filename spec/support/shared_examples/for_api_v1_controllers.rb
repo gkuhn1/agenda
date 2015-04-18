@@ -6,8 +6,6 @@ RSpec.shared_examples "api v1 controller" do
 
   let(:extra_params) {{}}
 
-  mock_database
-
   context "authentication" do
     it "should require autentication" do
       api_authenticate(nil, nil)

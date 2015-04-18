@@ -9,8 +9,6 @@ RSpec.shared_examples "require current_user" do
   let(:account) { @account || FactoryGirl.create(:account) }
   let(:user) { @user || account.users.first }
 
-  mock_database
-
   context "with current_user" do
     it "should return success_status if success" do
       api_authenticate(user, account)

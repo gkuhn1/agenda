@@ -3,8 +3,6 @@ class User
   include Mongoid::Timestamps
   include Gravtastic
 
-  store_in database: ->{ Mongoid.default_database }
-
   is_gravtastic
 
   # Include default devise modules. Others available are:

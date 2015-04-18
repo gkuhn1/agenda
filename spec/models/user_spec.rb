@@ -94,7 +94,6 @@ RSpec.describe User, type: :model do
 
   context "create_calendar!" do
     let(:user) {FactoryGirl.create(:user, :admin => true)}
-    mock_database
     it "should create new calendar if does not exists" do
       expect { user.create_calendar! }.to change(Calendar, :count).by(1)
     end

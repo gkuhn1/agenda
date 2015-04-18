@@ -4,102 +4,43 @@ RSpec.describe Api::V1::CalendarsController, type: :controller do
 
   let(:account) { FactoryGirl.create(:account) }
   let(:user) { account.users.first }
+  let(:user2) do
+    u = FactoryGirl.create(:user)
+    account.add_user(u)
+    u
+  end
   let(:account2) { FactoryGirl.create(:account, user: user) }
   let(:account3) { FactoryGirl.create(:account) }
+  let(:user3) { FactoryGirl.create(:user) }
+  let(:user4) { account3.users.first }
 
   let(:calendar) { FactoryGirl.create(:calendar, user: user) }
+  let(:calendar1) { FactoryGirl.create(:calendar, user: user2) }
+  let(:calendar2) { FactoryGirl.create(:calendar, user: user3) }
+  let(:calendar3) { FactoryGirl.create(:calendar, user: user4) }
 
   before(:each) {
-    @account = account
-    @user = user
+    api_authenticate(user, account)
+    [calendar, calendar1, calendar2, calendar3]
   }
 
-  it_behaves_like "api v1 controller"
-
   context "#index" do
-    it_behaves_like "require current_account" do
-      let(:action) {:index}
+    it "should return only current_account calendars" do
+      get :index
+      expect(assigns(:calendars).size).to eq(2)
+      expect(assigns(:calendars)).to match_array([calendar, calendar1])
     end
-
-    it_behaves_like "require current_user" do
-      let(:action) {:index}
-    end
-
   end
 
   context "#show" do
-    it_behaves_like "require current_account" do
-      let(:action) {:show}
-      let(:extra_params) { {id: calendar.id} }
+    it "should return only informations about current_account calendars" do
+      get :show, {id: calendar.id}
+      expect(response.code).to eq("200")
+      expect(assigns(:calendar)).to eq(calendar)
     end
-
-    it_behaves_like "require current_user" do
-      let(:action) {:show}
-      let(:extra_params) { {id: calendar.id} }
-    end
-  end
-
-  context "#new" do
-    it_behaves_like "require current_account" do
-      let(:action) {:new}
-    end
-
-    it_behaves_like "require current_user" do
-      let(:action) {:new}
-    end
-  end
-
-  context "#create" do
-    let(:calendar_params) { {calendar: FactoryGirl.attributes_for(:calendar).merge(user_id: user.id)} }
-
-    it_behaves_like "require current_account" do
-      let(:action) {:create}
-      let(:extra_params) { calendar_params }
-    end
-
-    it_behaves_like "require current_user" do
-      let(:action) {:create}
-      let(:extra_params) { calendar_params }
-    end
-  end
-
-  context "#edit" do
-    it_behaves_like "require current_account" do
-      let(:action) {:edit}
-      let(:extra_params) { {id: calendar.id} }
-    end
-
-    it_behaves_like "require current_user" do
-      let(:action) {:edit}
-      let(:extra_params) { {id: calendar.id} }
-    end
-  end
-
-
-  context "#update" do
-
-    let(:calendar_params) { {id: calendar.id, calendar: FactoryGirl.attributes_for(:calendar).merge(user_id: user.id)} }
-
-    it_behaves_like "require current_account" do
-      let(:action) {:update}
-      let(:extra_params) { calendar_params }
-    end
-
-    it_behaves_like "require current_user" do
-      let(:action) {:update}
-      let(:extra_params) { calendar_params }
-    end
-  end
-
-  context "#destroy" do
-    it_behaves_like "require current_account" do
-      let(:action) {:destroy}
-      let(:extra_params) { {id: calendar.id} }
-    end
-
-    it_behaves_like "require current_user" do
-      let(:action) {:destroy}
-      let(:extra_params) { {id: calendar.id} }
+    it "should return 404 if calendar is from other account" do
+      get :show, {id: calendar3.id}
+      expect(response.code).to eq("404")
     end
   end
 

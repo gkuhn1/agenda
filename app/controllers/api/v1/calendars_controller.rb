@@ -267,6 +267,14 @@ Apenas é possível excluir agendas caso o usuário autenticado tenha acesso a e
 
   private
 
+    def get_collection
+      current_account.calendars
+    end
+
+    def get_object
+      Calendar.where(id:params[:id]).and(get_collection.selector).find(params[:id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def calendar_params
       params.require(:calendar).permit(:is_public, :system_notify, :email_notify, :user_id)
