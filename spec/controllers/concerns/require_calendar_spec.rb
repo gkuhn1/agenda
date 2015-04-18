@@ -5,7 +5,7 @@ describe RequireCalendar, type: :controller do
   let(:account) {FactoryGirl.create(:account)}
   let(:user) { account.users.first }
 
-  let(:calendar) { FactoryGirl.create(:calendar, user: user) }
+  let(:calendar) { user.calendar }
 
   controller(ApplicationController) do
     include RequireCalendar

@@ -24,7 +24,7 @@ Rails.application.routes.draw do
           post :login
         end
       end
-      resources :calendars do
+      resources :calendars, only: [:index, :show, :edit, :update] do
         resources :tasks
       end
     end

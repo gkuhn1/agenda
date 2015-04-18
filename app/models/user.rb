@@ -53,15 +53,15 @@ class User
   before_validation :generate_token!
   validates_presence_of :name, :token
 
-  # after_create :create_calendar
-
-  # alias_method :super_calendar, :calendar
-  # def calendar
-  #   super_calendar || create_calendar!
-  # end
+  after_create :create_calendar!
+  before_destroy :destroy_calendar!
 
   def create_calendar!
     Calendar.create(user: self) if self.calendar.nil?
+  end
+
+  def destroy_calendar!
+    self.calendar.destroy if self.calendar.present?
   end
 
   def generate_token!

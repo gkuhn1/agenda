@@ -1,7 +1,7 @@
 class Api::V1::TasksController < Api::V1::ApiController
   include RequireCalendar
 
-  before_filter :set_calendar, :require_calendar, except: :index
+  before_filter :set_calendar, :require_calendar
 
   resource_description do
     short  'Recursos para manipulação de tarefas'
@@ -178,7 +178,7 @@ TODO
   private
 
     def get_collection
-      current_account.calendars.find(params[:calendar_id]).tasks
+      current_calendar.tasks
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

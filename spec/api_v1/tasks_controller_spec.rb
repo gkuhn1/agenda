@@ -4,17 +4,17 @@ RSpec.describe Api::V1::TasksController, type: :controller do
 
   let(:account) { FactoryGirl.create(:account) }
   let(:user) { account.users.first }
-  let(:account2) { FactoryGirl.create(:account) }
-  let(:user2) { FactoryGirl.create(:user) }
-
-  let(:calendar) { FactoryGirl.create(:calendar, user: user) }
-  let(:calendar2) { FactoryGirl.create(:calendar, user: user2) }
+  let(:calendar) { user.calendar }
   let(:calendar_tasks) {[
     FactoryGirl.create(:task, calendar: calendar),
     FactoryGirl.create(:task, calendar: calendar),
     FactoryGirl.create(:task, calendar: calendar),
     FactoryGirl.create(:task, calendar: calendar),
   ]}
+
+  let(:account2) { FactoryGirl.create(:account) }
+  let(:user2) { FactoryGirl.create(:user) }
+  let(:calendar2) { user2.calendar }
   let(:calendar2_tasks) {[
     FactoryGirl.create(:task, calendar: calendar2),
     FactoryGirl.create(:task, calendar: calendar2),
@@ -23,8 +23,8 @@ RSpec.describe Api::V1::TasksController, type: :controller do
   ]}
 
   before(:each) {
-    api_authenticate(user, account)
     [calendar_tasks, calendar2_tasks]
+    api_authenticate(user, account)
   }
 
   context "#index" do

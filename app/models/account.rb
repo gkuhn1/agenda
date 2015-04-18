@@ -56,8 +56,21 @@ class Account
     self.save
   end
 
+  def accessible_calendar_ids
+    self.users.map(&:calendar).compact.map(&:id)
+  end
+
+  def can_access_calendar?(calendar_id)
+    accessible_calendar_ids.include?(calendar_id)
+  end
+
+  def get_calendar(calendar_id)
+    raise Mongoid::Errors::DocumentNotFound.new(Calendar, id: calendar_id) if !can_access_calendar?(calendar_id)
+    Calendar.find(calendar_id)
+  end
+
   def calendars
-    Calendar.in(id: self.users.map(&:calendar).compact.map(&:id))
+    Calendar.in(id: accessible_calendar_ids)
   end
 
 end

@@ -7,7 +7,7 @@ RSpec.describe Api::V1::TasksController, type: :controller do
   let(:account2) { FactoryGirl.create(:account, user: user) }
   let(:account3) { FactoryGirl.create(:account) }
 
-  let(:calendar) { FactoryGirl.create(:calendar, user: user) }
+  let(:calendar) { user.calendar }
   let(:task) { FactoryGirl.create(:task, calendar: calendar) }
 
   before(:each) {

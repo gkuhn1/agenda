@@ -12,7 +12,7 @@ module RequireCalendar
   attr_accessor :current_calendar
 
   def set_calendar
-    self.current_calendar = current_account.calendars.find(params[:calendar_id]) if params[:calendar_id]
+    self.current_calendar = current_account.get_calendar(params[:calendar_id]) if params[:calendar_id]
   end
 
   def require_calendar

@@ -93,13 +93,25 @@ RSpec.describe User, type: :model do
   end
 
   context "create_calendar!" do
-    let(:user) {FactoryGirl.create(:user, :admin => true)}
-    it "should create new calendar if does not exists" do
-      expect { user.create_calendar! }.to change(Calendar, :count).by(1)
+    let(:user) {FactoryGirl.build(:user, :admin => true)}
+    it "should create new calendar after create" do
+      expect { user.save! }.to change(Calendar, :count).by(1)
     end
     it "should not create a new calendar if user already has one" do
-      user.create_calendar!
-      expect { user.create_calendar! }.to change(Calendar, :count).by(0)
+      user.save!
+      expect { user.save! }.to change(Calendar, :count).by(0)
+    end
+  end
+
+  context "destroy_calendar!" do
+    let(:user) {FactoryGirl.create(:user, :admin => true)}
+    it "should create new calendar after create" do
+      user
+      expect { user.destroy }.to change(Calendar, :count).by(-1)
+    end
+    it "should not create a new calendar if user already has one" do
+      user.calendar.destroy
+      expect { user.destroy }.to change(Calendar, :count).by(0)
     end
   end
 end

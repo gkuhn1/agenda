@@ -14,10 +14,10 @@ RSpec.describe Api::V1::CalendarsController, type: :controller do
   let(:user3) { FactoryGirl.create(:user) }
   let(:user4) { account3.users.first }
 
-  let(:calendar) { FactoryGirl.create(:calendar, user: user) }
-  let(:calendar1) { FactoryGirl.create(:calendar, user: user2) }
-  let(:calendar2) { FactoryGirl.create(:calendar, user: user3) }
-  let(:calendar3) { FactoryGirl.create(:calendar, user: user4) }
+  let(:calendar) { user.calendar }
+  let(:calendar1) { user2.calendar }
+  let(:calendar2) { user3.calendar }
+  let(:calendar3) { user4.calendar }
 
   before(:each) {
     api_authenticate(user, account)
