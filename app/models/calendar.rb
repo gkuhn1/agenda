@@ -11,4 +11,6 @@ class Calendar
   belongs_to :user
   validates_presence_of :user
 
+  embeds_many :tasks
+
 end

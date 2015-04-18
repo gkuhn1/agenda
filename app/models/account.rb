@@ -58,4 +58,8 @@ class Account
     self.save
   end
 
+  def calendars
+    Calendar.where(id: self.users.map(&:calendar).map(&:id))
+  end
+
 end
