@@ -1,5 +1,5 @@
 angular.module('agenda.states-error', ['agenda.grandfather'])
-.config(function ($stateProvider) {
+.config(['$stateProvider', function ($stateProvider) {
   $stateProvider
     .state('app.error', {
       url: '/error/:error',
@@ -10,4 +10,4 @@ angular.module('agenda.states-error', ['agenda.grandfather'])
       },
       accessLevel: accessLevels.public
     });
-});
+}]);
