@@ -15,9 +15,11 @@
   <!-- Main content -->
   <section class="content">
     <div ui-view>
-      <h1>Start > {{ startDate }}</h1>
-      <h1>End > {{ endDate }}</h1>
-      <h1>Current > {{ currentDate }}</h1>
+      <h5>Current > {{ currentDate }} | Start > {{ startDate }} | End > {{ endDate }}</h5>
+
+      <div id="fullcalendar" ui-calendar="calendarOptions" ng-model="eventSources" calendar="myCalendar"></div>
+
+
     </div>
   </section>
 

@@ -17,6 +17,9 @@
 //= require bootstrap-sprockets
 //= require iCheck/icheck.min
 //= require routing-config
+//= require moment/moment.min
+//= require fullcalendar/fullcalendar.min
+//= require fullcalendar/fullcalendar.pt-BR.min
 
 //= require datepicker/bootstrap-datepicker
 //= require datepicker/locales/bootstrap-datepicker.pt-BR
@@ -27,6 +30,7 @@
 //= require ladda/js/spin
 //= require ladda/js/ladda
 //= require angular-ladda/dist/angular-ladda
+//= require angular-ui-calendar/calendar
 
 // Angular app
 //= require_tree ./services

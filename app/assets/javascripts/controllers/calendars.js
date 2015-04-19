@@ -41,12 +41,37 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
 
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
     $scope.calendars = calendars;
+    $scope.eventSources = [];
+    $scope.$fullcalendar = $('#fullcalendar');
+
+    $scope.calendarOptions = {
+      lang: 'pt-br',
+      editable: true,
+      defaultView: 'agendaWeek',
+      defaultDate: new Date(),
+      header:{
+        left: 'month agendaWeek agendaDay',
+        center: 'title',
+        right: 'today prev,next'
+      },
+      views: {
+        agendaWeek: { // name of view
+          titleRangeSeparator: ' à '
+          // other view-specific options here
+        }
+      },
+      dayClick: $scope.alertEventOnClick,
+      eventDrop: $scope.alertOnDrop,
+      eventResize: $scope.alertOnResize
+    }
 
     $rootScope.$on('calendar-week-changed', function(event, startDate, endDate, currentDate) {
       $scope.$apply(function() {
         $scope.startDate = startDate;
         $scope.endDate = endDate;
         $scope.currentDate = currentDate;
+        console.log(currentDate);
+        $scope.$fullcalendar.fullCalendar('gotoDate', currentDate);
       })
     })
 

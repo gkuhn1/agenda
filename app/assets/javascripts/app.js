@@ -33,6 +33,7 @@ angular.module('agenda', [
   'agenda.server-error',
   'doowb.angular-pusher',
   'ui.utils.masks',
+  'ui.calendar',
   'angular-ladda'
 ])
 
