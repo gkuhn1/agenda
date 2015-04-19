@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   rescue_from AdminRequiredException, with: :permission_denied
   rescue_from ActionController::UnknownFormat, with: :not_acceptable
   rescue_from ActionController::ParameterMissing, with: :unprocessable_entity
+  rescue_from ActionDispatch::ParamsParser::ParseError, with: :unprocessable_entity_parse_error
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
 
   attr_accessor :current_account, :current_user
@@ -51,7 +52,7 @@ class ApplicationController < ActionController::Base
   protected
 
     # rescues
-    def unprocessable_entity
+    def unprocessable_entity()
       render :json => {:error => 'Unprocessable Entity'}, :status => 422
     end
 

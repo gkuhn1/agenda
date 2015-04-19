@@ -109,10 +109,16 @@
   background-color: transparent;
 }
 .datepicker table tr td.day:hover,
-.datepicker table tr td.day.focused {
+.datepicker table tr td.day.focused,
+.datepicker table tbody tr:hover {
   background: rgba(0,0,0,0.2);
   cursor: pointer;
 }
+
+.datepicker table tbody tr.active {
+  background-color: #ffffff;
+}
+
 .datepicker table tr td.old,
 .datepicker table tr td.new {
   color: #777;

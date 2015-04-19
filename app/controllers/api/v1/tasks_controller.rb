@@ -9,6 +9,14 @@ class Api::V1::TasksController < Api::V1::ApiController
     formats ['json']
   end
 
+  def_param_group :task do
+    param :title, String, "Título da tarefa", :required => true
+    param :description, String, "Descrição longa da tarefa", :required => false
+    param :where, String, "Localização (pode ser um local ou um endereço) onde a tarefa será executada", :required => true
+    param :start_at, String, "Data e Hora de inicio da tarefa *YYYY-MM-DDTHH:MM:SS*", :required => true
+    param :end_at, String, "Data e Hora de fim da tarefa *YYYY-MM-DDTHH:MM:SS*", :required => true
+  end
+
   # Index
   api :GET, '/calendars/:calendar_id/tasks', 'Lista a tarefas de um calendario que o usuário autenticado tem acesso'
   description <<-EOS
@@ -35,7 +43,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   end
 
   # New
-  api :GET, '/calendars/:calendar_id/tasks/new', 'Busca informações para criação de uma nova agenda'
+  api :GET, '/calendars/:calendar_id/tasks/new', 'Busca informações para criação de uma nova tarefa'
   description <<-EOS
 ===Requisição
 ====Retorno com Sucesso:
@@ -59,12 +67,12 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
     super
   end
 
-  api :POST, '/calendars/:calendar_id/tasks', 'Cria uma nova task para a agenda que foi passada'
+  api :POST, '/calendars/:calendar_id/tasks', 'Cria uma nova tarefa para a agenda que foi passada'
   description <<-EOS
 ===Requisição
 
 
-===== Exemplo de requisição para criação de dados de agenda com usuário já cadastrado
+===== Exemplo de requisição com dados para criação de uma nova tarefa
   {
     "task": {
       "id": "5532e21d676b7518ca010000",
@@ -77,7 +85,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   }
 
 ====Retorno com Sucesso:
-Dados da agenda criada
+Dados da tarefa criada
   {
     "id": "5532e323676b7518ca020000",
     "title": "Corte de cabelo Masculino",
@@ -98,15 +106,7 @@ HTTP Status: 422
     }
   }
   EOS
-  param :name, String, "Nome para a agenda a ser criada", :required => true
-  param :description, String, "Descrição longa para a agenda", :required => false
-  param :address, String, "Senha que o usuário irá utilizar para logar no aplicativo", :required => false
-  param :phone, String, "Telefone principal", :required => false
-  param :phone2, String, "Telefone secundário", :required => false
-  param :website, String, "Website", :required => false
-  param :user_attributes, Hash, "Parâmetros do usuário que deverá ser criado e associado a nova agenda. Os parâmetros são os mesmos aceitos na api de usuários"
-  param :user_ids, Array, "Usuários que farão parte da agenda", :required => false, :default => false
-  see "users#create"
+  param_group :task
   def create
     super
   end
@@ -116,8 +116,17 @@ HTTP Status: 422
   description <<-EOS
 ===Requisição
 ====Retorno com Sucesso:
-  TODO
-====Retorno com erro por não encontrar o usuário:
+  {
+    "id": "5532e323676b7518ca020000",
+    "title": "Corte de cabelo Masculino",
+    "description": null,
+    "where": "Salão",
+    "status": 1,
+    "status_description": "Criado",
+    "start_at": "2015-04-18T10:00:00.000-03:00",
+    "end_at": "2015-04-18T10:15:00.000-03:00"
+  }
+====Retorno com erro por não encontrar a tarefa:
   HTTP Status: 404
   {
     "error": "Not Found"
@@ -138,31 +147,50 @@ TODO
   Content-Type: application/json
   Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDAw
 
-===== Exemplo de requisição para alteração de dados de agenda
-  TODO
+===== Exemplo de requisição para alteração de dados de tarefa
+{
+  "task": {
+    "id": "5532e323676b7518ca020000",
+    "title": "Corte de cabelo Masculino",
+    "description": "Descrição editada!",
+    "where": "Localização editada!",
+    "start_at": "2015-04-18T10:10:00:00",
+    "end_at": "2015-04-18T10:25:00:00"
+  }
+}
 
 ====Retorno com Sucesso:
-Dados da agenda alterada
-  TODO
+Dados da tarefa alterada
+  {
+    "id": "5532e323676b7518ca020000",
+    "title": "Corte de cabelo Masculino",
+    "description": "Descrição editada!",
+    "where": "Localização editada!",
+    "status": 1,
+    "status_description": "Criado",
+    "start_at": "2015-04-18T10:10:00.000-03:00",
+    "end_at": "2015-04-18T10:25:00.000-03:00"
+  }
 
 ====Retorno com erro por dados incorretos:
 HTTP Status: 422
-  TODO
+  {
+    "errors":
+    {
+      "title":
+      [
+        "não pode ficar em branco"
+      ]
+    }
+  }
 
-=== Retorno caso a agenda não exista ou o usuário autenticado não possua acesso a ela:
+=== Retorno caso a tarefa não exista ou o usuário autenticado não possua acesso a agenda a qual ela pertence:
 HTTP Status: 404
   {
     "error": "Not Found"
   }
   EOS
-  param :name, String, "Nome para a agenda a ser criada", :required => true
-  param :description, String, "Descrição longa para a agenda", :required => false
-  param :address, String, "Senha que o usuário irá utilizar para logar no aplicativo", :required => false
-  param :phone, String, "Telefone principal", :required => false
-  param :phone2, String, "Telefone secundário", :required => false
-  param :website, String, "Website", :required => false
-  param :user_attributes, Hash, "Parâmetros do usuário que deverá ser criado e associado a nova agenda. Os parâmetros são os mesmos aceitos na api de usuários"
-  param :user_ids, Array, "Usuários que farão parte da agenda", :required => false, :default => false
+  param_group :task
   def update
     super
   end
@@ -171,7 +199,6 @@ HTTP Status: 404
   api :DELETE, '/calendars/:calendar_id/tasks/:task_id', 'Exclui uma tarefa da agenda selecionada.'
   description <<-EOS
 ===Requisição
-TODO
 
 ====Retorno com Sucesso:
   HTTP Status: 204

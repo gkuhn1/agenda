@@ -7,7 +7,7 @@ class Api::V1::CalendarsController < Api::V1::ApiController
   end
 
   # Index
-  api :GET, '/calendars', 'Lista os calendarios que o usuário da agenda autenticada tem acesso'
+  api :GET, '/calendars', 'Lista as agendas que o usuário da conta autenticada tem acesso'
   description <<-EOS
 ====Requisição
 Accept: application/json
@@ -68,9 +68,6 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   api :PUT, '/calendars/:calendar_id', 'Atualiza as informações de uma agenda que o usuário autenticado possui acesso'
   description <<-EOS
 ===Requisição
-
-Atualiza os dados de uma agenda existente com as informações passadas, retornando código HTTP 200 OK em caso de sucesso ou 422 em caso de erro de validação dos dados, com a descrição dos errors.
-Na atualização *não* é possivel criar novos usuários, porém pode-se manipular os usuários que possuem acesso a agenda (+user_ids+)
 
 ===== Cabeçalho da requisição
   Accept: application/json

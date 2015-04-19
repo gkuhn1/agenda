@@ -4,6 +4,7 @@ angular.module('agenda', [
   'agenda.userservice',
   'agenda.accountservice',
   'agenda.adminservice',
+  'agenda.calendarservice',
 
   // Controllers
   'agenda.accounts',
@@ -11,6 +12,7 @@ angular.module('agenda', [
   'agenda.home',
   'agenda.login',
   'agenda.users',
+  'agenda.calendars',
 
   // States
   'agenda.grandfather',
@@ -19,6 +21,7 @@ angular.module('agenda', [
   'agenda.states-login',
   'agenda.states-users',
   'agenda.states-accounts',
+  'agenda.states-calendars',
 
   'agenda.states-admin',
 
@@ -26,6 +29,7 @@ angular.module('agenda', [
   'httpq',
   'agenda.checklist',
   'agenda.ng-really-click',
+  'ng-bootstrap-datepicker',
   'agenda.server-error',
   'doowb.angular-pusher',
   'ui.utils.masks',

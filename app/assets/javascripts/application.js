@@ -18,6 +18,9 @@
 //= require iCheck/icheck.min
 //= require routing-config
 
+//= require datepicker/bootstrap-datepicker
+//= require datepicker/locales/bootstrap-datepicker.pt-BR
+
 // Angular extras
 //= require angular-pusher.min
 //= require angular-input-masks/angular-input-masks.br
