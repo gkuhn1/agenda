@@ -32,6 +32,26 @@
 
       <div id="calendar_datepicker" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="date">
       </div>
+
+      <li class="treeview" data-ng-treeview data-ng-model="tv_professionals">
+        <a href>
+          <i class="fa fa-circle-o"></i>
+          Profissionais
+          <i class="fa fa-angle-left pull-right"></i>
+          <small class="label pull-right bg-green">{{ active_calendars_count }}</small>
+        </a>
+        <ul class="nav treeview-menu">
+          <li ng-repeat="calendar in calendars">
+            <a href class="professional">
+              <i class="glyphicon glyphicon-user"></i>
+              {{ calendar.user.name }}
+              <small class="label pull-right bg-yellow">&nbsp;&nbsp;&nbsp;</small>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <ul>
     </ul>
   </section>
 </aside>

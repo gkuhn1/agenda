@@ -6,7 +6,12 @@ angular.module('agenda.states-calendars', ['agenda.grandfather'])
       .state('app.header.calendar-sidebar', {
         abstract: true,
         controller: "CalendarsSidebarCtrl",
-        templateUrl: "/templates/calendars/sidebar.html"
+        templateUrl: "/templates/calendars/sidebar.html",
+        resolve: {
+          calendars: ['CalendarService', function(CalendarService){
+            return CalendarService.all();
+          }]
+        }
       })
       .state('app.header.calendar-sidebar.calendars', {
         url: "/calendars",

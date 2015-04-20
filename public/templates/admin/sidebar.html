@@ -32,19 +32,19 @@
 
       <li class="header">ADMINISTRAÇÃO</li>
 
-      <li class="treeview" ng-class="{ active : $state.inc('accounts') || tv_account }" ng-init="tv_account = tv_account || false" ng-click="tv_account = !tv_account">
+      <li class="treeview" data-ng-treeview data-ng-model="tv_account" data-active-state="'accounts'">
         <a><span><i class="fa fa-credit-card"></i> Contas</span><i class="fa pull-right fa-angle-left"></i></a>
-        <ul class="treeview-menu" ng-class="{ 'menu-open' : $state.inc('accounts') || tv_account }">
-          <li ui-sref-active-eq="active" ng-click="$event.stopPropagation()"><a href ui-sref="app.header.admin-sidebar.home.accounts"><i class="fa fa-angle-double-right"></i> Lista</a></li>
-          <li ui-sref-active-eq="active" ng-click="$event.stopPropagation()"><a href ui-sref="app.header.admin-sidebar.home.accounts.new"><i class="fa fa-angle-double-right"></i> Nova conta</a></li>
+        <ul class="treeview-menu">
+          <li ui-sref-active-eq="active"><a href ui-sref="app.header.admin-sidebar.home.accounts"><i class="fa fa-angle-double-right"></i> Lista</a></li>
+          <li ui-sref-active-eq="active"><a href ui-sref="app.header.admin-sidebar.home.accounts.new"><i class="fa fa-angle-double-right"></i> Nova conta</a></li>
         </ul>
       </li>
 
-      <li class="treeview" ng-class="{ active : $state.inc('users') || tv_user }" ng-init="tv_user = tv_user || false" ng-click="tv_user = !tv_user">
+      <li class="treeview" data-ng-treeview data-ng-model="tv_user" data-active-state="'users'">
         <a><span><i class="fa fa-users"></i> Usuários</span><i class="fa pull-right fa-angle-left"></i></a>
-        <ul class="treeview-menu" ng-class="{ 'menu-open' : $state.inc('users') || tv_user }">
-          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users') }" ng-click="$event.stopPropagation()"><a href ui-sref="app.header.admin-sidebar.home.users"><i class="fa fa-angle-double-right"></i> Lista</a></li>
-          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users_new') }" ng-click="$event.stopPropagation()"><a href ui-sref="app.header.admin-sidebar.home.users.new"><i class="fa fa-angle-double-right"></i> Novo usuário</a></li>
+        <ul class="treeview-menu">
+          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users') }"><a href ui-sref="app.header.admin-sidebar.home.users"><i class="fa fa-angle-double-right"></i> Lista</a></li>
+          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users_new') }"><a href ui-sref="app.header.admin-sidebar.home.users.new"><i class="fa fa-angle-double-right"></i> Novo usuário</a></li>
         </ul>
       </li>
 

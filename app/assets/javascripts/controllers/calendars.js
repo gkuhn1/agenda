@@ -1,12 +1,15 @@
 angular.module('agenda.calendars', ['agenda.grandfather'])
-.controller("CalendarsSidebarCtrl", ['$scope', '$rootScope',
-  function($scope, $rootScope) {
+.controller("CalendarsSidebarCtrl", ['$scope', '$rootScope', 'calendars',
+  function($scope, $rootScope, calendars) {
 
     console.log("CalendarsSidebarCtrl");
 
+    $scope.tv_professionals = true // Set to start menu opened
     $scope.startDate;
     $scope.endDate;
     $scope.currentDate;
+    $scope.calendars = calendars;
+    $scope.active_calendars_count = calendars.length;
 
     var selectCurrentWeek = function(target) {
       setTimeout(function() {
@@ -41,14 +44,44 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
 
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
     $scope.calendars = calendars;
-    $scope.eventSources = [];
-    $scope.$fullcalendar = $('#fullcalendar');
+    $scope.events = []
+    $scope.eventSources = [$scope.events];
+    $scope.$fullcalendar = '#fullcalendar';
+
+    $scope.newTask = {};
+
+    $scope.createTask = function(newTask) {
+      console.log(newTask.startdate + newTask.starttime);
+      console.log(newTask.enddate + newTask.endtime);
+      $scope.events.push({
+            title: newTask.title,
+            start: moment(newTask.startdate + newTask.starttime, "DD/MM/YYYYHH:mm"),
+            end: moment(newTask.enddate + newTask.endtime, "DD/MM/YYYYHH:mm"),
+            allDay: false,
+      });
+      $scope.newTask = {};
+      $('#createTaskModal').modal('hide');
+    }
+
+    $scope.onSelectCalendar = function(start, end, allDay) {
+      console.log(start, end, allDay);
+      $scope.newTask.enddate = end.format('DD/MM/YYYY');
+      $scope.newTask.endtime = end.format('HH:mm');
+      $scope.newTask.startdate = start.format('DD/MM/YYYY');
+      $scope.newTask.starttime = start.format('HH:mm');
+      $('#createTaskModal').modal('show');
+    }
 
     $scope.calendarOptions = {
       lang: 'pt-br',
       editable: true,
       defaultView: 'agendaWeek',
       defaultDate: new Date(),
+      slotDuration: "00:15:00",
+      scrollTime: new Date().getTimeStr(),
+      axisFormat: 'HH:mm',
+      editable: true,
+      selectable: true,
       header:{
         left: 'month agendaWeek agendaDay',
         center: 'title',
@@ -60,6 +93,7 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
           // other view-specific options here
         }
       },
+      select: $scope.onSelectCalendar,
       dayClick: $scope.alertEventOnClick,
       eventDrop: $scope.alertOnDrop,
       eventResize: $scope.alertOnResize
@@ -70,8 +104,7 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
         $scope.startDate = startDate;
         $scope.endDate = endDate;
         $scope.currentDate = currentDate;
-        console.log(currentDate);
-        $scope.$fullcalendar.fullCalendar('gotoDate', currentDate);
+        $($scope.$fullcalendar).fullCalendar('gotoDate', currentDate);
       })
     })
 

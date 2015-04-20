@@ -10,15 +10,16 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
+//= require jquery
 //= require angular.min
 //= require angular-ui-router.min
 
-//= require jquery
 //= require bootstrap-sprockets
 //= require iCheck/icheck.min
 //= require routing-config
 //= require moment/moment.min
-//= require fullcalendar/fullcalendar.min
+//= require fullcalendar/fullcalendar
 //= require fullcalendar/fullcalendar.pt-BR.min
 
 //= require datepicker/bootstrap-datepicker
@@ -43,6 +44,22 @@ function contentWrapperHeight(e) {
   $('.content-wrapper').css('minHeight', $(window).height()-$('header.main-header').height());
 }
 
+/* center modal */
+function centerModals(){
+  $('.modal').each(function(i){
+    var $clone = $(this).clone().css('display', 'block').appendTo('body');
+    var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+    top = top > 0 ? top : 0;
+    $clone.remove();
+    $(this).find('.modal-content').css("margin-top", top);
+  });
+}
+
 $(document).ready(function() {
   $(window).resize(contentWrapperHeight);
+
+  // Centering modals in window
+  $(document).on('shown.bs.modal', '.modal', centerModals);
+  $(window).on('resize', centerModals);
 })
+

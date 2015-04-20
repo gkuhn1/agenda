@@ -30,6 +30,7 @@ angular.module('agenda', [
   'agenda.checklist',
   'agenda.ng-really-click',
   'ng-bootstrap-datepicker',
+  'ng-adminlte-treeview',
   'agenda.server-error',
   'doowb.angular-pusher',
   'ui.utils.masks',
@@ -158,4 +159,8 @@ Array.prototype.findById = function(elem) {
 Array.prototype.indexOfById = function(elem) {
   if (elem.id !== undefined) elem = elem.id;
   return this.map(function(el) { return el.id }).indexOf(elem);
+}
+
+Date.prototype.getTimeStr = function(e) {
+  return [this.getHours(), this.getMinutes(), this.getSeconds()].join(":")
 }

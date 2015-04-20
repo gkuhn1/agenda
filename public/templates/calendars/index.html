@@ -16,6 +16,7 @@
   <section class="content">
     <div ui-view>
       <h5>Current > {{ currentDate }} | Start > {{ startDate }} | End > {{ endDate }}</h5>
+      <h5>{{ eventSources }}</h5>
 
       <div id="fullcalendar" ui-calendar="calendarOptions" ng-model="eventSources" calendar="myCalendar"></div>
 
@@ -24,3 +25,34 @@
   </section>
 
 </div>
+
+
+<div id="createTaskModal" class="modal">
+  <div class="modal-dialog">
+    <form name="form" class="simple_form new_task" novalidate class="form-horizontal" ng-submit="createTask(newTask)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">Novo atendimento</h4>
+        </div>
+        <div class="modal-body">
+            <div class="control-group">
+            {{ newTask.startdate }} {{ newTask.starttime }}
+            <br>
+            {{ newTask.enddate }} {{ newTask.endtime }}
+            </div>
+            <input type="text" ng-model="newTask.title" >
+            <input type="text" ng-model="newTask.startdate" >
+            <input type="text" ng-model="newTask.starttime" >
+            <input type="text" ng-model="newTask.enddate" >
+            <input type="text" ng-model="newTask.endtime" >
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Criar!</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </form>
+  </div><!-- /.modal-dialog -->
+</div>
+

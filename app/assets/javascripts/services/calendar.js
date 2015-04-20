@@ -7,7 +7,7 @@ angular.module('agenda.calendarservice', ['httpq']).factory('CalendarService', [
 
     // load
     pub.all = function() {
-      return $httpq.get(base_url+'.json', {param1: "1", param2: "2"})
+      return $httpq.get(base_url+'.json')
     }
 
     pub.get = function(id) {
