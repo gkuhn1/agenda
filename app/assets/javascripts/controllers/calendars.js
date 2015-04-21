@@ -1,4 +1,4 @@
-angular.module('agenda.calendars', ['agenda.grandfather'])
+angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
 .controller("CalendarsSidebarCtrl", ['$scope', '$rootScope', 'calendars',
   function($scope, $rootScope, calendars) {
 
@@ -45,7 +45,7 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
     $scope.calendars = calendars;
     $scope.events = []
-    $scope.eventSources = [$scope.events];
+    $scope.eventSources = [{events: $scope.events, className: "bg-yellow"}];
     $scope.$fullcalendar = '#fullcalendar';
     $scope.errors = {};
     $scope.laddaModalLoading = false;
@@ -130,6 +130,7 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
 
     $scope.calendarOptions = {
       lang: 'pt-br',
+      useNgLocale: false,
       allDaySlot: false,
       editable: true,
       defaultView: 'agendaWeek',
