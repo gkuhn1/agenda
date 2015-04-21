@@ -28,6 +28,7 @@
 // Angular extras
 //= require angular-pusher.min
 //= require angular-input-masks/angular-input-masks.br
+//= require angular-mask/dist/ngMask.min
 //= require ladda/js/spin
 //= require ladda/js/ladda
 //= require angular-ladda/dist/angular-ladda

@@ -35,6 +35,7 @@ angular.module('agenda', [
   'agenda.server-error',
   'doowb.angular-pusher',
   'ui.utils.masks',
+  'ngMask',
   'ui.calendar',
   'angular-ladda'
 ])
@@ -136,7 +137,7 @@ angular.module('agenda', [
       $rootScope.$on('loading_stop', function() {
         $timeout(function() {
           $rootScope.loadingView = false;
-        });
+        }, 200);
       });
 
       $rootScope.$on('currentAccountSelected', function(event, account) {

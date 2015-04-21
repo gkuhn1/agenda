@@ -39,29 +39,75 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
   }
 ])
 
-.controller("CalendarsCtrl", ['$scope', '$rootScope', 'calendars', 'CalendarService',
-  function($scope, $rootScope, calendars, CalendarService) {
+.controller("CalendarsCtrl", ['$scope', '$rootScope', 'calendars', 'CalendarService', 'TaskService',
+  function($scope, $rootScope, calendars, CalendarService, TaskService) {
 
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
     $scope.calendars = calendars;
     $scope.events = []
     $scope.eventSources = [$scope.events];
     $scope.$fullcalendar = '#fullcalendar';
+    $scope.errors = {};
+    $scope.laddaModalLoading = false;
 
     $scope.newTask = {};
 
+    $scope.newTaskReset = function() {
+      $scope.newTask = {};
+      if (calendars.length < 2)
+        $scope.newTask.calendar_id = calendars[0].id
+    }
+    $scope.newTaskReset();
+
+    $scope.resetFormErrors = function() {
+      $scope.form.calendar.$setValidity('server', true);
+      $scope.form.title.$setValidity('server', true);
+      $scope.form.end_at.$setValidity('server', true);
+      $scope.form.start_at.$setValidity('server', true);
+      $scope.errors = {};
+      $scope.laddaLoading = false;
+    }
+
     $scope.createTask = function(newTask) {
+      $scope.resetFormErrors();
+
+      if (newTask.calendar_id === undefined) {
+        $scope.form.calendar.$setValidity('server', false);
+        $scope.errors.calendar = "Deve selecionar um Profissional!";
+        return;
+      }
       console.log(newTask.startdate + newTask.starttime);
       console.log(newTask.enddate + newTask.endtime);
-      $scope.events.push({
-            title: newTask.title,
-            start: moment(newTask.startdate + newTask.starttime, "DD/MM/YYYYHH:mm"),
-            end: moment(newTask.enddate + newTask.endtime, "DD/MM/YYYYHH:mm"),
-            allDay: false,
-      });
-      $scope.newTask = {};
-      $('#createTaskModal').modal('hide');
+      var success = function(data) {
+        console.log(data);
+        $scope.events.push(TaskService.toFullCalendar(data));
+        $scope.newTaskReset();
+        $('#createTaskModal').modal('hide');
+      };
+      var error = function(data) {
+        console.log(data.errors);
+        angular.forEach(data.errors, function(errors, field) {
+          console.log(errors, field);
+          $scope.form[field].$setValidity('server', false);
+          $scope.errors[field] = errors.join(', ');
+        })
+      }
+      promise = TaskService.save(newTask.calendar_id, TaskService.modalToTask(newTask));
+      promise.success(success).error(error).finally(function() {
+        $scope.laddaLoading = false;
+      })
     }
+
+    $scope.reloadTasks = function() {
+      angular.forEach($scope.calendars, function(calendar) {
+        TaskService.all(calendar.id).success(function(data) {
+          angular.forEach(data, function(task) {
+            $scope.events.push(TaskService.toFullCalendar(task));
+          })
+        });
+      })
+    }
+    $scope.reloadTasks();
 
     $scope.onSelectCalendar = function(start, end, allDay) {
       console.log(start, end, allDay);
@@ -70,10 +116,12 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
       $scope.newTask.startdate = start.format('DD/MM/YYYY');
       $scope.newTask.starttime = start.format('HH:mm');
       $('#createTaskModal').modal('show');
+      $('#createTaskModal').find('input:first').focus();
     }
 
     $scope.calendarOptions = {
       lang: 'pt-br',
+      allDaySlot: false,
       editable: true,
       defaultView: 'agendaWeek',
       defaultDate: new Date(),
@@ -82,6 +130,7 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
       axisFormat: 'HH:mm',
       editable: true,
       selectable: true,
+      selectHelper: true,
       header:{
         left: 'month agendaWeek agendaDay',
         center: 'title',
