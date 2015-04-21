@@ -99,11 +99,14 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
     }
 
     $scope.reloadTasks = function() {
+      $scope.$emit("loading_start");
       angular.forEach($scope.calendars, function(calendar) {
         TaskService.all(calendar.id).success(function(data) {
           angular.forEach(data, function(task) {
             $scope.events.push(TaskService.toFullCalendar(task));
           })
+        }).finally(function() {
+          $scope.$emit("loading_stop");
         });
       })
     }
@@ -117,6 +120,12 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
       $scope.newTask.starttime = start.format('HH:mm');
       $('#createTaskModal').modal('show');
       $('#createTaskModal').find('input:first').focus();
+    }
+    $scope.alertEventOnClick = function() {
+      console.log(arguments);
+    }
+    $scope.alertOnResize = function() {
+      console.log(arguments);
     }
 
     $scope.calendarOptions = {
@@ -137,9 +146,8 @@ angular.module('agenda.calendars', ['agenda.grandfather'])
         right: 'today prev,next'
       },
       views: {
-        agendaWeek: { // name of view
+        agendaWeek: {
           titleRangeSeparator: ' à '
-          // other view-specific options here
         }
       },
       select: $scope.onSelectCalendar,
