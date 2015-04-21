@@ -1,26 +1,9 @@
 
 <div style="min-height: 1200px;" class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1 class="ng-binding">
-
-      <small class="ng-binding">
-
-      </small>
-    </h1>
-    <ol class="breadcrumb">
-
-    </ol>
-  </section>
   <!-- Main content -->
   <section class="content">
     <div ui-view>
-      <h5>Current > {{ currentDate }} | Start > {{ startDate }} | End > {{ endDate }}</h5>
-      <h5>{{ eventSources }}</h5>
-
       <div id="fullcalendar" ui-calendar="calendarOptions" ng-model="eventSources" calendar="myCalendar"></div>
-
-
     </div>
   </section>
 

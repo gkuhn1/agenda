@@ -1,4 +1,5 @@
-angular.module('agenda.adminservice', ['httpq']).factory('AdminService', ['$httpq', '$http',
+angular.module('agenda.adminservice', ['httpq'])
+.factory('AdminService', ['$httpq', '$http',
   function ($httpq, $http) {
 
     var base_url = '/admin';

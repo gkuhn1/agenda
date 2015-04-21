@@ -8,8 +8,8 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
         templateUrl: "/templates/admin/accounts/index.html",
         controller: "AccountsCtrl",
         resolve: {
-          accounts: ['AccountService', function(AccountService){
-            return AccountService.all();
+          accounts: ['AccountAdminService', function(AccountAdminService){
+            return AccountAdminService.all();
           }]
         }
       })
@@ -21,8 +21,8 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
             users: ['UserAdminService', function(UserAdminService) {
               return UserAdminService.all();
             }],
-            newAccount: ['AccountService', function(AccountService) {
-              return AccountService.new();
+            newAccount: ['AccountAdminService', function(AccountAdminService) {
+              return AccountAdminService.new();
             }]
           },
           data: {
@@ -34,8 +34,8 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
           controller: 'ShowAccountCtrl',
           templateUrl: "/templates/admin/accounts/show.html",
           resolve: {
-            account: ['$stateParams', 'AccountService', function($stateParams, AccountService) {
-              return AccountService.get($stateParams.id)
+            account: ['$stateParams', 'AccountAdminService', function($stateParams, AccountAdminService) {
+              return AccountAdminService.get($stateParams.id)
             }]
           }
         })
@@ -47,8 +47,8 @@ angular.module('agenda.states-accounts', ['agenda.grandfather'])
             users: ['UserAdminService', function(UserAdminService) {
               return UserAdminService.all();
             }],
-            newAccount: ['AccountService', '$stateParams', function(AccountService, $stateParams) {
-              return AccountService.get($stateParams.id);
+            newAccount: ['AccountAdminService', '$stateParams', function(AccountAdminService, $stateParams) {
+              return AccountAdminService.get($stateParams.id);
             }]
           },
           data: {

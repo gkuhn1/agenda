@@ -1,25 +1,30 @@
-angular.module('agenda.accountservice', ['httpq']).factory('AccountService', ['$httpq', '$http',
+angular.module('agenda.accountservice', ['httpq'])
+.factory('AccountService', ['$httpq', '$http',
   function ($httpq, $http) {
 
-    var base_url = '/api/v1/accounts';
+    var pub = {
+      base_url: '/api/v1/accounts'
+    }
 
-    var pub = {};
+    pub.set_url = function(url) {
+      pub.base_url = url;
+    }
 
     // load
     pub.all = function() {
-      return $httpq.get(base_url+'.json', {param1: "1", param2: "2"})
+      return $httpq.get(pub.base_url+'.json', {param1: "1", param2: "2"})
     }
 
     pub.current = function() {
-      return $httpq.get(base_url+'/current.json');
+      return $httpq.get(pub.base_url+'/current.json');
     }
 
     pub.get = function(id) {
-      return $httpq.get(base_url+'/'+id+'.json');
+      return $httpq.get(pub.base_url+'/'+id+'.json');
     }
 
     pub.new = function() {
-      return $httpq.get(base_url+'/new.json')
+      return $httpq.get(pub.base_url+'/new.json')
     }
 
     pub.save = function(account, edit) {
@@ -31,19 +36,32 @@ angular.module('agenda.accountservice', ['httpq']).factory('AccountService', ['$
     }
 
     pub.create = function(account) {
-      return $http.post(base_url+'.json', {account: account});
+      return $http.post(pub.base_url+'.json', {account: account});
     }
 
     pub.update = function(account) {
-     return $http.put(base_url+'/'+account.id+'.json', {account: account});
+     return $http.put(pub.base_url+'/'+account.id+'.json', {account: account});
     }
 
     pub.destroy = function(id) {
-      return $http.delete(base_url+'/'+id+'.json');
+      return $http.delete(pub.base_url+'/'+id+'.json');
     }
 
 
     return pub;
   }
 
-]);
+])
+
+.factory('AccountAdminService', ['AccountService',
+  function(AccountService){
+
+    var extended = {};
+    angular.copy(AccountService, extended);
+    extended.set_url('/admin/accounts');
+    return extended;
+
+  }
+])
+
+;
