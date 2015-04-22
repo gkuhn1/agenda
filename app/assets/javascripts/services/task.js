@@ -58,7 +58,6 @@ angular.module('agenda.taskservice', ['httpq'])
     pub.modalToTask = function(task) {
       data = {
         title: task.title,
-        color: 'yellow',
         stick: true
       }
       if (task.startdate + task.starttime !== "")

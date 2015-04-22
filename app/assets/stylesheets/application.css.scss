@@ -1,11 +1,11 @@
 
-@import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap-sprockets";
 @import "adminlte/css/AdminLTE.min";
 @import "adminlte/css/skins/_all-skins.min";
 
 @import "iCheck/all";
-@import "fullcalendar/fullcalendar.min";
+@import "fullcalendar/fullcalendar";
 @import "datepicker/datepicker3";
 @import "daterangepicker/daterangepicker-bs3";
 @import "bootstrap-wysihtml5/bootstrap3-wysihtml5.min";

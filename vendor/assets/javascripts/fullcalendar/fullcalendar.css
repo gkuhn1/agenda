@@ -123,7 +123,7 @@ body .fc { /* extra precedence to overcome jqui */
 
 /* Firefox has an annoying inner border */
 .fc button::-moz-focus-inner { margin: 0; padding: 0; }
-	
+
 .fc-state-default { /* non-theme */
 	border: 1px solid;
 }
@@ -145,7 +145,7 @@ body .fc { /* extra precedence to overcome jqui */
 	top: .05em; /* seems to be a good adjustment across browsers */
 	margin: 0 .1em;
 }
-	
+
 /*
   button states
   borrowed from twitter bootstrap (http://twitter.github.com/bootstrap/)
@@ -350,7 +350,7 @@ previous button's border...
 	border-right: 0 hidden transparent;
 
 	/* no bottom borders on rows */
-	border-bottom: 0 hidden transparent; 
+	border-bottom: 0 hidden transparent;
 }
 
 .fc-row:first-child table {
@@ -600,7 +600,7 @@ a.fc-more:hover {
 .fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */
 	margin-left: 0;
 }
-	
+
 /* title text */
 
 .fc-toolbar h2 {
@@ -617,7 +617,7 @@ a.fc-more:hover {
 .fc-toolbar .ui-state-hover {
 	z-index: 2;
 }
-	
+
 .fc-toolbar .fc-state-down {
 	z-index: 3;
 }
@@ -744,6 +744,7 @@ a.fc-more:hover {
 	vertical-align: middle;
 	padding: 0 4px;
 	white-space: nowrap;
+	border: 0 none;
 }
 
 .fc-ltr .fc-axis {
@@ -758,6 +759,20 @@ a.fc-more:hover {
 	font-weight: normal; /* overcome jqui theme making it bold */
 }
 
+.fc-axis.fc-time.fc-widget-content > span {
+  position: relative;
+  top: -13px;
+  font-size: 11px;
+}
+
+.fc-minor + .fc-minor + .fc-minor .fc-widget-content,
+.fc-minor .fc-widget-content {
+	border-top-width: 0;
+}
+
+.fc-minor + .fc-minor .fc-widget-content {
+    border-top-width: 1px;
+}
 
 /* TimeGrid Structure
 --------------------------------------------------------------------------------------------------*/
@@ -819,9 +834,10 @@ a.fc-more:hover {
 	border-bottom: 0; /* each cell is responsible for its top border */
 }
 
+/*
 .fc-slats .fc-minor td {
 	border-top-style: dotted;
-}
+}*/
 
 .fc-slats .ui-widget-content { /* for jqui theme */
 	background: none; /* see through to fc-bg */

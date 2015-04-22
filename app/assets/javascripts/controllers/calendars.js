@@ -44,8 +44,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
 
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
     $scope.calendars = calendars;
-    $scope.events = []
-    $scope.eventSources = [{events: $scope.events, className: "bg-yellow"}];
+    $scope.eventSources = [];
     $scope.$fullcalendar = '#fullcalendar';
     $scope.errors = {};
     $scope.laddaModalLoading = false;
@@ -80,7 +79,8 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       console.log(newTask.enddate + newTask.endtime);
       var success = function(data) {
         console.log(data);
-        $scope.events.push(TaskService.toFullCalendar(data));
+        var events = $scope.eventSources.findById(newTask.calendar_id).events;
+        events.push(TaskService.toFullCalendar(data));
         $scope.newTaskReset();
         $('#createTaskModal').modal('hide');
       };
@@ -100,14 +100,17 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
 
     $scope.reloadTasks = function() {
       $scope.$emit("loading_start");
+      $scope.eventSources = [];
       angular.forEach($scope.calendars, function(calendar) {
+        var source = {events: [], color: calendar.color || "#909090", id: calendar.id};
         TaskService.all(calendar.id).success(function(data) {
           angular.forEach(data, function(task) {
-            $scope.events.push(TaskService.toFullCalendar(task));
+            source.events.push(TaskService.toFullCalendar(task));
           })
         }).finally(function() {
           $scope.$emit("loading_stop");
         });
+        $scope.eventSources.push(source);
       })
     }
     $scope.reloadTasks();
