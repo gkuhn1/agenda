@@ -765,6 +765,10 @@ a.fc-more:hover {
   font-size: 11px;
 }
 
+table tr:first-child > .fc-axis.fc-time.fc-widget-content:first-child > span {
+    top: -5px;
+}
+
 .fc-minor + .fc-minor + .fc-minor .fc-widget-content,
 .fc-minor .fc-widget-content {
 	border-top-width: 0;

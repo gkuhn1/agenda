@@ -39,8 +39,8 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
   }
 ])
 
-.controller("CalendarsCtrl", ['$scope', '$rootScope', 'calendars', 'CalendarService', 'TaskService',
-  function($scope, $rootScope, calendars, CalendarService, TaskService) {
+.controller("CalendarsCtrl", ['$scope', '$rootScope', '$timeout', 'calendars', 'CalendarService', 'TaskService',
+  function($scope, $rootScope, $timeout, calendars, CalendarService, TaskService) {
 
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
     $scope.calendars = calendars;
@@ -98,12 +98,16 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       })
     }
 
-    $scope.reloadTasks = function() {
+    $scope.reloadTasks = function(element, view) {
+      console.log("222", element);
+      if (element === undefined) {
+        element = $('#fullcalendar').fullCalendar('getView');
+      }
       $scope.$emit("loading_start");
-      $scope.eventSources = [];
+      $scope.eventSources.splice(0,$scope.eventSources.length)
       angular.forEach($scope.calendars, function(calendar) {
         var source = {events: [], color: calendar.color || "#909090", id: calendar.id};
-        TaskService.all(calendar.id).success(function(data) {
+        TaskService.all(calendar.id, element).success(function(data) {
           angular.forEach(data, function(task) {
             source.events.push(TaskService.toFullCalendar(task));
           })
@@ -112,8 +116,8 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
         });
         $scope.eventSources.push(source);
       })
+      $($scope.$fullcalendar).fullCalendar('refetch');
     }
-    $scope.reloadTasks();
 
     $scope.onSelectCalendar = function(start, end, allDay) {
       console.log(start, end, allDay);
@@ -141,6 +145,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       slotDuration: "00:15:00",
       scrollTime: new Date().getTimeStr(),
       axisFormat: 'HH:mm',
+      height: 600,
       editable: true,
       selectable: true,
       selectHelper: true,
@@ -154,11 +159,16 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
           titleRangeSeparator: ' à '
         }
       },
+      viewRender: $scope.reloadTasks,
       select: $scope.onSelectCalendar,
       dayClick: $scope.alertEventOnClick,
       eventDrop: $scope.alertOnDrop,
       eventResize: $scope.alertOnResize
     }
+
+    $timeout(function() {
+      $('#fullcalendar').fullCalendar('option','height', $('.content-wrapper').height());
+    }, 200);
 
     $rootScope.$on('calendar-week-changed', function(event, startDate, endDate, currentDate) {
       $scope.$apply(function() {

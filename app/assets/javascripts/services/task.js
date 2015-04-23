@@ -11,9 +11,13 @@ angular.module('agenda.taskservice', ['httpq'])
     }
 
     // load
-    pub.all = function(calendar_id) {
-      console.log(pub.get_url(calendar_id))
-      return $http.get(pub.get_url(calendar_id))
+    pub.all = function(calendar_id, options) {
+      console.log(options);
+      data = {};
+      if (options.start !== undefined && options.end !== undefined) {
+        data = {start_at: options.start.toISOString(), end_at: options.end.toISOString()};
+      }
+      return $http.get(pub.get_url(calendar_id),data)
     }
 
     pub.get = function(calendar_id, id) {
