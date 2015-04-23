@@ -6316,6 +6316,7 @@ var View = fc.View = Class.extend({
 
 	// Wraps the basic render() method with more View-specific logic. Called by the owner Calendar.
 	renderView: function() {
+		this.trigger('beforeViewRender', this, this, this.el);
 		this.render();
 		this.updateSize();
 		this.initializeScroll();

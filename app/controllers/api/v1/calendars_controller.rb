@@ -13,6 +13,9 @@ class Api::V1::CalendarsController < Api::V1::ApiController
 Accept: application/json
 Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDAw
 
+=====Filtros de requisição
+  tasks [true/false] - Exibir também as tarefas de cada celendário
+
 ====Retorno com Sucesso:
   [
     {
@@ -24,6 +27,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   ]
   EOS
   def index
+    @tasks = params[:tasks]
     super
   end
 

@@ -99,24 +99,22 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
     }
 
     $scope.reloadTasks = function(element, view) {
-      console.log("222", element);
+      $scope.$emit("loading_start");
+
       if (element === undefined) {
         element = $('#fullcalendar').fullCalendar('getView');
       }
-      $scope.$emit("loading_start");
       $scope.eventSources.splice(0,$scope.eventSources.length)
       angular.forEach($scope.calendars, function(calendar) {
         var source = {events: [], color: calendar.color || "#909090", id: calendar.id};
-        TaskService.all(calendar.id, element).success(function(data) {
-          angular.forEach(data, function(task) {
-            source.events.push(TaskService.toFullCalendar(task));
-          })
-        }).finally(function() {
-          $scope.$emit("loading_stop");
-        });
+        angular.forEach(calendar.tasks, function(task) {
+          source.events.push(TaskService.toFullCalendar(task));
+        })
         $scope.eventSources.push(source);
       })
-      $($scope.$fullcalendar).fullCalendar('refetch');
+
+      // $($scope.$fullcalendar).fullCalendar('refetch');
+      $scope.$emit("loading_stop", {timeout: false});
     }
 
     $scope.onSelectCalendar = function(start, end, allDay) {
@@ -159,7 +157,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
           titleRangeSeparator: ' à '
         }
       },
-      viewRender: $scope.reloadTasks,
+      beforeViewRender: $scope.reloadTasks,
       select: $scope.onSelectCalendar,
       dayClick: $scope.alertEventOnClick,
       eventDrop: $scope.alertOnDrop,

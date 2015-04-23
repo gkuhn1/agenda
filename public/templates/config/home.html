@@ -1,0 +1,98 @@
+
+<div style="min-height: 1200px;" class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1 class="ng-binding">
+
+      <small class="ng-binding">
+
+      </small>
+    </h1>
+    <ol class="breadcrumb">
+
+    </ol>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <!-- uiView: alert --><div ui-view="alert" class="ng-scope"></div>
+    <div class="pad margin no-print">
+      <div role="alert" ng-show="alertDanger" class="alert alert-dismissable alert-danger ng-binding ng-hide">
+        <button type="button" data-dismiss="alert" class="close" aria-hidden="true">x</button>
+
+      </div>
+      <div role="alert" ng-show="alertSuccess" class="alert alert-dismissable alert-success ng-binding ng-hide">
+        <button type="button" data-dismiss="alert" class="close" aria-hidden="true">x</button>
+
+      </div>
+    </div>
+    <!-- Info boxes -->
+    <div class="row" ui-view>
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua">
+            <i class="ion ion-ios-gear-outline"></i>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">Tarefas agendadas</span>
+            <span class="info-box-number">
+              90
+              <small>%</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-red">
+            <i class="fa fa-google-plus"></i>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">Likes</span>
+            <span class="info-box-number">41,410</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <!-- fix for small devices only -->
+      <div class="clearfix visible-sm-block"></div>
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-green">
+            <i class="ion ion-ios-cart-outline"></i>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">Contas criadas</span>
+            <span class="info-box-number">
+              {{ panels.accounts_count }}
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-yellow">
+            <i class="ion ion-ios-people-outline"></i>
+          </span>
+          <div class="info-box-content">
+            <span class="info-box-text">Usuários</span>
+            <span class="info-box-number">
+              {{ panels.users_count }}
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+
+    </div>
+  </section>
+</div>

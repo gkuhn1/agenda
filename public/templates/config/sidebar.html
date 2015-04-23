@@ -1,0 +1,64 @@
+<aside class="main-sidebar">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+      <div class="pull-left image">
+        <img src="{{ current_user.gravatar_url }}" class="img-circle" alt="User Image">
+      </div>
+      <div class="pull-left info">
+        <p>Olá, {{ current_user.name }}</p>
+        <a href="#">
+          <i class="fa fa-circle text-success"></i>
+          Online
+        </a>
+      </div>
+    </div>
+    <!-- search form -->
+    <form method="get" class="sidebar-form ng-pristine ng-valid" action="#">
+      <div class="input-group">
+        <input type="text" placeholder="Search..." name="q" class="form-control">
+        <span class="input-group-btn">
+          <button type="submit" name="seach" id="search-btn" class="btn btn-flat">
+            <i class="fa fa-search"></i>
+          </button>
+        </span>
+      </div>
+    </form>
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+
+    <ul class="sidebar-menu" ui-view="sidebarmenu">
+
+      <li class="header">CONFIGURAÇÕES DA CONTA</li>
+
+      <li class="treeview" data-ng-treeview data-ng-model="tv_account" data-active-state="'accounts'">
+        <a><span><i class="fa fa-credit-card"></i> Conta</span><i class="fa pull-right fa-angle-left"></i></a>
+        <ul class="treeview-menu">
+          <li ui-sref-active-eq="active"><a href ui-sref="app.header.admin-sidebar.home.accounts"><i class="fa fa-angle-double-right"></i> Lista</a></li>
+          <li ui-sref-active-eq="active"><a href ui-sref="app.header.admin-sidebar.home.accounts.new"><i class="fa fa-angle-double-right"></i> Nova conta</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview" data-ng-treeview data-ng-model="tv_user" data-active-state="'users'">
+        <a><span><i class="fa fa-users"></i> Profissionais</span><i class="fa pull-right fa-angle-left"></i></a>
+        <ul class="treeview-menu">
+          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users') }"><a href ui-sref="app.header.admin-sidebar.home.users"><i class="fa fa-angle-double-right"></i> Lista</a></li>
+          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users_new') }"><a href ui-sref="app.header.admin-sidebar.home.users.new"><i class="fa fa-angle-double-right"></i> Novo usuário</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview" data-ng-treeview data-ng-model="tv_account" data-active-state="'accounts'">
+        <a><span><i class="fa fa-credit-card"></i> Especialidades</span><i class="fa pull-right fa-angle-left"></i></a>
+        <ul class="treeview-menu">
+          <li ui-sref-active-eq="active"><a href ui-sref="app.header.admin-sidebar.home.accounts"><i class="fa fa-angle-double-right"></i> Lista</a></li>
+          <li ui-sref-active-eq="active"><a href ui-sref="app.header.admin-sidebar.home.accounts.new"><i class="fa fa-angle-double-right"></i> Nova conta</a></li>
+        </ul>
+      </li>
+
+    </ul>
+
+  </section>
+</aside>
+
+<ui-view />

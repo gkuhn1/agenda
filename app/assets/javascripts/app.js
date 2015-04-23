@@ -14,6 +14,7 @@ angular.module('agenda', [
   'agenda.login',
   'agenda.users',
   'agenda.calendars',
+  'agenda.configs',
 
   // States
   'agenda.grandfather',
@@ -23,6 +24,7 @@ angular.module('agenda', [
   'agenda.states-users',
   'agenda.states-accounts',
   'agenda.states-calendars',
+  'agenda.states-configs',
 
   'agenda.states-admin',
 
@@ -134,10 +136,15 @@ angular.module('agenda', [
         $rootScope.loadingView = true;
       });
 
-      $rootScope.$on('loading_stop', function() {
-        $timeout(function() {
+      $rootScope.$on('loading_stop', function(event, params) {
+        params = params || {};
+        if (params.timeout === undefined || params.timeout !== false) {
+          $timeout(function() {
+            $rootScope.loadingView = false;
+          }, params.timeout || 200);
+        } else {
           $rootScope.loadingView = false;
-        }, 200);
+        }
       });
 
       $rootScope.$on('currentAccountSelected', function(event, account) {
