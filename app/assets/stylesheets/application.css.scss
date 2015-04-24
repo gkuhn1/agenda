@@ -66,6 +66,15 @@ table.table-ellipsis > tbody > tr > td {
   text-overflow: ellipsis;
 }
 
+/** TRUNCATE **/
+.css-truncate {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+}
 
 /* MODAL CENTERING CSS */
 /* scroll fixes */

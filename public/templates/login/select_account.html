@@ -13,7 +13,7 @@
     <p class="login-box-msg">Selecione uma conta</p>
 
     <div ng-repeat="account in accounts">
-      <a ng-click="select_account(account)" class="btn btn-block btn-success btn-sm">
+      <a ng-click="select_account(account)" class="btn btn-block btn-success btn-sm css-truncate" title="{{ account.name }}">
         {{ account.name }}
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </a>

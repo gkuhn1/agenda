@@ -32,19 +32,15 @@
 
       <li class="header">CONFIGURAÇÕES DA CONTA</li>
 
-      <li class="treeview" data-ng-treeview data-ng-model="tv_account" data-active-state="'accounts'">
-        <a><span><i class="fa fa-credit-card"></i> Conta</span><i class="fa pull-right fa-angle-left"></i></a>
-        <ul class="treeview-menu">
-          <li ui-sref-active-eq="active"><a href ui-sref="app.header.admin-sidebar.home.accounts"><i class="fa fa-angle-double-right"></i> Lista</a></li>
-          <li ui-sref-active-eq="active"><a href ui-sref="app.header.admin-sidebar.home.accounts.new"><i class="fa fa-angle-double-right"></i> Nova conta</a></li>
-        </ul>
+      <li ui-sref-active-eq="active">
+        <a href ui-sref="app.header.config-sidebar.home.edit"><i class="fa fa-credit-card"></i> Editar inf. da conta</a>
       </li>
 
       <li class="treeview" data-ng-treeview data-ng-model="tv_user" data-active-state="'users'">
         <a><span><i class="fa fa-users"></i> Profissionais</span><i class="fa pull-right fa-angle-left"></i></a>
         <ul class="treeview-menu">
           <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users') }"><a href ui-sref="app.header.admin-sidebar.home.users"><i class="fa fa-angle-double-right"></i> Lista</a></li>
-          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users_new') }"><a href ui-sref="app.header.admin-sidebar.home.users.new"><i class="fa fa-angle-double-right"></i> Novo usuário</a></li>
+          <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users_new') }"><a href ui-sref="app.header.admin-sidebar.home.users.new"><i class="fa fa-angle-double-right"></i> Novo profissional</a></li>
         </ul>
       </li>
 

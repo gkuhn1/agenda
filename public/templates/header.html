@@ -1,5 +1,5 @@
 <header class="main-header">
-  <a title="{{ current_account.description }}" href="/" class="logo">
+  <a title="{{ current_account.description }}" href="/" class="logo css-truncate">
     {{ current_account.name }}
   </a>
   <!-- Header Navbar: style can be found in header.less -->
@@ -13,19 +13,19 @@
     </a>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li>
+        <li ui-sref-active-eq="open">
           <a href ui-sref="app.header.sidebar.home">Dashboard</a>
         </li>
-        <li>
+        <li ui-sref-active-eq="open">
           <a href ui-sref="app.header.calendar-sidebar.calendars">Calendário</a>
         </li>
         <li>
           <a href>Clientes</a>
         </li>
-        <li>
+        <li ui-sref-active-eq="open">
           <a href ui-sref="app.header.config-sidebar.home">Configurações</a>
         </li>
-        <li ng-show="current_user.admin">
+        <li ng-show="current_user.admin" ui-sref-active-eq="open">
           <a href ui-sref="app.header.admin-sidebar.home">Administração</a>
         </li>
       </ul>

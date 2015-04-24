@@ -14,7 +14,7 @@ angular.module('agenda', [
   'agenda.login',
   'agenda.users',
   'agenda.calendars',
-  'agenda.configs',
+  'agenda.account-configs',
 
   // States
   'agenda.grandfather',
@@ -24,7 +24,7 @@ angular.module('agenda', [
   'agenda.states-users',
   'agenda.states-accounts',
   'agenda.states-calendars',
-  'agenda.states-configs',
+  'agenda.states-account-configs',
 
   'agenda.states-admin',
 

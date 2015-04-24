@@ -1,0 +1,32 @@
+angular.module('agenda.states-account-configs', ['agenda.grandfather'])
+.config(['$stateProvider',
+  function($stateProvider) {
+
+    $stateProvider
+      .state('app.header.config-sidebar', {
+        abstract: true,
+        templateUrl: "/templates/config/sidebar.html"
+      })
+        .state('app.header.config-sidebar.home', {
+          url: "/account",
+          controller: 'AccountConfigHomeCtrl',
+          templateUrl: "/templates/config/home.html",
+          resolve: {
+            current_account: ['Auth', function(Auth) {
+              return Auth.current_account();
+            }]
+          }
+        })
+          .state('app.header.config-sidebar.home.edit', {
+            url: "/edit",
+            controller: 'EditAccountConfigHomeCtrl',
+            templateUrl: "/templates/config/edit.html",
+            resolve: {
+              current_account: ['Auth', function(Auth) {
+                return Auth.current_account();
+              }]
+            }
+          })
+
+  }
+]);
