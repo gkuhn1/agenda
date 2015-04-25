@@ -114,4 +114,19 @@ RSpec.describe User, type: :model do
       expect { user.destroy }.to change(Calendar, :count).by(0)
     end
   end
+
+  context "account_user_for" do
+    let(:user) {FactoryGirl.create(:user, :admin => true)}
+    let(:account1) {FactoryGirl.create(:account)}
+    let(:account2) {FactoryGirl.create(:account)}
+    let(:account3) {FactoryGirl.create(:account)}
+    it "should return account_user for specified user and account" do
+      account1.account_users.create(user: user, task_color: "#FFFFFF")
+      expect(user.account_user_for(account1).task_color).to eq("#FFFFFF")
+    end
+    it "should raise 404 if user does not have account" do
+      account1.account_users.create(user: user, task_color: "#FFFFFF")
+      expect { user.account_user_for(account3).task_color }.to raise_error(Mongoid::Errors::DocumentNotFound)
+    end
+  end
 end
