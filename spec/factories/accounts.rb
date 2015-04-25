@@ -12,7 +12,7 @@ FactoryGirl.define do
       user nil
     end
 
-    after(:build) do |account, evaluator|
+    after(:create) do |account, evaluator|
       account.add_user(evaluator.user.nil? ? FactoryGirl.create(:user) : evaluator.user)
     end
   end

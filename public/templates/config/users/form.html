@@ -1,0 +1,88 @@
+<div class="col-md-12">
+  <div class="box box-danger">
+    <div class="box-header">
+      <h3 class="box-title">
+        Editar configurações de {{ user.name }}
+      </h3>
+    </div>
+    <div class="box-body">
+      <form name="form" class="simple_form new_user" ng-submit="saveUser(user)" novalidate>
+        <div class="col-md-6">
+
+
+          <div class="form-group string optional user_task_color" ng-class="{'has-error' : form.task_color.$error.server}">
+            <label for="user_task_color" class="string optional control-label">Cor das tarefas no calendário</label>
+            <input type="text" class="string optional form-control" ng-model="user.task_color" name="task_color" server-error>
+            <p class="help-block" ng-show="form.task_color.$error.server">{{ errors.task_color }}</p>
+          </div>
+
+          <div class="form-group optional user_permission"  ng-class="{'has-error' : form.permission.$error.server}">
+            <label for="user_name" class="string optional control-label">Permissão</label>
+            <div class="checkbox">
+              <label class="string optional control-label">
+                <input type="radio" ng-model="user.permission" name="permission" server-error> Operador
+              </label>
+              <label class="string optional control-label">
+                <input type="radio" ng-model="user.permission" name="permission" server-error> Administrador
+              </label>
+              <label class="string optional control-label">
+                <input type="radio" ng-model="user.permission" name="permission" server-error> Dono
+              </label>
+            </div>
+            <p class="help-block" ng-show="form.permission.$error.server">{{ errors.permission }}</p>
+          </div>
+
+<!--
+          <div class="form-group string optional user_name" ng-class="{'has-error' : form.name.$error.server}">
+            <label for="user_name" class="string optional control-label">Nome</label>
+            <input type="text" class="string optional form-control" ng-model="user.name" name="name" server-error>
+            <p class="help-block" ng-show="form.name.$error.server">{{ errors.name }}</p>
+          </div>
+
+          <div class="form-group string optional user_email"  ng-class="{'has-error' : form.email.$error.server}">
+            <label for="user_email" class="string optional control-label">E-mail</label>
+            <input type="text" ng-model="user.email" class="string optional form-control"  name="email" server-error>
+            <p class="help-block" ng-show="form.email.$error.server">{{ errors.email }}</p>
+          </div>
+
+          <div class="form-group optional user_generate_password"  ng-class="{'has-error' : form.generate_password.$error.server}">
+            <div class="checkbox">
+              <label class="string optional control-label">
+                <input type="checkbox" ng-model="user.generate_password" name="generate_password" server-error> Gerar senha automaticamente?
+              </label>
+            </div>
+            <p class="help-block" ng-show="form.generate_password.$error.server">{{ errors.generate_password }}</p>
+          </div>
+
+          <div class="form-group string optional user_password" ng-show="!user.generate_password" ng-class="{'has-error' : form.password.$error.server}">
+            <label for="user_password" class="string optional control-label">Senha</label>
+            <input type="password" ng-model="user.password" class="string optional form-control"  name="password" server-error>
+            <p class="help-block" ng-show="form.password.$error.server">{{ errors.password }}</p>
+          </div>
+
+          <div class="form-group optional user_admin"  ng-class="{'has-error' : form.admin.$error.server}">
+            <div class="checkbox">
+              <label class="string optional control-label">
+                <input type="checkbox" ng-model="user.admin" name="admin" server-error> Administrador?
+              </label>
+            </div>
+            <p class="help-block" ng-show="form.admin.$error.server">{{ errors.admin }}</p>
+          </div>
+-->
+
+        </div>
+        <div class="clearfix"></div>
+        <div class="box-footer">
+          <div class="row">
+            <div class="col-md-2">
+              <a class="btn btn-default" href ui-sref="^"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+            </div>
+            <div class="col-md-10" style="text-align: right;">
+              <button type="submit" class="btn btn-success" name="commit" ladda="laddaLoading"><i class="glyphicon glyphicon-ok"></i> Enviar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

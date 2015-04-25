@@ -54,7 +54,7 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
   context "#create" do
     let(:auth_params_no_account) { {} }
     let(:auth_params_no_user) { {} }
-    let(:account_params) { {account: FactoryGirl.attributes_for(:account).merge(user_ids: [user.id])} }
+    let(:account_params) { {account: FactoryGirl.attributes_for(:account)} }
 
     it "should not require current_account" do
       api_authenticate

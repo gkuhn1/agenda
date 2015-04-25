@@ -27,6 +27,30 @@ angular.module('agenda.states-account-configs', ['agenda.grandfather'])
               }]
             }
           })
+          .state('app.header.config-sidebar.home.users', {
+            url: "/users",
+            controller: 'AccountUsersCtrl',
+            templateUrl: "/templates/config/users/index.html",
+            resolve: {
+              users: ['UserService', function(UserService) {
+                return UserService.all();
+              }]
+            }
+          })
+            .state('app.header.config-sidebar.home.users.edit', {
+              url: "/:id/edit",
+              controller: 'AccountUsersEditCtrl',
+              templateUrl: "/templates/config/users/form.html",
+              resolve: {
+                user: ['$stateParams', 'UserService', function($stateParams, UserService) {
+                  return UserService.get($stateParams.id);
+                }]
+              },
+              data: {
+                edit: true
+              }
+            })
+
 
   }
 ]);

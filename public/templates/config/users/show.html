@@ -1,0 +1,27 @@
+<div class="col-md-12">
+
+  <div class="box box-danger">
+    <div class="box-header">
+      <h3 class="box-title">
+         {{ user.name }}
+      </h3>
+    </div>
+    <div class="box-body">
+      <p id="notice"></p>
+      <p><b>E-mail:</b> {{ user.email }} </p>
+      <p><b>Administrador?:</b> {{ user.admin ? 'Sim' : 'Não' }} </p>
+
+    </div>
+
+  <div class="box-footer">
+    <div class="row">
+      <div class="col-md-2">
+        <a class="btn btn-default" href ui-sref="app.header.admin-sidebar.home.users"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a>
+      </div>
+      <div class="col-md-10" style="text-align: right;">
+        <a class="btn btn-warning" href ui-sref="app.header.admin-sidebar.home.users.edit(user)"><i class="fa fa-pencil"></i> Editar</a>
+      </div>
+    </div>
+  </div>
+
+</div>

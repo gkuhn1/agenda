@@ -1,0 +1,36 @@
+<div ui-view>
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Lista de usuários da conta atual</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr role="row">
+              <th>Name</th>
+              <th>Email</th>
+              <th>Permissão</th>
+              <th>Possui agenda?</th>
+              <th>Cor de tarefa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat='user in users'>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.permission_desc }}</td>
+              <td>{{ user.has_calendar }}</td>
+              <td>{{ user.task_color }}</td>
+              <td>
+                <a href ui-sref="app.header.config-sidebar.home.users.edit(user)"><i class="fa fa-pencil"></i></a>
+                <a href ng-really-message="Confirmar remoção deste usuário da conta?" ng-really-click="destroyUser()"><i class="fa fa-trash-o"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

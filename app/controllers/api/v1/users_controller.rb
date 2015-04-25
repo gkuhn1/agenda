@@ -35,7 +35,10 @@ class Api::V1::UsersController < Api::V1::ApiController
           "5505a29e676b7554a7010000"
         ]
       },{...}],
-      "gravatar_url":"https://secure.gravatar.com/avatar/d99b817adea899880d8638bbe997ac0b.png?r=PG"
+      "gravatar_url":"https://secure.gravatar.com/avatar/d99b817adea899880d8638bbe997ac0b.png?r=PG",
+      "task_color": "#909090",
+      "permission": "owner",
+      "has_calendar": true
     }
   ]
   EOS
@@ -71,7 +74,10 @@ class Api::V1::UsersController < Api::V1::ApiController
         ]
       }
     ],
-    "gravatar_url":"https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG"
+    "gravatar_url":"https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG",
+      "task_color": "#909090",
+      "permission": "owner",
+      "has_calendar": true
   }
   EOS
   def show
@@ -134,7 +140,10 @@ Dados do usuário criado
         "updated_at": "2015-04-11T18:53:14.347-03:00",
         "user_ids": ["552997ca676b750e74000000"]
     }],
-    "gravatar_url": "https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG"
+    "gravatar_url": "https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG",
+    "task_color": "#909090",
+    "permission": "owner",
+    "has_calendar": true
   }
 
 ====Retorno com erro por dados incorretos:
@@ -184,7 +193,10 @@ HTTP Status: 422
         "updated_at": "2015-04-11T18:53:14.347-03:00",
         "user_ids": ["552997ca676b750e74000000"]
     }],
-    "gravatar_url": "https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG"
+    "gravatar_url": "https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG",
+    "task_color": "#909090",
+    "permission": "owner",
+    "has_calendar": true
   }
 ====Retorno com erro por não encontrar o usuário:
   HTTP Status: 404
@@ -227,7 +239,10 @@ HTTP Status: 422
         "updated_at": "2015-04-11T18:53:14.347-03:00",
         "user_ids": ["552997ca676b750e74000000"]
     }],
-    "gravatar_url": "https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG"
+    "gravatar_url": "https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG",
+    "task_color": "#909090",
+    "permission": "owner",
+    "has_calendar": true
   }
 
 ====Retorno com erro por dados incorretos:

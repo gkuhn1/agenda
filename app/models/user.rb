@@ -46,7 +46,6 @@ class User
 
   attr_accessor :generate_password
 
-  has_and_belongs_to_many :accounts
   has_one :calendar
 
   before_validation :generate_password!
@@ -74,5 +73,13 @@ class User
 
   def admin?
     self.admin == true
+  end
+
+  def accounts
+    Account.where({'account_users' => {'$elemMatch': {"user_id": _id}}})
+  end
+
+  def account_user_for(account)
+    accounts.find(account._id).account_users.where({"user_id": _id}).first
   end
 end

@@ -280,7 +280,7 @@ Apenas é possível excluir contas caso o usuário autenticado tenha acesso a es
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.require(:account).permit(:name, :description, :address, :phone, :phone2, :website, :plan, user_attributes: [:name, :email, :password, :password_confirmation], user_ids: [])
+      params.require(:account).permit(:name, :description, :address, :phone, :phone2, :website, :plan, user_attributes: [:name, :email, :password, :password_confirmation])
     end
 
 end

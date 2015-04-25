@@ -7,17 +7,17 @@ describe Account, type: :model do
       expect(account.valid?).to be(false)
       expect(account.errors[:name]).to eq(["não pode ficar em branco"])
     end
-    it "should call fill_out_db before validation" do
-      account = Account.new(:name => "test")
-      expect(account).to receive(:fill_out_db).once.and_call_original
-      expect(account.valid?).to be(false)
-      expect(account.database).not_to eq(nil)
-    end
-    it "should hava at least one user" do
-      account = Account.new
-      expect(account.valid?).to be(false)
-      expect(account.errors[:user_ids]).to eq(["não pode ficar em branco"])
-    end
+    # it "should call fill_out_db before validation" do
+    #   account = Account.new(:name => "test")
+    #   expect(account).to receive(:fill_out_db).once.and_call_original
+    #   expect(account.valid?).to be(false)
+    #   expect(account.database).not_to eq(nil)
+    # end
+    # it "should hava at least one user" do
+    #   account = Account.new
+    #   expect(account.valid?).to be(false)
+    #   expect(account.errors[:user_ids]).to eq(["não pode ficar em branco"])
+    # end
   end
 
   context ".build_user_from_attributes" do
@@ -48,43 +48,48 @@ describe Account, type: :model do
       account = FactoryGirl.build(:account)
       user = FactoryGirl.build(:user)
       account.instance_variable_set("@user_from_attributes", user)
-      account.create_user_from_attributes
-      expect(account.user_ids).to include(user._id)
+      account.save
+      expect(account.users).to include(user)
     end
     it "should do nothing if user doesn't exists" do
       account = FactoryGirl.build(:account)
       account.create_user_from_attributes
-      expect(account.user_ids.count).to eq(1)
+      expect(account.users.count).to eq(0)
     end
   end
 
-  context ".fill_out_db" do
-    it "should set database based on name" do
-      account = Account.new(:name => "MyAccount")
-      account.valid?
-      expect(account.database).to eq("myaccount")
-    end
-    it "should not set duplicated database" do
-      a = FactoryGirl.create(:account, :name => "MyAccount", :database => "myaccount")
-      account = Account.new(:name => "MyAccount")
-      account.valid?
-      expect(account.database).to eq("myaccount_1")
-    end
-    it "should not be called if database is filled" do
-      account = FactoryGirl.build(:account, :name => "MyAccount", :database => "myaccount123")
-      expect(account).not_to receive(:fill_out_db)
-      expect(account.valid?).to be(true)
-    end
-  end
+  # context ".fill_out_db" do
+  #   it "should set database based on name" do
+  #     account = Account.new(:name => "MyAccount")
+  #     account.valid?
+  #     expect(account.database).to eq("myaccount")
+  #   end
+  #   it "should not set duplicated database" do
+  #     a = FactoryGirl.create(:account, :name => "MyAccount", :database => "myaccount")
+  #     account = Account.new(:name => "MyAccount")
+  #     account.valid?
+  #     expect(account.database).to eq("myaccount_1")
+  #   end
+  #   it "should not be called if database is filled" do
+  #     account = FactoryGirl.build(:account, :name => "MyAccount", :database => "myaccount123")
+  #     expect(account).not_to receive(:fill_out_db)
+  #     expect(account.valid?).to be(true)
+  #   end
+  # end
 
   context ".add_user" do
-    it "should add an user and save both account and user" do
+    it "should add an user to account" do
       account = FactoryGirl.create(:account)
       user = FactoryGirl.create(:user)
-      expect(account).to receive(:save).and_call_original
-      expect(user).to receive(:save).twice.and_call_original
       account.add_user(user)
-      expect(account.user_ids).to include(user._id)
+      expect(account.users).to include(user)
+    end
+    it "should ignore if user already are in account" do
+      account = FactoryGirl.create(:account)
+      user = FactoryGirl.create(:user)
+      expect(account.add_user(user)).to be_instance_of(AccountUser)
+      expect(account.add_user(user)).to be nil
+      expect(account.users).to include(user)
     end
   end
 end
