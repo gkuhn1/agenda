@@ -47,16 +47,29 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
 ])
 
 .controller("AccountUsersEditCtrl", ['$scope', '$rootScope',
-    '$state', 'user', 'AccountService', 'Auth',
-  function($scope, $rootScope, $state, user, AccountService, Auth) {
+    '$state', 'user', 'UserService',
+  function($scope, $rootScope, $state, user, UserService) {
     $scope.user = user;
     $scope.errors = {};
+
+    $('#task_colorpicker').colorpicker({
+      color: user.task_color,
+      format: 'hex',
+      afterUpdate: function(elem, val) {
+        $scope.user.task_color = val;
+      }
+    });
 
     $scope.saveUser = function(user) {
       $scope.laddaLoading = true;
       $scope.errors = {};
+
+      if ($state.current.data.edit == false)
+        user.generate_password = true;
+
       UserService.save(user, $state.current.data.edit)
         .success(function(data) {
+          updateUser(data);
           $state.go('^');
         })
         .error(function(data) {
@@ -71,5 +84,15 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
         ;
     }
 
+    var updateUser = function(data) {
+      if ($state.current.data.edit) {
+        var idx = $scope.$parent.users.indexOfById(data);
+        $scope.$parent.users[idx] = data;
+      } else {
+        $scope.$parent.users.push(data);
+      }
+    }
+
   }
 ])
+

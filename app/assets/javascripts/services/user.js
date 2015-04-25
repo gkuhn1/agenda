@@ -37,7 +37,7 @@ angular.module('agenda.userservice', ['httpq'])
     }
 
     pub.create = function(user) {
-      return $http.post(pub.base_url+'/users.json', {user: user});
+      return $http.post(pub.base_url+'.json', {user: user});
     }
 
     pub.update = function(user) {

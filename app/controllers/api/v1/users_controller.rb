@@ -8,6 +8,17 @@ class Api::V1::UsersController < Api::V1::ApiController
     formats ['json']
   end
 
+  def_param_group :user do
+    param :name, String, "Nome completo do usuário", :required => true
+    param :email, String, "Endereço de e-mail válido", :required => true
+    param :password, String, "Senha que o usuário irá utilizar para logar no aplicativo", :required => false
+    param :password_confirmation, String, "Confirmação de senha", :required => false
+    param :generate_password, Boolean, "Gerar um password aleatório para o usuário e enviar para o e-mail cadastrado.", :required => false, :default => false
+    param :task_color, String, "Cor padrão para as tarefas deste usuário na conta autenticada.", :require => false, :default => "#909090"
+    param :permission, AccountUser::PERMISSIONS.keys, "Permissão padrão para este usuário na conta autenticada.", :required => false, :default => "owner"
+    param :has_calendar, Boolean, "Indica se o sistema permitira controle de agenda para este usuário na conta autenticada.", :required => false, :default => true
+  end
+
   # Index
   api :GET, '/users', 'Lista usuários da conta logada'
   description <<-EOS
@@ -75,9 +86,9 @@ class Api::V1::UsersController < Api::V1::ApiController
       }
     ],
     "gravatar_url":"https://secure.gravatar.com/avatar/f35eaa580eb1276b9f487cd618d0e141.png?r=PG",
-      "task_color": "#909090",
-      "permission": "owner",
-      "has_calendar": true
+    "task_color": "#909090",
+    "permission": "owner",
+    "has_calendar": true
   }
   EOS
   def show
@@ -154,19 +165,23 @@ HTTP Status: 422
     }
   }
   EOS
-  param :name, String, "Nome completo do usuário", :required => true
-  param :email, String, "Endereço de e-mail válido", :required => true
-  param :password, String, "Senha que o usuário irá utilizar para logar no aplicativo", :required => false
-  param :password_confirmation, String, "Confirmação de senha", :required => false
-  param :generate_password, Boolean, "Gerar um password aleatório para o usuário e enviar para o e-mail cadastrado.", :required => false, :default => false
+  param_group :user
   def create
-    super
-  end
+    object = get_model.new(self.send(self.controller_name.singularize + "_params"))
+    instance_variable_set(get_variable, object)
 
-  set_callback :create_render, :before, :add_new_user_to_current_account
-  def add_new_user_to_current_account
-    current_account.add_user(@user)
-    @user.reload
+    respond_to do |format|
+      if instance_variable_get(get_variable).save
+        account_user = current_account.add_user(@user)
+        account_user.update_attributes(user_account_params)
+
+        format.html { redirect_to "/" + self.controller_path, notice: "Registro criado com sucesso" }
+        format.json { render :show, status: :created }
+      else
+        format.html { render :new }
+        format.json { render json: {errors: instance_variable_get(get_variable).errors}, status: :unprocessable_entity }
+      end
+    end
   end
 
   # New
@@ -253,11 +268,21 @@ HTTP Status: 422
     }
   }
   EOS
-  param :name, String, "Nome completo do usuário", :required => false
-  param :email, String, "Endereço de e-mail válido", :required => false
-  param :token, String, "Token de autenticação", :required => false
+  param_group :user
   def update
-    super
+    object = get_object or return
+    instance_variable_set(get_variable, object)
+
+    respond_to do |format|
+      if instance_variable_get(get_variable).update(self.send(self.controller_name.singularize + "_params"))
+        object.account_user_for(current_account).update_attributes(user_account_params)
+        format.html { redirect_to "/" + self.controller_path, notice: "Registro atualizado com sucesso" }
+        format.json { render :show, status: :ok }
+      else
+        format.html { render :edit }
+        format.json { render json: {errors: instance_variable_get(get_variable).errors}, status: :unprocessable_entity }
+      end
+    end
   end
 
   # New
@@ -359,8 +384,12 @@ HTTP Status: 401
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:id, :name, :email,
-        :password, :password_confirmation, :generate_password)
+      params.require(:user).permit(:id, :name, :email, :password, :password_confirmation,
+        :generate_password)
+    end
+
+    def user_account_params
+      params.require(:user).permit(:task_color, :permission, :has_calendar)
     end
 
     def get_collection

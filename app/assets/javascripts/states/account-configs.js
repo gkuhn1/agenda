@@ -50,6 +50,17 @@ angular.module('agenda.states-account-configs', ['agenda.grandfather'])
                 edit: true
               }
             })
+            .state('app.header.config-sidebar.home.users.new', {
+              url: "/new",
+              controller: 'AccountUsersEditCtrl',
+              templateUrl: "/templates/config/users/new_form.html",
+              resolve: {
+                user: function() {return {}; }
+              },
+              data: {
+                edit: false
+              }
+            })
 
 
   }

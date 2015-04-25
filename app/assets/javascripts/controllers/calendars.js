@@ -106,7 +106,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       }
       $scope.eventSources.splice(0,$scope.eventSources.length)
       angular.forEach($scope.calendars, function(calendar) {
-        var source = {events: [], color: calendar.color || "#909090", id: calendar.id};
+        var source = {events: [], color: calendar.user.task_color, id: calendar.id};
         angular.forEach(calendar.tasks, function(task) {
           source.events.push(TaskService.toFullCalendar(task));
         })

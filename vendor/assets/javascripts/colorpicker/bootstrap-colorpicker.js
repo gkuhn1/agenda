@@ -519,6 +519,7 @@
         input: 'input', // children input selector
         container: false, // container selector
         component: '.add-on, .input-group-addon', // children component selector
+        afterUpdate: undefined, // Callback to update UI
         sliders: {
             saturation: {
                 maxLeft: 100,
@@ -767,6 +768,8 @@
                 this.updateData(val);
             }
             this.updatePicker();
+            if (this.options.afterUpdate !== undefined)
+                this.options.afterUpdate(this, val);
             return val;
 
         },

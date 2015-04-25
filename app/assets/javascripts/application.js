@@ -21,7 +21,7 @@
 //= require moment/moment.min
 //= require fullcalendar/fullcalendar
 //= require fullcalendar/fullcalendar.pt-BR.min
-
+//= require colorpicker/bootstrap-colorpicker
 //= require datepicker/bootstrap-datepicker
 //= require datepicker/locales/bootstrap-datepicker.pt-BR
 

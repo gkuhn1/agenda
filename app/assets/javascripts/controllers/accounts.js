@@ -33,6 +33,7 @@ angular.module('agenda.accounts', ['agenda.grandfather'])
     $scope.saveAccount = function(account) {
       $scope.laddaLoading = true;
       $scope.errors = {};
+
       AccountService.save(account, $state.current.data.edit)
         .success(function(data) {
           updateAccount(data);
