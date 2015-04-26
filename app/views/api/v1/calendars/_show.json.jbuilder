@@ -6,7 +6,7 @@ json.email_notify calendar.email_notify
 
 if @tasks
   json.tasks do
-    json.array!(calendar.tasks, partial: 'api/v1/tasks/show', as: :task)
+    json.array!(calendar.filter_tasks(task_filter_params), partial: 'api/v1/tasks/show', as: :task)
   end
 end
 

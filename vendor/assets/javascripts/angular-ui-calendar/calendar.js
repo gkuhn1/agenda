@@ -283,7 +283,7 @@ angular.module('ui.calendar', [])
 
         eventsWatcher.onRemoved = function(event) {
           calendar.fullCalendar('removeEvents', function(e) {
-            return e._id === event._id;
+            return e.id === event.id;
           });
         };
 

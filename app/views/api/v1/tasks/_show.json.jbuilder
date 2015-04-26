@@ -1,5 +1,6 @@
 
 json.id task.id
+json.calendar_id task.calendar_id
 json.title task.title
 json.description task.description
 json.where task.where

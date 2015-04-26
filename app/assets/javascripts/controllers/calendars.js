@@ -50,8 +50,14 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
     $scope.$fullcalendar = '#fullcalendar';
     $scope.errors = {};
     $scope.laddaModalLoading = false;
+    $scope.laddaModalDeleteLoading = false;
 
     $scope.newTask = {};
+
+    $scope.closeModal = function() {
+      $scope.newTaskReset();
+      $('#createTaskModal').modal('hide');
+    }
 
     $scope.newTaskReset = function() {
       $scope.newTask = {};
@@ -79,23 +85,31 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       }
       var success = function(data) {
         console.log(data);
-        var events = $scope.eventSources.findById(newTask.calendar_id).events;
+        var events = $scope.eventSources.findBy("calendar_id", newTask.calendar_id).events;
         events.push(TaskService.toFullCalendar(data));
-        $scope.newTaskReset();
-        $('#createTaskModal').modal('hide');
+        $scope.closeModal();
       };
       var error = function(data) {
         console.log(data.errors);
         angular.forEach(data.errors, function(errors, field) {
-          console.log(errors, field);
           $scope.form[field].$setValidity('server', false);
           $scope.errors[field] = errors.join(', ');
         })
       }
-      promise = TaskService.save(newTask.calendar_id, TaskService.modalToTask(newTask));
+      promise = TaskService.save(newTask.calendar_id, TaskService.modalToTask(newTask), newTask.updating);
       promise.success(success).error(error).finally(function() {
         $scope.laddaLoading = false;
       })
+    }
+
+    $scope.destroyTask = function(task) {
+      console.log(task);
+      TaskService.destroy(task.calendar_id, task.id)
+        .success(function(data) {
+          var events = $scope.eventSources.findBy("calendar_id", task.calendar_id).events;
+          events.splice(events.indexOfById(task), 1);
+          $scope.closeModal();
+        })
     }
 
     $scope.reloadTasks = function(element, view) {
@@ -104,14 +118,18 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       if (element === undefined) {
         element = $('#fullcalendar').fullCalendar('getView');
       }
-      $scope.eventSources.splice(0,$scope.eventSources.length)
-      angular.forEach($scope.calendars, function(calendar) {
-        var source = {events: [], color: calendar.user.task_color, id: calendar.id};
-        angular.forEach(calendar.tasks, function(task) {
-          source.events.push(TaskService.toFullCalendar(task));
+      CalendarService.promise_all(element.start.toISOString(), element.end.toISOString())
+        .success(function(data) {
+          $scope.eventSources.splice(0,$scope.eventSources.length)
+          $scope.calendars = data;
+          angular.forEach($scope.calendars, function(calendar) {
+            var source = {events: [], color: calendar.user.task_color, calendar_id: calendar.id};
+            angular.forEach(calendar.tasks, function(task) {
+              source.events.push(TaskService.toFullCalendar(task));
+            })
+            $scope.eventSources.push(source);
+          })
         })
-        $scope.eventSources.push(source);
-      })
 
       // $($scope.$fullcalendar).fullCalendar('refetch');
       $scope.$emit("loading_stop", {timeout: false});
@@ -125,9 +143,18 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       $('#createTaskModal').modal('show');
       $('#createTaskModal').find('input:first').focus();
     }
-    $scope.eventClick = function() {
-      console.log(arguments);
+
+    $scope.eventClick = function(cal_task, event, calendar) {
+      TaskService.get(cal_task.calendar_id, cal_task.id)
+        .success(function(data) {
+          $scope.newTask = TaskService.taskToModal(data);
+          $scope.newTask.updating = true;
+          console.log($scope.newTask);
+          $('#createTaskModal').modal('show');
+          $('#createTaskModal').find('input:first').focus();
+        });
     }
+
     $scope.alertOnResize = function() {
       console.log(arguments);
     }

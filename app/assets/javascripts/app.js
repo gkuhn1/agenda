@@ -162,9 +162,13 @@ angular.module('agenda', [
     }
 ])
 
+Array.prototype.findBy = function(key, elem) {
+  if (elem["" + key] !== undefined) elem = elem["" + key];
+  return $.grep(this, function(element, index){ return element["" + key] == elem; })[0];
+}
+
 Array.prototype.findById = function(elem) {
-  if (elem.id !== undefined) elem = elem.id;
-  return $.grep(this, function(element, index){ return element.id == elem; })[0];
+  return this.findBy("id", elem);
 }
 
 Array.prototype.indexOfById = function(elem) {

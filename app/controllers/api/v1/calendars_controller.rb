@@ -1,5 +1,7 @@
 class Api::V1::CalendarsController < Api::V1::ApiController
 
+  helper_method :task_filter_params
+
   resource_description do
     short  'Recursos para manipulação de Agendas'
     name 'Agendas'
@@ -129,6 +131,10 @@ HTTP Status: 404
     # Never trust parameters from the scary internet, only allow the white list through.
     def calendar_params
       params.require(:calendar).permit(:id, :system_notify, :email_notify)
+    end
+
+    def task_filter_params
+      params.permit(:start_at, :end_at)
     end
 
 end

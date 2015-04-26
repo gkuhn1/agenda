@@ -6,8 +6,22 @@ angular.module('agenda.calendarservice', ['httpq']).factory('CalendarService', [
     var pub = {};
 
     // load
-    pub.all = function() {
-      return $httpq.get(base_url+'.json', {cache: true, params: {tasks: 'true'}});
+    pub._all = function($h, start, end) {
+      var data = {tasks: true};
+      if (start && end) {
+        data.start_at  = start
+        data.end_at = end
+      }
+
+      return $h.get(base_url+'.json', {cache: true, params: data});
+    }
+
+    pub.all = function(start, end) {
+      return pub._all($httpq, start, end);
+    }
+
+    pub.promise_all = function(start, end) {
+      return pub._all($http, start, end);
     }
 
     pub.get = function(id) {

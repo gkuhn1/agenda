@@ -21,7 +21,7 @@ angular.module('agenda.taskservice', ['httpq'])
     }
 
     pub.get = function(calendar_id, id) {
-      return $httpq.get(pub.get_url(calendar_id)+'/'+id+'.json');
+      return $http.get(pub.get_url(calendar_id)+'/'+id+'.json');
     }
 
     pub.new = function(calendar_id) {
@@ -29,6 +29,7 @@ angular.module('agenda.taskservice', ['httpq'])
     }
 
     pub.save = function(calendar_id, obj, edit) {
+      console.log(edit);
       if (edit) {
         return pub.update(calendar_id, obj);
       } else {
@@ -50,6 +51,8 @@ angular.module('agenda.taskservice', ['httpq'])
 
     pub.toFullCalendar = function(task) {
       return {
+        id: task.id,
+        calendar_id: task.calendar_id,
         title: task.title,
         // start: moment(task.startdate + task.starttime, "DD/MM/YYYYHH:mm"),
         // end: moment(task.enddate + task.endtime, "DD/MM/YYYYHH:mm"),
@@ -60,16 +63,28 @@ angular.module('agenda.taskservice', ['httpq'])
     }
 
     pub.modalToTask = function(task) {
-      data = {
-        title: task.title,
-        stick: true
-      }
+      console.log(task);
+      var data = angular.copy(task, {});
+      data.stick = true
+
       if (task.startdate + task.starttime !== "")
         data.start_at = moment(task.startdate + task.starttime, "DD/MM/YYYYHH:mm").toISOString()
 
       if (task.enddate + task.endtime !== "")
         data.end_at = moment(task.enddate + task.endtime, "DD/MM/YYYYHH:mm").toISOString()
 
+      return data;
+    }
+
+    pub.taskToModal = function(task) {
+      var data = angular.copy(task, {});
+
+      var end = moment(task.end_at);
+      var start = moment(task.start_at);
+      data.enddate = end.format('DD/MM/YYYY');
+      data.endtime = end.format('HH:mm');
+      data.startdate = start.format('DD/MM/YYYY');
+      data.starttime = start.format('HH:mm');
       return data;
     }
 
