@@ -8,7 +8,7 @@ class Task
   field :start_at, type: Time
   field :end_at, type: Time
 
-  embedded_in :calendar
+  belongs_to :calendar
   has_and_belongs_to_many :specialties
 
   STATUS = {
