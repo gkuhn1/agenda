@@ -19,7 +19,7 @@
         <li ui-sref-active-eq="open">
           <a href ui-sref="app.header.calendar-sidebar.calendars">Calendário</a>
         </li>
-        <li>
+        <li ng-show="false">
           <a href>Clientes</a>
         </li>
         <li ui-sref-active-eq="open">
@@ -126,7 +126,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false">
-              <img src="{{ current_user.gravatar_url }}" class="user-image" alt="User Image">
+              <img ng-src="{{ current_user.gravatar_url }}" class="user-image" alt="User Image">
               <span class="hidden-xs">
                 {{ current_user.name }}
               </span>
@@ -134,7 +134,7 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ current_user.gravatar_url }}" class="img-circle" alt="User Image">
+                <img ng-src="{{ current_user.gravatar_url }}" class="img-circle" alt="User Image">
                 <p>
                   {{ current_user.name }}
                   <small>
@@ -149,8 +149,8 @@
               </li>
               <!-- Menu Body -->
               <li class="user-body">
-                <div class="col-xs-4 text-center" ng-repeat="account in accounts">
-                  <a href ng-click="changeCurrentAccount(account)">{{ account.name }}</a>
+                <div class="col-xs-12 css-truncate" ng-repeat="account in accounts">
+                  <a href ng-click="changeCurrentAccount(account)" title="{{ account.name }}">{{ account.name }}</a>
                 </div>
               </li>
               <!-- Menu Footer -->

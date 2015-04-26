@@ -1,0 +1,30 @@
+<div ui-view>
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Lista de usuários da conta atual</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr role="row">
+              <th>Descrição</th>
+              <th>Ativo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat='specialty in specialties'>
+              <td>{{ specialty.description }}</td>
+              <td ng-bind-html='specialty.active | yesnoicon | htmlsafe'></td>
+              <td>
+                <a href ui-sref=".edit(specialty)"><i class="fa fa-pencil"></i></a>
+                <a href ng-really-message="Confirmar remoção desta especialidade?" ng-really-click="destroy()"><i class="fa fa-trash-o"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

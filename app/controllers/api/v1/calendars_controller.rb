@@ -32,7 +32,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   end
 
   # Show
-  api :GET, '/calendars/:calendar_id', 'Busca informações sobre uma agenda específica'
+  api :GET, '/calendars/:id', 'Busca informações sobre uma agenda específica'
   description <<-EOS
 ====Requisição
 ====Retorno com Sucesso:
@@ -48,7 +48,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   end
 
   # Edit
-  api :GET, '/calendars/:calendar_id/edit', 'Busca informações de uma agenda que o usuário autenticado possui acesso para edição'
+  api :GET, '/calendars/:id/edit', 'Busca informações de uma agenda que o usuário autenticado possui acesso para edição'
   description <<-EOS
 ===Requisição
 ====Retorno com Sucesso:
@@ -69,7 +69,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   end
 
   # update
-  api :PUT, '/calendars/:calendar_id', 'Atualiza as informações de uma agenda que o usuário autenticado possui acesso'
+  api :PUT, '/calendars/:id', 'Atualiza as informações de uma agenda que o usuário autenticado possui acesso'
   description <<-EOS
 ===Requisição
 

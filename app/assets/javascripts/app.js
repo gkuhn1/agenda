@@ -6,6 +6,7 @@ angular.module('agenda', [
   'agenda.adminservice',
   'agenda.calendarservice',
   'agenda.taskservice',
+  'agenda.specialtyservice',
 
   // Controllers
   'agenda.accounts',
@@ -39,7 +40,8 @@ angular.module('agenda', [
   'ui.utils.masks',
   'ngMask',
   'ui.calendar',
-  'angular-ladda'
+  'angular-ladda',
+  'agenda-filters'
 ])
 
 // CONFIGS
@@ -126,7 +128,7 @@ angular.module('agenda', [
       $rootScope.$on('$stateChangeSuccess', function(e, curr, prev) {
         // Hide loading message
         $rootScope.$broadcast("loading_stop");
-        contentWrapperHeight();
+        $timeout(function() {contentWrapperHeight()});
 
         $rootScope.current_account = Auth.current_account();
         $rootScope.current_user = Auth.current_user();

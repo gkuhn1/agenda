@@ -9,6 +9,7 @@ class Task
   field :end_at, type: Time
 
   embedded_in :calendar
+  has_and_belongs_to_many :specialties
 
   STATUS = {
     1 => "Criado"

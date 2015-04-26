@@ -42,7 +42,8 @@
 //= require app
 
 function contentWrapperHeight(e) {
-  $('.content-wrapper').css('minHeight', $(window).height()-$('header.main-header').height());
+  $('.content-wrapper').css('minHeight', ($(window).height()-$('.main-header').height()));
+  $('.main-sidebar').css('height', ($('.content-wrapper').height()+50));
 }
 
 /* center modal */

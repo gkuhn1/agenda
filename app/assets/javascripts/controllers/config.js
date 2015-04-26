@@ -96,3 +96,57 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
   }
 ])
 
+
+.controller("AccountSpecialitiesCtrl", ['$scope', '$rootScope',
+    '$state', 'specialties',
+  function($scope, $rootScope, $state, specialties) {
+    console.log(specialties);
+    $scope.specialties = specialties;
+
+    $scope.destroy = function() {
+      console.log('destroy');
+    }
+  }
+])
+
+.controller("AccountSpecialitiesEditCtrl", ['$scope', '$rootScope',
+    '$state', 'specialty', 'SpecialtyService',
+  function($scope, $rootScope, $state, specialty, SpecialtyService) {
+    $scope.specialty = specialty;
+    $scope.errors = {};
+
+    $scope.saveUser = function(specialty) {
+      $scope.laddaLoading = true;
+      $scope.errors = {};
+
+      if ($state.current.data.edit == false)
+        specialty.generate_password = true;
+
+      SpecialtyService.save(specialty, $state.current.data.edit)
+        .success(function(data) {
+          update(data);
+          $state.go('^');
+        })
+        .error(function(data) {
+          angular.forEach(data.errors, function(errors, field) {
+            $scope.form[field].$setValidity('server', false);
+            $scope.errors[field] = errors.join(', ');
+          })
+        })
+        .finally(function() {
+          $scope.laddaLoading = false;
+        })
+        ;
+    }
+
+    var update = function(data) {
+      if ($state.current.data.edit) {
+        var idx = $scope.$parent.specialties.indexOfById(data);
+        $scope.$parent.specialties[idx] = data;
+      } else {
+        $scope.$parent.specialties.push(data);
+      }
+    }
+
+  }
+])

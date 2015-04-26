@@ -27,6 +27,8 @@ angular.module('agenda.states-account-configs', ['agenda.grandfather'])
               }]
             }
           })
+
+
           .state('app.header.config-sidebar.home.users', {
             url: "/users",
             controller: 'AccountUsersCtrl',
@@ -56,6 +58,42 @@ angular.module('agenda.states-account-configs', ['agenda.grandfather'])
               templateUrl: "/templates/config/users/new_form.html",
               resolve: {
                 user: function() {return {}; }
+              },
+              data: {
+                edit: false
+              }
+            })
+
+
+          .state('app.header.config-sidebar.home.specialties', {
+            url: "/specialties",
+            controller: 'AccountSpecialitiesCtrl',
+            templateUrl: "/templates/config/specialties/index.html",
+            resolve: {
+              specialties: ['SpecialtyService', function(SpecialtyService) {
+                return SpecialtyService.all();
+              }]
+            }
+          })
+            .state('app.header.config-sidebar.home.specialties.edit', {
+              url: "/:id/edit",
+              controller: 'AccountSpecialitiesEditCtrl',
+              templateUrl: "/templates/config/specialties/form.html",
+              resolve: {
+                specialty: ['$stateParams', 'SpecialtyService', function($stateParams, SpecialtyService) {
+                  return SpecialtyService.get($stateParams.id);
+                }]
+              },
+              data: {
+                edit: true
+              }
+            })
+            .state('app.header.config-sidebar.home.specialties.new', {
+              url: "/new",
+              controller: 'AccountSpecialitiesEditCtrl',
+              templateUrl: "/templates/config/specialties/new_form.html",
+              resolve: {
+                specialty: function() {return {active: true}; }
               },
               data: {
                 edit: false

@@ -8,8 +8,11 @@ module Update
     object = get_object or return
     instance_variable_set(get_variable, object)
 
+    params = self.send(self.controller_name.singularize + "_params")
+    ["id", "_id"].each { |param| params.delete(param) }
+
     respond_to do |format|
-      if instance_variable_get(get_variable).update(self.send(self.controller_name.singularize + "_params"))
+      if instance_variable_get(get_variable).update(params)
         format.html { redirect_to "/" + self.controller_path, notice: "Registro atualizado com sucesso" }
         format.json { render :show, status: :ok }
       else

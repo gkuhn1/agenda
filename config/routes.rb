@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       resources :calendars, only: [:index, :show, :edit, :update] do
         resources :tasks
       end
+      resources :specialties
     end
   end
 

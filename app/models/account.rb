@@ -13,6 +13,7 @@ class Account
 
   # has_and_belongs_to_many :users
   embeds_many :account_users
+  has_many :specialties
 
   # before_validation :fill_out_db, if: 'name.present? and database.blank?'
 

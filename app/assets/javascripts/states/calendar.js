@@ -10,6 +10,9 @@ angular.module('agenda.states-calendars', ['agenda.grandfather'])
         resolve: {
           calendars: ['CalendarService', function(CalendarService){
             return CalendarService.all();
+          }],
+          specialties: ['SpecialtyService', function(SpecialtyService) {
+            return SpecialtyService.all();
           }]
         }
       })

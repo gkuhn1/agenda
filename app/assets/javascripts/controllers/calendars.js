@@ -1,6 +1,6 @@
 angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
-.controller("CalendarsSidebarCtrl", ['$scope', '$rootScope', 'calendars',
-  function($scope, $rootScope, calendars) {
+.controller("CalendarsSidebarCtrl", ['$scope', '$rootScope', 'calendars', 'specialties',
+  function($scope, $rootScope, calendars, specialties) {
 
     console.log("CalendarsSidebarCtrl");
 
@@ -10,6 +10,8 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
     $scope.currentDate;
     $scope.calendars = calendars;
     $scope.active_calendars_count = calendars.length;
+    $scope.specialties = specialties;
+    $scope.active_specialties_count = specialties.length;
 
     var selectCurrentWeek = function(target) {
       setTimeout(function() {
@@ -75,8 +77,6 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
         $scope.errors.calendar = "Deve selecionar um Profissional!";
         return;
       }
-      console.log(newTask.startdate + newTask.starttime);
-      console.log(newTask.enddate + newTask.endtime);
       var success = function(data) {
         console.log(data);
         var events = $scope.eventSources.findById(newTask.calendar_id).events;
@@ -118,7 +118,6 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
     }
 
     $scope.onSelectCalendar = function(start, end, allDay) {
-      console.log(start, end, allDay);
       $scope.newTask.enddate = end.format('DD/MM/YYYY');
       $scope.newTask.endtime = end.format('HH:mm');
       $scope.newTask.startdate = start.format('DD/MM/YYYY');
@@ -126,7 +125,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       $('#createTaskModal').modal('show');
       $('#createTaskModal').find('input:first').focus();
     }
-    $scope.alertEventOnClick = function() {
+    $scope.eventClick = function() {
       console.log(arguments);
     }
     $scope.alertOnResize = function() {
@@ -159,14 +158,15 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       },
       beforeViewRender: $scope.reloadTasks,
       select: $scope.onSelectCalendar,
+      eventClick: $scope.eventClick,
       dayClick: $scope.alertEventOnClick,
       eventDrop: $scope.alertOnDrop,
       eventResize: $scope.alertOnResize
     }
 
     $timeout(function() {
-      $('#fullcalendar').fullCalendar('option','height', $('.content-wrapper').height());
-    }, 200);
+      $('#fullcalendar').fullCalendar('option','height', ($(window).height() - $('.main-header').height()));
+    });
 
     $rootScope.$on('calendar-week-changed', function(event, startDate, endDate, currentDate) {
       $scope.$apply(function() {
