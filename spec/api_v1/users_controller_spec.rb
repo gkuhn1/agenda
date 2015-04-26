@@ -93,6 +93,16 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       let(:action) {:update}
       let(:extra_params) { user_params }
     end
+
+    it "should return 422 if validation error with errors" do
+      api_authenticate(user, account)
+      user_params = FactoryGirl.attributes_for(:user, :email => "aaaaa")
+
+      put :update, {id: user.id, user: user_params}
+
+      expect(response.code).to eq('422')
+      expect(response.body).to eq({:errors => {:email => ['não é válido']}}.to_json)
+    end
   end
 
   context "#destroy" do

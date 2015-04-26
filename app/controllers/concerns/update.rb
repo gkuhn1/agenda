@@ -13,10 +13,10 @@ module Update
 
     respond_to do |format|
       if instance_variable_get(get_variable).update(params)
-        format.html { redirect_to "/" + self.controller_path, notice: "Registro atualizado com sucesso" }
+        # format.html { redirect_to "/" + self.controller_path, notice: "Registro atualizado com sucesso" }
         format.json { render :show, status: :ok }
       else
-        format.html { render :edit }
+        # format.html { render :edit }
         format.json { render json: {errors: instance_variable_get(get_variable).errors}, status: :unprocessable_entity }
       end
     end

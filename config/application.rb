@@ -35,5 +35,7 @@ module Tcc
 
     config.i18n.available_locales = :pt_BR
 
+    config.paths['app/views'] << "spec/test_views" if Rails.env.test?
+
   end
 end
