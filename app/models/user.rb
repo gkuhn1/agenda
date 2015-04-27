@@ -80,6 +80,6 @@ class User
   end
 
   def account_user_for(account)
-    accounts.find(account._id).account_users.where({"user_id": _id}).first
+    accounts.find(account._id).account_users.where({"user_id": _id}).first if account
   end
 end

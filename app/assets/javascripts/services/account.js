@@ -12,7 +12,7 @@ angular.module('agenda.accountservice', ['httpq'])
 
     // load
     pub.all = function() {
-      return $httpq.get(pub.base_url+'.json', {param1: "1", param2: "2"})
+      return $httpq.get(pub.base_url+'.json')
     }
 
     pub.current = function() {
