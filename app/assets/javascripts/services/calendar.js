@@ -13,7 +13,7 @@ angular.module('agenda.calendarservice', ['httpq']).factory('CalendarService', [
         data.end_at = end
       }
 
-      return $h.get(base_url+'.json', {cache: true, params: data});
+      return $h.get(base_url+'.json', {params: data});
     }
 
     pub.all = function(start, end) {
