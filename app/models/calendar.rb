@@ -14,7 +14,7 @@ class Calendar
   def filter_tasks(filters)
     begin
       if filters[:start_at] and filters[:end_at]
-        start_at, end_at = [DateTime.parse(filters[:start_at]), DateTime.parse(filters[:end_at])]
+        start_at, end_at = [DateTime.parse(filters[:start_at]).utc, DateTime.parse(filters[:end_at]).utc]
         end_at += 1.day if end_at.hour == 0 and end_at.second == 0
         return tasks.where(:start_at.gt => start_at, :end_at.lt => end_at)
       end
