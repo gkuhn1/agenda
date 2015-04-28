@@ -33,11 +33,11 @@
       <li class="header">CONFIGURAÇÕES DA CONTA</li>
 
       <li ui-sref-active-eq="active">
-        <a href ui-sref="app.header.config-sidebar.home.edit"><i class="fa fa-credit-card"></i> Minha conta</a>
+        <a href ui-sref="app.header.config-sidebar.home.edit"><i class="fa fa-cog"></i> Minha conta</a>
       </li>
 
       <li class="treeview" data-ng-treeview data-ng-model="tv_user" data-active-state="'users'">
-        <a><span><i class="fa fa-users"></i> Profissionais</span><i class="fa pull-right fa-angle-left"></i></a>
+        <a><span><i class="fa fa-user-md"></i> Profissionais</span><i class="fa pull-right fa-angle-left"></i></a>
         <ul class="treeview-menu">
           <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users') }"><a href ui-sref="app.header.config-sidebar.home.users"><i class="fa fa-angle-double-right"></i> Lista</a></li>
           <li ui-sref-active-eq="active" ng-class="{ active : $state.includes('users_new') }"><a href ui-sref="app.header.config-sidebar.home.users.new"><i class="fa fa-angle-double-right"></i> Novo profissional</a></li>
@@ -45,7 +45,7 @@
       </li>
 
       <li class="treeview" data-ng-treeview data-ng-model="tv_specialties" data-active-state="'specialties'">
-        <a><span><i class="fa fa-credit-card"></i> Especialidades</span><i class="fa pull-right fa-angle-left"></i></a>
+        <a><span><i class="fa fa-tags"></i> Especialidades</span><i class="fa pull-right fa-angle-left"></i></a>
         <ul class="treeview-menu">
           <li ui-sref-active-eq="active"><a href ui-sref="app.header.config-sidebar.home.specialties"><i class="fa fa-angle-double-right"></i> Lista</a></li>
           <li ui-sref-active-eq="active"><a href ui-sref="app.header.config-sidebar.home.specialties.new"><i class="fa fa-angle-double-right"></i> Nova especialidade</a></li>

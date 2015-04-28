@@ -24,6 +24,7 @@
 //= require colorpicker/bootstrap-colorpicker
 //= require datepicker/bootstrap-datepicker
 //= require datepicker/locales/bootstrap-datepicker.pt-BR
+//= require slimScroll/jquery.slimscroll
 
 // Angular extras
 //= require angular-pusher.min
@@ -42,8 +43,17 @@
 //= require app
 
 function contentWrapperHeight(e) {
-  $('.content-wrapper').css('minHeight', ($(window).height()-$('.main-header').height()));
-  $('.main-sidebar').css('height', ($('.content-wrapper').height()+50));
+  console.log('rezise');
+  var height = ($(window).height()-$('.main-header').height());
+  $('.content-wrapper').css('minHeight', height);
+  setTimeout(function() {
+    $('.main-sidebar').css('height', ($('.content-wrapper').height()+39));
+  }, 1);
+
+  // seta o tamanho do calendario se existir calendario
+  var cal = $('#fullcalendar');
+  if (cal.length > 0)
+    cal.fullCalendar('option','height', height);
 }
 
 /* center modal */

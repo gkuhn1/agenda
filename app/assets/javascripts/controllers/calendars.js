@@ -195,6 +195,27 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       $('#fullcalendar').fullCalendar('option','height', ($(window).height() - $('.main-header').height()));
     });
 
+    $(window).resize(function() {
+      $(".sidebar").slimScroll({destroy: true}).height("auto");
+      $timeout(function() {
+        addSlimScroll();
+      });
+    })
+
+    var addSlimScroll = function() {
+      $(".sidebar").slimscroll({
+        height: 'auto',
+        color: "#FFF",
+        opacity: .7,
+        alwaysVisible: true,
+        railVisible: true,
+        railColor: '#FFF',
+        railOpacity: .3,
+        size: "4px"
+      });
+    }
+    addSlimScroll();
+
     $rootScope.$on('calendar-week-changed', function(event, startDate, endDate, currentDate) {
       $scope.$apply(function() {
         $scope.startDate = startDate;
