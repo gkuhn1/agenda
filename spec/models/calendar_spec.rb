@@ -32,7 +32,7 @@ RSpec.describe Calendar, type: :model do
     end
 
     it "should fiter based on datetime" do
-      expect(calendar.filter_tasks({start_at: "2015-04-27T10:00:00.501-03:00", end_at: "2015-04-27T18:00:00.501-03:00"}).count).to eq(1)
+      expect(calendar.filter_tasks({start_at: "2015-04-27T10:00:00.501-03:00", end_at: "2015-04-27T19:00:00.501-03:00"}).count).to eq(1)
     end
 
     it "should not filter with start_at and end_at nil" do

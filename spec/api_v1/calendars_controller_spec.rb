@@ -44,7 +44,7 @@ RSpec.describe Api::V1::CalendarsController, type: :controller do
         start_at: "2015-05-02T14:00:00.501-03:00", end_at: "2015-05-05T15:00:00.501-03:00") }
 
       it "should filter tasks if start_at and end_at is present" do
-        get :index, {tasks: true, start_at: "2015-04-27T10:00:00.501-03:00", end_at: "2015-04-27T18:00:00.501-03:00"}
+        get :index, {tasks: true, start_at: "2015-04-27T10:00:00.501-03:00", end_at: "2015-04-27T19:00:00.501-03:00"}
         body = JSON.parse(response.body)
         rendered_calendar = body.select{ |c| c["id"] == calendar.id}.first
         expect(rendered_calendar["tasks"].count).to eq(1)
