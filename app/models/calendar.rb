@@ -12,11 +12,15 @@ class Calendar
   has_many :tasks
 
   def filter_tasks(filters)
-    if filters[:start_at] and filters[:end_at]
-      return tasks.where(:start_at.gt => filters[:start_at], :end_at.lt => filters[:end_at])
-    else
-      return tasks
+    begin
+      if filters[:start_at] and filters[:end_at]
+        start_at, end_at = [DateTime.parse(filters[:start_at]), DateTime.parse(filters[:end_at])]
+        end_at += 1.day if end_at.hour == 0 and end_at.second == 0
+        return tasks.where(:start_at.gt => start_at, :end_at.lt => end_at)
+      end
+    rescue ArgumentError => e
     end
+    return tasks
   end
 
 end
