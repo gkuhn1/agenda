@@ -135,17 +135,15 @@ angular.module('agenda', [
         $rootScope.current_user = Auth.current_user();
       });
 
+      $rootScope.loadingArr = [];
       $rootScope.$on('loading_start', function() {
         $rootScope.loadingView = true;
+        $rootScope.loadingArr.push(1);
       });
 
       $rootScope.$on('loading_stop', function(event, params) {
-        params = params || {};
-        if (params.timeout === undefined || params.timeout !== false) {
-          $timeout(function() {
-            $rootScope.loadingView = false;
-          }, params.timeout || 200);
-        } else {
+        $rootScope.loadingArr.pop();
+        if ($rootScope.loadingArr.length == 0) {
           $rootScope.loadingView = false;
         }
       });

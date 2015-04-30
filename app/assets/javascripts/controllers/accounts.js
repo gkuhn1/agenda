@@ -25,6 +25,9 @@ angular.module('agenda.accounts', ['agenda.grandfather'])
     $scope.laddaLoading = false;
     $scope.form_title = "Adicionar Conta";
     $scope.account = newAccount;
+    if ($scope.account.user_ids == undefined) {
+      $scope.account.user_ids = [];
+    }
     $scope.users = users;
     $scope.errors = {};
 
@@ -40,9 +43,14 @@ angular.module('agenda.accounts', ['agenda.grandfather'])
           $state.go('^');
         })
         .error(function(data) {
-          angular.forEach(data, function(errors, field) {
-            $scope.form[field].$setValidity('server', false);
-            $scope.errors[field] = errors.join(', ');
+          angular.forEach(data.errors, function(errors, field) {
+            try {
+              $scope.form[field].$setValidity('server', false);
+              $scope.errors[field] = errors.join(', ');
+            } catch(e) {
+              console.log(field);
+              console.log(e);
+            }
           })
         })
         .finally(function() {
