@@ -43,7 +43,6 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   def mark_as_read
     @notification = get_object
     @notification.mark_as_read
-    binding.pry
     render :show
   end
 
