@@ -1,9 +1,12 @@
 class Specialty
   include Mongoid::Document
   include Mongoid::Timestamps
+  # TODO use Mongoid_paranoia
 
   field :description, type: String
   field :active, type: Mongoid::Boolean, default: true
+
+  field :was_deleted, type: Mongoid::Boolean, default: false
   field :deleted_at, type: Time
 
   belongs_to :account
@@ -11,12 +14,15 @@ class Specialty
 
   validates_presence_of :description, :account
 
-  scope :not_deleted, ->{ where( :deleted_at.exists => false ) }
+  scope :not_deleted, ->{ where( was_deleted: false ) }
   scope :actives, -> { where(active: true) }
 
   def destroy
-    self.deleted_at = Time.now
-    self.save!
+    update_attributes(was_deleted: true, deleted_at: Time.now)
   end
+
+  # def recovery
+  #   update_attributes(was_deleted: false, deleted_at: nil)
+  # end
 
 end
