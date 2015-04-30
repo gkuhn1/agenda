@@ -28,15 +28,13 @@ Rails.application.routes.draw do
         resources :tasks
       end
       resources :specialties
-    end
-  end
 
-  resources :homepages do
-    collection do
-      get :select_account
-    end
-    member do
-      get :select_account
+      resources :notifications, only: [:index] do
+        member do
+          put :mark_as_read
+          put :mark_as_unread
+        end
+      end
     end
   end
 

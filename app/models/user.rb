@@ -47,6 +47,7 @@ class User
   attr_accessor :generate_password
 
   has_one :calendar
+  has_many :notifications
 
   before_validation :generate_password!
   before_validation :generate_token!
