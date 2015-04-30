@@ -10,24 +10,42 @@ angular.module('agenda.home', ['agenda.grandfather'])
   }
 ])
 
-.controller("HeaderCtrl", ['$rootScope', '$scope', '$timeout', 'Auth',
-  function($rootScope, $scope, $timeout, Auth) {
+.controller("HeaderCtrl", ['$rootScope', '$scope', '$timeout', 'Auth', 'NotificationService', 'notifications',
+  function($rootScope, $scope, $timeout, Auth, NotificationService, notifications) {
 
     console.log('HeaderCtrl');
 
     $scope.page = {};
     $scope.page.title = "Home";
 
-    $scope.accounts = Auth.current_user().accounts;
-    // $scope.current_account = Auth.current_account();
-    // $scope.current_user = Auth.current_user();
+    console.log(notifications);
 
-    // console.log($scope.current_account);
+    $scope.ntf = notifications;
+    $scope.notifications = notifications.notifications;
+
+    $scope.accounts = Auth.current_user().accounts;
 
     // função para ajustar a contentwrapper para a altura correta da tela do usuário
     $timeout(function() {
       contentWrapperHeight();
     })
+
+    $scope.toggleRead = function(notification) {
+      var promise;
+      if (notification.read) {
+        promise = NotificationService.mark_as_unread(notification);
+        $scope.ntf.unread_count++;
+        $scope.ntf.read_count--;
+      } else {
+        promise = NotificationService.mark_as_read(notification);
+        $scope.ntf.unread_count--;
+        $scope.ntf.read_count++;
+      }
+      promise.success(function(data) {
+        var idx = $scope.notifications.indexOfById(data);
+        $scope.notifications[idx] = data;
+      });
+    }
 
     $scope.changeCurrentAccount = function(account) {
       console.log("change_account()");

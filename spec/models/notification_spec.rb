@@ -11,10 +11,16 @@ RSpec.describe Notification, type: :model do
       expect(notification.errors[:user]).to eq(["não pode ficar em branco"])
     end
 
-    it "should require an text" do
+    it "should require a text" do
       notification = FactoryGirl.build(:notification, text: nil)
       expect(notification.valid?).to be(false)
       expect(notification.errors[:text]).to eq(["não pode ficar em branco"])
+    end
+
+    it "should require a title" do
+      notification = FactoryGirl.build(:notification, title: nil)
+      expect(notification.valid?).to be(false)
+      expect(notification.errors[:title]).to eq(["não pode ficar em branco"])
     end
 
     it "should require unknown type" do

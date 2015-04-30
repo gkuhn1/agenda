@@ -2,9 +2,10 @@ class Notification
   include Mongoid::Document
 
   field :type, type: Integer
+  field :title, type: String
+  field :text, type: String
   field :read, type: Boolean, default: false
   field :read_at, type: Time
-  field :text, type: String
 
   belongs_to :user
 
@@ -13,7 +14,7 @@ class Notification
     2 => "E-mail"
   }
 
-  validates_presence_of :text, :user, :read
+  validates_presence_of :title, :text, :user, :read
   validates :type, :inclusion => {:in => TYPES.keys, :message => 'desconhecido' }
 
   scope :to_user, ->(user) { where(user_id: user._id) }

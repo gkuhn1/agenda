@@ -1,5 +1,5 @@
 json.notifications do
-  json.array!(@unreads) do |notification|
+  json.array!(@notifications) do |notification|
     json.partial! 'show', :notification => notification
   end
 end

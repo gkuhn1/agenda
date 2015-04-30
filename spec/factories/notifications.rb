@@ -1,7 +1,8 @@
 FactoryGirl.define do
 
   factory :notification do
-    text "Notificação"
+    title "Notification"
+    text "Notification text"
     read false
     read_at nil
     type 1

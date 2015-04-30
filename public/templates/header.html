@@ -31,31 +31,36 @@
       </ul>
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+
           <!-- Messages: style can be found in dropdown.less -->
           <li class="dropdown messages-menu">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
+              <span class="label label-success">{{ ntf.unread_count }}</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
+              <li class="header">Você tem {{ ntf.unread_count }} avisos não lidos</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
-                  <li>
+                  <li ng-repeat="notification in notifications" ng-class="{ 'bg-warning': !notification.read, 'bg-info': notification.read}">
                     <!-- start message -->
-                    <a href="#">
+                    <a href ng-click="toggleRead(notification); $event.stopPropagation();">
                       <div class="pull-left">
-                        <img src="/assets/user2-160x160-d6de584f8886ce2d126676050b1994b9.jpg" class="img-circle" alt="User Image">
+                        <i class="fa fa-bell-o"></i>
                       </div>
                       <h4>
-                        Support Team
-                        <small>
+                        {{ notification.title }}
+                        <small ng-show="notification.read">
                           <i class="fa fa-clock-o"></i>
-                          5 mins
+                          Lida
+                        </small>
+                        <small ng-show="!notification.read">
+                          <i class="fa fa-clock-o"></i>
+                          Não Lida
                         </small>
                       </h4>
-                      <p>Why not buy a new awesome theme?</p>
+                      <p>{{ notification.text }}</p>
                     </a>
                   </li>
                   <!-- end message -->
@@ -66,30 +71,33 @@
               </li>
             </ul>
           </li>
+
           <!-- Notifications: style can be found in dropdown.less -->
           <li class="dropdown notifications-menu">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+              <span class="label label-warning">{{ ntf.unread_count }}</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header">Você tem {{ ntf.unread_count }} avisos não lidos</li>
               <li>
-                <!-- inner menu: contains the actual data -->
                 <ul class="menu">
-                  <li>
+                  <li ng-repeat="notification in notifications">
                     <a href="#">
                       <i class="fa fa-users text-aqua"></i>
-                      5 new members joined today
+                      {{ notification.text }}
                     </a>
                   </li>
                 </ul>
               </li>
+              <!--
               <li class="footer">
                 <a href="#">View all</a>
               </li>
+               -->
             </ul>
           </li>
+
           <!-- Tasks: style can be found in dropdown.less -->
           <li class="dropdown tasks-menu">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">

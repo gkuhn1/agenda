@@ -7,7 +7,12 @@ angular.module('agenda.states-home', ['agenda.grandfather'])
       .state('app.header', {
         abstract: true,
         templateUrl: "/templates/header.html",
-        controller : 'HeaderCtrl'
+        controller : 'HeaderCtrl',
+        resolve: {
+          notifications: ['NotificationService', function(NotificationService) {
+            return NotificationService.all();
+          }]
+        }
       })
       .state('app.header.sidebar', {
         abstract: true,
