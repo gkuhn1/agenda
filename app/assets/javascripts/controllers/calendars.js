@@ -41,8 +41,8 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
   }
 ])
 
-.controller("CalendarsCtrl", ['$scope', '$rootScope', '$timeout', 'calendars', 'CalendarService', 'TaskService',
-  function($scope, $rootScope, $timeout, calendars, CalendarService, TaskService) {
+.controller("CalendarsCtrl", ['$scope', '$rootScope', '$timeout', 'Pusher', 'CalendarService', 'TaskService', 'calendars',
+  function($scope, $rootScope, $timeout, Pusher, CalendarService, TaskService, calendars) {
 
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
     $scope.calendars = calendars;
@@ -85,8 +85,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       }
       var success = function(data) {
         console.log(data);
-        var events = $scope.eventSources.findBy("calendar_id", newTask.calendar_id).events;
-        events.push(TaskService.toFullCalendar(data));
+        $scope.addOrUpdateTask(newTask.calendar_id, data);
         $scope.closeModal();
       };
       var error = function(data) {
@@ -100,6 +99,21 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       promise.success(success).error(error).finally(function() {
         $scope.laddaLoading = false;
       })
+    }
+
+    $scope.addOrUpdateTask = function(calendar_id, data) {
+      var events = $scope.eventSources.findBy("calendar_id", calendar_id).events;
+      var idx = events.indexOfById(data.id);
+      var calendar_task_data = TaskService.toFullCalendar(data);
+      if ( idx == -1 ) {
+        events.push(TaskService.toFullCalendar(data));
+      } else {
+        console.log('updating ', angular.equals(events[idx], calendar_task_data));
+        console.log(events[idx], calendar_task_data);
+        if ( !angular.equals(events[idx], calendar_task_data) ) {
+          events[idx] = TaskService.toFullCalendar(data);
+        }
+      }
     }
 
     $scope.destroyTask = function(task) {
@@ -215,6 +229,15 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       });
     }
     addSlimScroll();
+
+    Pusher.subscribe($rootScope.current_user.id + '_tasks', 'added', function (item) {
+      console.info('coming from pusher');
+      $scope.addOrUpdateTask(item.calendar_id, item);
+    });
+    Pusher.subscribe($rootScope.current_user.id + '_tasks', 'changed', function (item) {
+      console.info('coming from pusher');
+      $scope.addOrUpdateTask(item.calendar_id, item);
+    });
 
     $rootScope.$on('calendar-week-changed', function(event, startDate, endDate, currentDate) {
       $scope.$apply(function() {
