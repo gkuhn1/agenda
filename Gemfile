@@ -52,6 +52,10 @@ gem 'gravtastic'
 gem 'ransack', '~> 1.6.4'
 
 gem 'thin', '~> 1.6.3'
+gem 'sidekiq', '~> 3.3.4'
+# require for sidekiq monitor
+gem 'sinatra', :require => nil
+gem 'pusher', '~> 0.14.4'
 
 gem 'apipie-rails', '0.3.3'
 
@@ -71,11 +75,14 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   #gem 'byebug'
 
+  gem 'foreman', '~> 0.78.0'
+
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 gem 'simplecov', :require => false, :group => :test

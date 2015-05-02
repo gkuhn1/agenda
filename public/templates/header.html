@@ -36,7 +36,7 @@
           <li class="dropdown messages-menu">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">{{ ntf.unread_count }}</span>
+              <span class="label label-danger" ng-show="ntf.unread_count > 0">{{ ntf.unread_count }}</span>
             </a>
             <ul class="dropdown-menu">
               <li class="header">Você tem {{ ntf.unread_count }} avisos não lidos</li>
@@ -76,7 +76,7 @@
           <li class="dropdown notifications-menu">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">{{ ntf.unread_count }}</span>
+              <span class="label label-success">{{ ntf.unread_count }}</span>
             </a>
             <ul class="dropdown-menu">
               <li class="header">Você tem {{ ntf.unread_count }} avisos não lidos</li>

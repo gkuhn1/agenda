@@ -224,6 +224,7 @@ HTTP Status: 404
     def task_params
       t_params = params.fetch(:task, {}).permit(:id, :title, :description, :where, :start_at, :end_at)
       t_params[:calendar] = current_calendar
+      t_params[:created_by] = current_user
       t_params
     end
 

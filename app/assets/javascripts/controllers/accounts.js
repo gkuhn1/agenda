@@ -31,8 +31,6 @@ angular.module('agenda.accounts', ['agenda.grandfather'])
     $scope.users = users;
     $scope.errors = {};
 
-    console.log();
-
     $scope.saveAccount = function(account) {
       $scope.laddaLoading = true;
       $scope.errors = {};

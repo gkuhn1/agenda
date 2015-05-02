@@ -10,8 +10,8 @@ angular.module('agenda.home', ['agenda.grandfather'])
   }
 ])
 
-.controller("HeaderCtrl", ['$rootScope', '$scope', '$timeout', 'Auth', 'NotificationService', 'notifications',
-  function($rootScope, $scope, $timeout, Auth, NotificationService, notifications) {
+.controller("HeaderCtrl", ['$rootScope', '$scope', '$timeout', 'Auth', 'Pusher', 'NotificationService', 'notifications',
+  function($rootScope, $scope, $timeout, Auth, Pusher, NotificationService, notifications) {
 
     console.log('HeaderCtrl');
 
@@ -23,7 +23,14 @@ angular.module('agenda.home', ['agenda.grandfather'])
     $scope.ntf = notifications;
     $scope.notifications = notifications.notifications;
 
-    $scope.accounts = Auth.current_user().accounts;
+    $scope.current_user = Auth.current_user();
+    $scope.accounts = $scope.current_user.accounts;
+
+    Pusher.subscribe($scope.current_user.id + '_notifications', 'added', function (item) {
+      // Notification was added.
+      $scope.notifications.unshift(item);
+      $scope.ntf.unread_count++;
+    });
 
     // função para ajustar a contentwrapper para a altura correta da tela do usuário
     $timeout(function() {

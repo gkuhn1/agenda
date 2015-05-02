@@ -1,6 +1,13 @@
+require 'sidekiq/web'
+
+Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+  username == "username" && password == "pass"
+end if Rails.env.production?
+
 Rails.application.routes.draw do
 
   apipie
+  mount Sidekiq::Web => '/sidekiq'
 
   namespace :admin do
     resources :dashboard, only: :index

@@ -1,5 +1,8 @@
 class Notification
   include Mongoid::Document
+  include Mongoid::Timestamps
+
+  include Jsonable
 
   field :type, type: Integer
   field :title, type: String
@@ -17,13 +20,17 @@ class Notification
   validates_presence_of :title, :text, :user, :read
   validates :type, :inclusion => {:in => TYPES.keys, :message => 'desconhecido' }
 
+  default_scope -> { order_by(:created_at => 'asc') }
   scope :to_user, ->(user) { where(user_id: user._id) }
   scope :sys, -> { where(type: 1) }
 
   scope :unread, -> { where(read: false) }
   scope :read, -> { where(read: true) }
 
-  def self.add(user, text)
+  def self.to(user, title, text)
+    n = new(user: user, title: title, text:text, type: 1)
+    n.save!
+    n
   end
 
   def mark_as_read

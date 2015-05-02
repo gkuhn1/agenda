@@ -45,4 +45,18 @@ RSpec.describe Task, type: :model do
     end
   end
 
+  context "#create_notification" do
+    let(:task) { FactoryGirl.build(:task, status: 1) }
+    it "should not create a notification if user is the same" do
+      task.created_by = FactoryGirl.create(:user)
+      task.calendar = task.created_by.calendar
+      expect { task.save }.not_to change(Notification, :count)
+    end
+    it "should send notification to calendar task user's if task was created by another user" do
+      task.created_by = FactoryGirl.create(:user)
+      task.calendar = FactoryGirl.create(:user).calendar
+      expect { task.save }.to change(Notification, :count).by(1)
+    end
+  end
+
 end

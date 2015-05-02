@@ -7,6 +7,7 @@ FactoryGirl.define do
     start_at "2015-04-18 10:09:41"
     end_at "2015-04-18 10:09:41"
     calendar
+    created_by factory: :user
   end
 
 end
