@@ -75,3 +75,54 @@ angular.module('agenda.home', ['agenda.grandfather'])
 
   }
 ])
+
+.controller("SearchCtrl", ['$rootScope', '$scope',
+  function($rootScope, $scope) {
+
+    console.info('SEARCH CTRL');
+
+    $scope.professionals = {};
+    $scope.search = {};
+    $scope.places = [
+      {name: "Local 1", id: "1"},
+      {name: "Local 2", id: "2"},
+      {name: "Local 3", id: "3"},
+      {name: "Local 4", id: "4"},
+      {name: "Local 5", id: "5"},
+      {name: "Local 6", id: "6"},
+      {name: "Local 7", id: "7"},
+      {name: "Local 8", id: "8"}
+    ];
+    $scope.specialties = [
+      {name: "Especialidade 1", id: "1"},
+      {name: "Especialidade 2", id: "2"},
+      {name: "Especialidade 3", id: "3"},
+      {name: "Especialidade 4", id: "4"},
+      {name: "Especialidade 5", id: "5"},
+      {name: "Especialidade 6", id: "6"},
+      {name: "Especialidade 7", id: "7"},
+      {name: "Especialidade 8", id: "8"}
+    ];
+
+    $scope.doSearch = function() {
+      console.log($scope.search);
+      $scope.professionals = [
+        {name: "Professional 1", id: 1},
+        {name: "Professional 2", id: 2},
+        {name: "Professional 3", id: 3},
+        {name: "Professional 5", id: 5},
+        {name: "Professional 4", id: 4},
+        {name: "Professional 6", id: 6},
+        {name: "Professional 7", id: 7},
+        {name: "Professional 8", id: 8},
+        {name: "Professional 9", id: 9}
+      ]
+    }
+
+    $scope.datepickerOptions = {
+      format: 'dd/mm/yyyy',
+      language: 'pt-BR'
+    }
+
+  }
+])

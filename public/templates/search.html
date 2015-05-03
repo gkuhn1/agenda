@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <form ng-submit="doSearch()">
+        <div class="box-header with-border">
+          <h3 class="box-title">Pesquisar profissional</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+          <div class="row">
+
+            <div class="col-md-3">
+              <label>Data desejada:</label>
+              <div id="calendar_datepicker" class="datepicker-small" ng-datepicker ng-options="datepickerOptions" ng-model="search.date"></div>
+            </div>
+
+            <div class="col-md-9">
+
+              <div class="col-md-6">
+                <label>Horário (disponibilidade)</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" name="start" ng-model="search.start_at" />
+                  <span class="input-group-addon">h</span>
+                  <span class="input-group-addon">até</span>
+                  <input type="text" class="form-control" name="end"  ng-model="search.end_at" />
+                  <span class="input-group-addon">h</span>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Local de atendimento</label>
+
+                  <ui-select ng-model="search.place"
+                     theme="bootstrap"
+                     reset-search-input="false">
+                  <ui-select-match placeholder="Selecione um local...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="place.id as place in places | propsFilter: {name: $select.search} track by $index"
+                        refresh-delay="0">
+                      <div ng-bind-html="place.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+
+                </div>
+              </div>
+
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Especialidade</label>
+                  <ui-select ng-model="search.specialty"
+                     theme="bootstrap"
+                     reset-search-input="false">
+                  <ui-select-match placeholder="Selecione uma especialidade...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="specialty.id as specialty in specialties | propsFilter: {name: $select.search} track by $index"
+                        refresh-delay="0">
+                      <div ng-bind-html="specialty.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+              </div>
+
+            </div>
+
+          </div><!-- /.row -->
+        </div><!-- ./box-body -->
+
+        <div class="box-footer">
+          <div class="row">
+            <div class="col-md-12">
+
+              <div class="pull-right">
+                <button class="btn btn-default" type="reset">
+                  <i class="fa fa-eraser"></i>
+                  Limpar
+                </button>
+                <button class="btn btn-success" type="submit">
+                  <i class="fa fa-search"></i>
+                  Buscar!
+                </button>
+              </div>
+            </div>
+          </div><!-- /.row -->
+        </div><!-- /.box-footer -->
+
+      </form>
+
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div>
+
+
+<div class="row" ng-show="professionals.length > 0">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Profissionais encontrados ({{ professionals.length }})</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Profissional</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="professional in professionals">
+              <td>{{ professional.id }}</td>
+              <td>{{ professional.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div>
+</div>

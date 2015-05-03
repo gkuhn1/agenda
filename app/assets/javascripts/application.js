@@ -27,6 +27,7 @@
 //= require slimScroll/jquery.slimscroll
 
 // Angular extras
+//= require angular-sanitize
 //= require angular-pusher.min
 //= require angular-input-masks/angular-input-masks.br
 //= require angular-mask/dist/ngMask.min
@@ -34,6 +35,7 @@
 //= require ladda/js/ladda
 //= require angular-ladda/dist/angular-ladda
 //= require angular-ui-calendar/calendar
+//= require ui-select/select
 
 // Angular app
 //= require_tree ./services

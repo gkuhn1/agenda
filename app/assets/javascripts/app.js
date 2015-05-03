@@ -40,6 +40,8 @@ angular.module('agenda', [
   'doowb.angular-pusher',
   'ui.utils.masks',
   'ngMask',
+  'ngSanitize',
+  'ui.select',
   'ui.calendar',
   'angular-ladda',
   'agenda-filters'

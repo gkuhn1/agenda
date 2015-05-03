@@ -25,5 +25,11 @@ angular.module('agenda.states-home', ['agenda.grandfather'])
         templateUrl: "/templates/application.html"
       })
 
+      .state('app.header.sidebar.home.search', {
+        url: "search",
+        controller: 'SearchCtrl',
+        templateUrl: "/templates/search.html"
+      })
+
   }
 ]);
