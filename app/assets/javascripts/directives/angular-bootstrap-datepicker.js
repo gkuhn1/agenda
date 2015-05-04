@@ -1,6 +1,6 @@
 angular.module('ng-bootstrap-datepicker', [])
 
-.directive('ngDatepicker', function() {
+.directive('ngDatepicker', ['$timeout', function($timeout) {
   return {
     restrict: 'A',
     replace: true,
@@ -18,7 +18,10 @@ angular.module('ng-bootstrap-datepicker', [])
           scope.ngModel = $.fn.datepicker.DPGlobal.formatDate(e.date, settings.format, settings.language);
         });
       });
+      if (scope.ngOptions.defaultDate !== undefined) {
+        $timeout(function() {element.datepicker('setDate', scope.ngOptions.defaultDate)});
+      }
       if (scope.ngOptions.init !== undefined) scope.ngOptions.init.call(element, element, settings);
     }
   };
-});
+}]);

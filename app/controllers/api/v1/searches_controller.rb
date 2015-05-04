@@ -1,0 +1,87 @@
+class Api::V1::SearchesController < Api::V1::ApiController
+
+  # Index
+  api :GET, '/searches', 'Busca'
+  description <<-EOS
+====Requisição
+Accept: application/json
+Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDAw
+
+====Retorno com Sucesso:
+  {
+    "notifications": [
+      {
+        "id": "55419e98676b752573000000",
+        "text": "teste",
+        "read": false,
+        "read_at": null
+      }
+    ],
+    "read_count": 3,
+    "unread_count": 1,
+    "notifications_count": 4
+  }
+  EOS
+  def index
+    # Retorna contas
+    search_filter = SearchValidator.new search_filters
+    if search_filter.valid?
+
+      # Buscar contas que possuam a especialidade filtrada
+      accounts = Specialty.where(id: params[:specialty_id]).map(&:account).flatten
+      # Mapear os calendarios dessas contas
+      calendars = accounts.map{|a| a.users.to_a }.flatten.map(&:calendar).keep_if { |c| c.date_available?(search_filters) }
+      # se informado periodo de data verificar se o calendario possui data disponível para o periodo informado
+      @accounts = Account.where(:id.in => calendars.map(&:user).map {|u| u.accounts.to_a }.flatten.uniq.map(&:id))
+
+    else
+      render json: {errors: search_filter.errors}, status: :unprocessable_entity
+    end
+  end
+
+  # specialties
+  api :PUT, '/searches/specialties', 'Retorna a lista de especialidades existente'
+  description <<-EOS
+====Requisição
+====Retorno com Sucesso:
+  [
+    {
+      "id": "553c2542676b750ee5000000",
+      "description": "Manicure",
+      "active": true
+    },
+    {
+      "id": "553c412e676b750ee40a0000",
+      "description": "Especialidade 01",
+      "active": true
+    }
+  ]
+  EOS
+  def specialties
+    @specialties = Specialty.actives
+  end
+
+  # Show
+  api :PUT, '/searches/places', 'Retorna a lista de locais existente'
+  description <<-EOS
+====Requisição
+====Retorno com Sucesso:
+  {
+    "id": "55419e98676b752573000000",
+    "text": "teste",
+    "read": false,
+    "read_at": null
+  }
+  EOS
+  def places
+    # TODO
+  end
+
+  private
+
+    def search_filters
+      params.permit(:specialty_id, :start_at, :end_at)
+    end
+
+
+end

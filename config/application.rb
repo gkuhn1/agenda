@@ -35,6 +35,8 @@ module Tcc
 
     config.i18n.available_locales = :pt_BR
 
+    config.autoload_paths += %W(#{config.root}/app/models/validators)
+
     config.paths['app/views'] << "spec/test_views" if Rails.env.test?
 
   end

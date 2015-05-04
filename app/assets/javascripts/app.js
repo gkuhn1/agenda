@@ -8,6 +8,7 @@ angular.module('agenda', [
   'agenda.taskservice',
   'agenda.specialtyservice',
   'agenda.notificationservice',
+  'agenda.searchservice',
 
   // Controllers
   'agenda.accounts',

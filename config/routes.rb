@@ -42,6 +42,13 @@ Rails.application.routes.draw do
           put :mark_as_unread
         end
       end
+
+      resources :searches, only: [:index] do
+        collection do
+          get :places
+          get :specialties
+        end
+      end
     end
   end
 

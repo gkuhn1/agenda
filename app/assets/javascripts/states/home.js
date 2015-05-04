@@ -28,7 +28,15 @@ angular.module('agenda.states-home', ['agenda.grandfather'])
       .state('app.header.sidebar.home.search', {
         url: "search",
         controller: 'SearchCtrl',
-        templateUrl: "/templates/search.html"
+        templateUrl: "/templates/search.html",
+        resolve: {
+          places: ['SearchService', function(SearchService) {
+            return SearchService.all_places();
+          }],
+          specialties: ['SearchService', function(SearchService) {
+            return SearchService.all_specialties();
+          }]
+        }
       })
 
   }

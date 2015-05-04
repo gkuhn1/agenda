@@ -23,4 +23,10 @@ class Calendar
     return tasks
   end
 
+
+  def date_available?(filters)
+    # Retorna true/false o calendario possui data disponivel para os filtros passados
+    !filter_tasks(filters).any?
+  end
+
 end
