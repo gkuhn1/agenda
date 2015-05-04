@@ -14,6 +14,7 @@ class Specialty
 
   validates_presence_of :description, :account
 
+  default_scope -> { order_by(:description => 'asc') }
   scope :not_deleted, ->{ where( was_deleted: false ) }
   scope :actives, -> { where(active: true) }
 

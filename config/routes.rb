@@ -47,6 +47,7 @@ Rails.application.routes.draw do
         collection do
           get :places
           get :specialties
+          post :new_task
         end
       end
     end

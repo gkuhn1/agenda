@@ -47,7 +47,7 @@
 function contentWrapperHeight(e) {
   console.log('rezise');
   var height = ($(window).height()-$('.main-header').height());
-  $('.content-wrapper').css('minHeight', height);
+  $('.content-wrapper').css('height', height);
   setTimeout(function() {
     $('.main-sidebar').css('height', ($('.content-wrapper').height()+39));
   }, 1);

@@ -1,0 +1,71 @@
+
+<div id="createTaskModal" class="modal">
+  <div class="modal-dialog">
+    <form name="form" class="simple_form new_task" novalidate class="form-horizontal" ng-submit="createTask(newTask)">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar" ng-click="initTask()"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">Novo agendamento</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group" ng-class="{'has-error' : form.title.$error.server}">
+            <label>* Título</label>
+            <input type="text" name="title" class="form-control" placeholder="Título" ng-model="newTask.title">
+            <p class="help-block" ng-show="form.title.$error.server">{{ errors.title }}</p>
+          </div>
+
+          <!-- <div class="form-group" ng-class="{'has-error' : form.calendar.$error.server}" ng-show="calendars.length > 1">
+            <label>* Profissional</label>
+            <select id="task_calendar_id" name="calendar" class="form-control" ng-model="newTask.calendar_id">
+              <option ng-repeat="calendar in calendars" value="{{ calendar.id }}">{{ calendar.user.name }}</option>
+            </select>
+            <p class="help-block" ng-show="form.calendar.$error.server">{{ errors.calendar }}</p>
+          </div> -->
+
+          <div class="row">
+            <div class="form-group col-sm-6" ng-class="{'has-error' : form.start_at.$error.server}">
+              <label>* Data/Hora inicial</label>
+            </div>
+            <div class="form-group col-sm-6" ng-class="{'has-error' : form.end_at.$error.server}">
+              <label>* Data/Hora final</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4" ng-class="{'has-error' : form.start_at.$error.server}">
+              <input type="text" name="start_at" class="form-control" placeholder="__/__/____" mask="39/19/2099" ng-model="newTask.startdate">
+            </div>
+            <div class="col-sm-2" ng-class="{'has-error' : form.start_at.$error.server}">
+              <input type="text" class="form-control" placeholder="__:__" mask="29:59" ng-model="newTask.starttime">
+            </div>
+            <div class="col-sm-4" ng-class="{'has-error' : form.end_at.$error.server}">
+              <input type="text" name="end_at" class="form-control" placeholder="__/__/____" mask="39/19/2099" ng-model="newTask.enddate">
+            </div>
+            <div class="col-sm-2" ng-class="{'has-error' : form.end_at.$error.server}">
+              <input type="text" class="form-control col-sm-6" placeholder="__:__" mask="29:59" ng-model="newTask.endtime">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6" ng-class="{'has-error' : form.start_at.$error.server}">
+              <p class="help-block" ng-show="form.start_at.$error.server">{{ errors.start_at }}</p>
+            </div>
+            <div class="col-sm-6" ng-class="{'has-error' : form.end_at.$error.server}">
+              <p class="help-block" ng-show="form.end_at.$error.server">{{ errors.end_at }}</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="initTask()">Cancelar</button>
+          <button type="submit" class="btn btn-primary" ladda="laddaModalLoading" data-spinner-size="30"
+            ng-show="!newTask.updating">
+            <i class="fa fa-check"></i>
+            Agendar!
+          </button>
+        </div>
+      </div><!-- /.modal-content -->
+    </form>
+  </div><!-- /.modal-dialog -->
+</div>

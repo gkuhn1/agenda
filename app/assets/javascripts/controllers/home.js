@@ -110,12 +110,61 @@ angular.module('agenda.home', ['agenda.grandfather'])
       $scope.sercheabled = true;
     }
 
+    $scope.getBase64Data = function() {
+      return objToBase64($scope.search);
+    }
+
     $scope.datepickerOptions = {
       format: 'dd/mm/yyyy',
       language: 'pt-BR',
       startDate: moment().format('DD/MM/YYYY'),
       defaultDate: moment().format('DD/MM/YYYY')
     }
+
+  }
+])
+
+.controller("SearchAddTaskCtrl", ['$rootScope', '$scope', '$state', 'SearchService', 'TaskService', 'params',
+  function($rootScope, $scope, $state, SearchService, TaskService, params) {
+
+    console.log(params);
+    $scope.initTask = function() {
+      $scope.newTask = {
+        title: params.specialty_id,
+        specialty_id: params.specialty_id,
+        account_id: $state.params.account_id,
+        startdate: params.date,
+        starttime: params.start_at,
+        enddate: params.date,
+        endtime: params.end_at
+      };
+      $scope.errors = {};
+    }
+
+    $scope.createTask = function(newTask) {
+      var success = function(data) {
+        console.log(data);
+        alert('task incluida. redirecionar para o calendário...')
+      };
+      var error = function(data) {
+        console.log(data.errors);
+        angular.forEach(data.errors, function(errors, field) {
+          $scope.form[field].$setValidity('server', false);
+          $scope.errors[field] = errors.join(', ');
+        })
+      }
+      promise = SearchService.createTask(TaskService.modalToTask(newTask));
+      promise.success(success).error(error).finally(function() {
+        $scope.laddaLoading = false;
+      })
+      ;
+    }
+
+    $scope.initTask();
+    $('#createTaskModal').modal('show');
+    $('#createTaskModal').one('hide.bs.modal', function (e) {
+      $state.go("^");
+    })
 
   }
 ])

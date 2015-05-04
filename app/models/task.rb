@@ -10,6 +10,8 @@ class Task
   field :status, type: Integer
   field :start_at, type: Time
   field :end_at, type: Time
+  field :account_id, type: String
+  field :specialty_id, type: String
 
   belongs_to :calendar
   belongs_to :created_by, class_name: 'User'
@@ -19,7 +21,8 @@ class Task
     1 => "Criado"
   }
 
-  validates_presence_of :title, :start_at, :end_at, :calendar
+  validates_presence_of :title, :start_at, :end_at
+  validates_presence_of :calendar, if: 'account_id.blank?'
   validates :status, :inclusion => {:in => STATUS.keys, :message => 'situação desconhecida.' }
 
   before_validation :set_status
@@ -45,9 +48,19 @@ class Task
   # NOTIFICATIONS
   def create_notification
     # se o criador for diferente do usuário para qual a tarefa é direcionada
-    if self.calendar.user != self.created_by
+    if !self.calendar.present? or self.calendar.user != self.created_by
       # manda notificação para o usuário do calendário
-      NotifyWorker.perform_async(self.calendar.user.id, 'Novo agendamento', "#{f_start_at} até #{f_end_at}")
+      if self.calendar.present?
+        user_ids = [self.calendar.user.id]
+      elsif self.account_id.present?
+        user_ids = Account.find(self.account_id).users.map(&:id)
+      else
+        user_ids = []
+      end
+
+      user_ids.each do |user_id|
+        NotifyWorker.perform_async(user_id, 'Novo agendamento', "#{f_start_at} até #{f_end_at}")
+      end
     end
   end
 

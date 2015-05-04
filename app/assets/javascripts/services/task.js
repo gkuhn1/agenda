@@ -67,12 +67,15 @@ angular.module('agenda.taskservice', ['httpq'])
       var data = angular.copy(task, {});
       data.stick = true
 
-      if (task.startdate + task.starttime !== "")
-        data.start_at = moment(task.startdate + task.starttime, "DD/MM/YYYYHH:mm").toISOString()
+      var start_at = (task.startdate + task.starttime) || "";
+      if (start_at !== "")
+        data.start_at = moment(start_at, "DD/MM/YYYYHH:mm").toISOString()
 
-      if (task.enddate + task.endtime !== "")
-        data.end_at = moment(task.enddate + task.endtime, "DD/MM/YYYYHH:mm").toISOString()
+      var end_at = (task.enddate + task.endtime) || "";
+      if (end_at !== "")
+        data.end_at = moment(end_at, "DD/MM/YYYYHH:mm").toISOString()
 
+      console.log(data);
       return data;
     }
 

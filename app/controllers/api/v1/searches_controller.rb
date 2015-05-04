@@ -40,7 +40,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   end
 
   # specialties
-  api :PUT, '/searches/specialties', 'Retorna a lista de especialidades existente'
+  api :GET, '/searches/specialties', 'Retorna a lista de especialidades existente'
   description <<-EOS
 ====Requisição
 ====Retorno com Sucesso:
@@ -62,7 +62,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   end
 
   # Show
-  api :PUT, '/searches/places', 'Retorna a lista de locais existente'
+  api :GET, '/searches/places', 'Retorna a lista de locais existente'
   description <<-EOS
 ====Requisição
 ====Retorno com Sucesso:
@@ -77,7 +77,37 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
     # TODO
   end
 
+  # Show
+  api :POST, '/searches/new_task', 'Cria uma nova tarefa para a conta de id informado'
+  description <<-EOS
+====Requisição
+====Retorno com Sucesso:
+  {
+    "id": "55419e98676b752573000000",
+    "text": "teste",
+    "read": false,
+    "read_at": null
+  }
+  EOS
+  def new_task
+    @task = Task.new task_params
+    respond_to do |format|
+      if @task.save
+        format.json { render :new_task, status: :created }
+      else
+        format.json { render json: {errors: @task.errors}, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def task_params
+      t_params = params.fetch(:task, {}).permit(:title, :account_id, :specialty_id, :description, :where, :start_at, :end_at)
+      t_params[:created_by] = current_user
+      t_params
+    end
 
     def search_filters
       params.permit(:specialty_id, :start_at, :end_at)

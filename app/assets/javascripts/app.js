@@ -164,6 +164,14 @@ angular.module('agenda', [
     }
 ])
 
+var objToBase64 = function(obj) {
+  return btoa(angular.toJson(obj));
+}
+
+String.prototype.toObject = function() {
+  return angular.fromJson(atob(this));
+}
+
 Array.prototype.findBy = function(key, elem) {
   if (elem["" + key] !== undefined) elem = elem["" + key];
   return $.grep(this, function(element, index){ return element["" + key] == elem; })[0];

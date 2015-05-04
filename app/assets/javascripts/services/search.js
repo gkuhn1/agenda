@@ -30,14 +30,18 @@ angular.module('agenda.searchservice', ['httpq'])
     }
 
     pub.search = function(search) {
-      var data = {}
-      if (search.end_at === undefined) search.end_at = '23:59'
-      if (search.start_at === undefined) search.start_at = '00:00'
+      var data = {};
+      if (search.end_at === undefined) search.end_at = '23:59';
+      if (search.start_at === undefined) search.start_at = '00:00';
 
-      data.start_at = moment(search.date+search.start_at, 'DD/MM/YYYYHH:mm').toISOString()
-      data.end_at = moment(search.date+search.end_at, 'DD/MM/YYYYHH:mm').toISOString()
-      data.specialty_id = search.specialty_id
+      data.start_at = moment(search.date+search.start_at, 'DD/MM/YYYYHH:mm').toISOString();
+      data.end_at = moment(search.date+search.end_at, 'DD/MM/YYYYHH:mm').toISOString();
+      data.specialty_id = search.specialty_id;
       return $http.get(pub.get_url(), {params: data});
+    }
+
+    pub.createTask = function(task) {
+      return $http.post(pub.get_url()+'/new_task', {task: task})
     }
 
     return pub;

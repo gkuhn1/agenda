@@ -112,16 +112,18 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Profissional</th>
+              <th>Estabelecimento</th>
+              <th>Endereço</th>
+              <th>Telefone</th>
               <th>Agendar</th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="professional in professionals">
-              <td>{{ professional.id }}</td>
-              <td>{{ professional.name }}</td>
-              <td><button class="btn btn-info">Agendar</button></td>
+            <tr ng-repeat="account in professionals">
+              <td>{{ account.name }}</td>
+              <td>{{ account.address }}</td>
+              <td>{{ account.phone }}</td>
+              <td><a class="btn btn-info" href ui-sref="app.header.sidebar.home.search.addtask({account_id: account.id, base64_data: getBase64Data()})">Agendar</a></td>
             </tr>
           </tbody>
         </table>
@@ -129,3 +131,6 @@
     </div><!-- /.box -->
   </div>
 </div>
+
+
+<ui-view />
