@@ -10,4 +10,4 @@ json.status_description task.status!
 json.start_at task.start_at
 json.created_by_id task.created_by_id
 json.end_at task.end_at
-json.task_color task.color(current_account)
+json.task_color task.color

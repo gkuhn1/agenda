@@ -42,9 +42,46 @@ RSpec.describe Api::V1::TasksController, type: :controller do
       expect(response.code).to eq("200")
       expect(assigns(:task)).to eq(calendar_tasks[1])
     end
-    it "should return 404 if calendar is from other account" do
-      get :show, {calendar_id: calendar.id, id: calendar2_tasks[1].id}
+    it "should return 404 if task is from other account" do
+      pending "problema da issue #4002 do mongoid"
+      get :show, {id: calendar2_tasks[1].id}
       expect(response.code).to eq("404")
+    end
+
+
+    context "filtering" do
+      render_views
+
+      let!(:t1) { FactoryGirl.create(:task, calendar: calendar,
+        start_at: "2015-04-27T14:00:00.501-03:00", end_at: "2015-04-27T15:00:00.501-03:00", created_by_id: user.id) }
+      let!(:t2) { FactoryGirl.create(:task, calendar: calendar,
+        start_at: "2015-04-26T14:00:00.501-03:00", end_at: "2015-04-26T15:00:00.501-03:00", created_by_id: user.id) }
+      let!(:t3) { FactoryGirl.create(:task, calendar: calendar,
+        start_at: "2015-04-17T14:00:00.501-03:00", end_at: "2015-04-17T15:00:00.501-03:00", created_by_id: user.id) }
+      let!(:t4) { FactoryGirl.create(:task, calendar: calendar,
+        start_at: "2015-05-02T14:00:00.501-03:00", end_at: "2015-05-05T15:00:00.501-03:00", created_by_id: user.id) }
+
+      it "should filter tasks if start_at and end_at is present" do
+        get :index, {tasks: true, start_at: "2015-04-27T10:00:00.501-03:00", end_at: "2015-04-27T18:00:00.501-03:00"}
+        body = JSON.parse(response.body)
+        expect(body.count).to eq(1)
+        expect(body).to eq(
+          [{"id"=>t1.id,
+          "calendar_id"=>calendar.id,
+          "account_id"=>nil,
+          "title"=>"My Task",
+          "description"=>"My Task description",
+          "where"=>"My task location",
+          "status"=>1,
+          "status_description"=>"Criado",
+          "start_at"=>"2015-04-27T14:00:00.501-03:00",
+          "created_by_id"=>user.id,
+          "end_at"=>"2015-04-27T15:00:00.501-03:00",
+          "task_color"=>nil
+          }]
+        )
+      end
+
     end
   end
 
@@ -68,6 +105,20 @@ RSpec.describe Api::V1::TasksController, type: :controller do
       task_params[:task].merge!("status"=>"99")
       post :create, task_params
       expect(assigns(:task).status).to eq(1)
+    end
+  end
+
+
+  context "task_filter_params" do
+    let(:params) {ActionController::Parameters.new({
+      calendar: "12331",
+      start_at: "start_at",
+      end_at: "end_at",
+      other: 0
+    })}
+    it "should return only start_at and end_at params" do
+      allow(controller).to receive(:params).and_return(params)
+      expect(controller.send(:task_filter_params)).to eq({"start_at"=> "start_at", "end_at"=> "end_at"})
     end
   end
 

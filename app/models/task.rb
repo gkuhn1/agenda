@@ -12,6 +12,7 @@ class Task
   field :end_at, type: Time
   field :account_id, type: String
   field :specialty_id, type: String
+  field :account_user_id, type: String
 
   belongs_to :calendar
   belongs_to :created_by, class_name: 'User'
@@ -37,10 +38,10 @@ class Task
     self.status = 1 if self.status.nil?
   end
 
-  def color(current_account)
+  def color
     # retorna a cor de um evento
-    if self.calendar.present?
-      current_account.account_users.where(user_id: self.calendar.user_id).first.task_color
+    if self.account_user_id.present?
+      AccountUser.find(self.account_user_id).task_color
     end
   end
 

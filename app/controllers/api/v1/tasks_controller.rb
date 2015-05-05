@@ -246,7 +246,7 @@ HTTP Status: 404
         tasks_ids += calendar.filter_tasks(task_filter_params).map(&:id)
       end
       tasks_ids += current_account.filter_tasks(task_filter_params).map(&:id)
-      Task.where(:id.in => tasks_ids)
+      Task.in(id: tasks_ids)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

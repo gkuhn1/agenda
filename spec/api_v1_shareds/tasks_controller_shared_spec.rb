@@ -15,19 +15,15 @@ RSpec.describe Api::V1::TasksController, type: :controller do
     @user = user
   }
 
-  it_behaves_like "api v1 controller" do
-    let(:extra_params) { {calendar_id: calendar.id} }
-  end
+  it_behaves_like "api v1 controller"
 
   context "#index" do
     it_behaves_like "require current_account" do
       let(:action) {:index}
-      let(:extra_params) { {calendar_id: calendar.id} }
     end
 
     it_behaves_like "require current_user" do
       let(:action) {:index}
-      let(:extra_params) { {calendar_id: calendar.id} }
     end
 
   end
@@ -35,29 +31,27 @@ RSpec.describe Api::V1::TasksController, type: :controller do
   context "#show" do
     it_behaves_like "require current_account" do
       let(:action) {:show}
-      let(:extra_params) { {id: task.id, calendar_id: calendar.id} }
+      let(:extra_params) { {id: task.id} }
     end
 
     it_behaves_like "require current_user" do
       let(:action) {:show}
-      let(:extra_params) { {id: task.id, calendar_id: calendar.id} }
+      let(:extra_params) { {id: task.id} }
     end
   end
 
   context "#new" do
     it_behaves_like "require current_account" do
       let(:action) {:new}
-      let(:extra_params) { {calendar_id: calendar.id} }
     end
 
     it_behaves_like "require current_user" do
       let(:action) {:new}
-      let(:extra_params) { {calendar_id: calendar.id} }
     end
   end
 
   context "#create" do
-    let(:task_params) { {calendar_id: calendar.id, task: FactoryGirl.attributes_for(:task)} }
+    let(:task_params) { {task: FactoryGirl.attributes_for(:task).merge(calendar_id: calendar.id) } }
 
     it_behaves_like "require current_account" do
       let(:action) {:create}
@@ -73,19 +67,19 @@ RSpec.describe Api::V1::TasksController, type: :controller do
   context "#edit" do
     it_behaves_like "require current_account" do
       let(:action) {:edit}
-      let(:extra_params) { {id: task.id, calendar_id: calendar.id} }
+      let(:extra_params) { {id: task.id} }
     end
 
     it_behaves_like "require current_user" do
       let(:action) {:edit}
-      let(:extra_params) { {id: task.id, calendar_id: calendar.id} }
+      let(:extra_params) { {id: task.id} }
     end
   end
 
 
   context "#update" do
 
-    let(:task_params) { {id: task.id, calendar_id: calendar.id, task: FactoryGirl.attributes_for(:task)} }
+    let(:task_params) { {id: task.id, task: FactoryGirl.attributes_for(:task)} }
 
     it_behaves_like "require current_account" do
       let(:action) {:update}
@@ -101,12 +95,12 @@ RSpec.describe Api::V1::TasksController, type: :controller do
   context "#destroy" do
     it_behaves_like "require current_account" do
       let(:action) {:destroy}
-      let(:extra_params) { {id: task.id, calendar_id: calendar.id} }
+      let(:extra_params) { {id: task.id} }
     end
 
     it_behaves_like "require current_user" do
       let(:action) {:destroy}
-      let(:extra_params) { {id: task.id, calendar_id: calendar.id} }
+      let(:extra_params) { {id: task.id} }
     end
   end
 
