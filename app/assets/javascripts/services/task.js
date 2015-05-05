@@ -3,63 +3,80 @@ angular.module('agenda.taskservice', ['httpq'])
   function($httpq, $http){
 
     var pub = {
-      base_url: "/api/v1/calendars/:calendar_id/tasks"
+      base_url: "/api/v1/tasks"
     };
 
-    pub.get_url = function(calendar_id) {
-      return pub.base_url.replace(":calendar_id", calendar_id);
+    pub.get_url = function() {
+      return pub.base_url;
     }
 
     // load
-    pub.all = function(calendar_id, options) {
+    pub._all = function($h, options) {
       console.log(options);
       data = {};
       if (options.start !== undefined && options.end !== undefined) {
         data = {start_at: options.start.toISOString(), end_at: options.end.toISOString()};
       }
-      return $http.get(pub.get_url(calendar_id),data)
+      return $h.get(pub.get_url(), {params: data})
     }
 
-    pub.get = function(calendar_id, id) {
-      return $http.get(pub.get_url(calendar_id)+'/'+id+'.json');
+    pub.all = function(start, end) {
+      return pub._all($httpq, {start: start, end: end});
     }
 
-    pub.new = function(calendar_id) {
-      return $httpq.get(pub.get_url(calendar_id)+'/new.json')
+    pub.promise_all = function(start, end) {
+      return pub._all($http, {start: start, end: end});
     }
 
-    pub.save = function(calendar_id, obj, edit) {
+    pub.get = function(id) {
+      return $http.get(pub.get_url()+'/'+id+'.json');
+    }
+
+    pub.new = function() {
+      return $httpq.get(pub.get_url()+'/new.json')
+    }
+
+    pub.save = function(obj, edit) {
       console.log(edit);
       if (edit) {
-        return pub.update(calendar_id, obj);
+        return pub.update(obj);
       } else {
-        return pub.create(calendar_id, obj);
+        return pub.create(obj);
       }
     }
 
-    pub.create = function(calendar_id, obj) {
-      return $http.post(pub.get_url(calendar_id), {task: obj});
+    pub.create = function(obj) {
+      return $http.post(pub.get_url(), {task: obj});
     }
 
-    pub.update = function(calendar_id, obj) {
-      return $http.put(pub.get_url(calendar_id)+'/'+obj.id+'.json', {task: obj});
+    pub.update = function(obj) {
+      return $http.put(pub.get_url()+'/'+obj.id+'.json', {task: obj});
     }
 
-    pub.destroy = function(calendar_id, id) {
-      return $http.delete(pub.get_url(calendar_id)+'/'+id+'.json');
+    pub.destroy = function(id) {
+      return $http.delete(pub.get_url()+'/'+id+'.json');
     }
 
     pub.toFullCalendar = function(task) {
-      return {
-        id: task.id,
-        calendar_id: task.calendar_id,
-        title: task.title,
-        // start: moment(task.startdate + task.starttime, "DD/MM/YYYYHH:mm"),
-        // end: moment(task.enddate + task.endtime, "DD/MM/YYYYHH:mm"),
-        start: moment(task.start_at),
-        end: moment(task.end_at),
-        allDay: false,
-      }
+      task.start = moment(task.start_at);
+      task.end = moment(task.end_at);
+      task.allDay = false;
+      task.color = task.task_color;
+      return task;
+    }
+
+    pub.eventToTask = function(event) {
+      var task = {};
+      task.id = event.id;
+      task.account_id = event.account_id;
+      task.calendar_id = event.calendar_id;
+      task.title = event.title;
+      task.where = event.where;
+      task.status = event.status;
+      task.description = event.description;
+      task.end_at = event.end.toISOString();
+      task.start_at = event.start.toISOString();
+      return task;
     }
 
     pub.modalToTask = function(task) {
@@ -69,11 +86,11 @@ angular.module('agenda.taskservice', ['httpq'])
 
       var start_at = (task.startdate + task.starttime) || "";
       if (start_at !== "")
-        data.start_at = moment(start_at, "DD/MM/YYYYHH:mm").toISOString()
+        data.start_at = moment(start_at, "DD/MM/YYYYHH:mm").toISOString();
 
       var end_at = (task.enddate + task.endtime) || "";
       if (end_at !== "")
-        data.end_at = moment(end_at, "DD/MM/YYYYHH:mm").toISOString()
+        data.end_at = moment(end_at, "DD/MM/YYYYHH:mm").toISOString();
 
       console.log(data);
       return data;

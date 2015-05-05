@@ -1,7 +1,4 @@
 class Api::V1::TasksController < Api::V1::ApiController
-  include RequireCalendar
-
-  before_filter :set_calendar, :require_calendar
 
   resource_description do
     short  'Recursos para manipulação de tarefas'
@@ -18,21 +15,48 @@ class Api::V1::TasksController < Api::V1::ApiController
   end
 
   # Index
-  api :GET, '/calendars/:calendar_id/tasks', 'Lista a tarefas de um calendario que o usuário autenticado tem acesso'
+  api :GET, '/tasks', 'Lista as tarefas de todos os calendarios da conta autenticada'
   description <<-EOS
 ====Requisição
 Accept: application/json
 Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDAw
 
 ====Retorno com Sucesso:
-  TODO
+  [
+    {
+      "id": "553d2a52676b751521000000",
+      "calendar_id": "5532cc58676b752f23000000",
+      "account_id": null,
+      "title": "Corte de cabelo Masculino",
+      "description": null,
+      "where": "Salão",
+      "status": 1,
+      "status_description": "Criado",
+      "start_at": "2015-04-18T10:00:00.000-03:00",
+      "created_by_id": null,
+      "end_at": "2015-04-18T10:15:00.000-03:00"
+    },
+    {
+      "id": "553d2a52676b751521010000",
+      "calendar_id": "5532cc58676b752f23000000",
+      "account_id": null,
+      "title": "Corte de cabelo Masculino",
+      "description": "Descrição editada!",
+      "where": "Localização editada!",
+      "status": 1,
+      "status_description": "Criado",
+      "start_at": "2015-04-18T10:10:00.000-03:00",
+      "created_by_id": null,
+      "end_at": "2015-04-18T10:25:00.000-03:00"
+    }
+  ]
   EOS
   def index
     super
   end
 
   # Show
-  api :GET, '/calendars/:calendar_id/tasks/:task_id', 'Busca informações completas sobre uma tarefa específica'
+  api :GET, '/tasks/:task_id', 'Busca informações completas sobre uma tarefa específica'
   description <<-EOS
 ====Requisição
 ====Retorno com Sucesso:
@@ -43,7 +67,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   end
 
   # New
-  api :GET, '/calendars/:calendar_id/tasks/new', 'Busca informações para criação de uma nova tarefa'
+  api :GET, '/tasks/new', 'Busca informações para criação de uma nova tarefa'
   description <<-EOS
 ===Requisição
 ====Retorno com Sucesso:
@@ -67,7 +91,7 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
     super
   end
 
-  api :POST, '/calendars/:calendar_id/tasks', 'Cria uma nova tarefa para a agenda que foi passada'
+  api :POST, '/tasks', 'Cria uma nova tarefa para a agenda que foi passada'
   description <<-EOS
 ===Requisição
 
@@ -112,7 +136,7 @@ HTTP Status: 422
   end
 
   # New
-  api :GET, '/calendars/:calendar_id/tasks/:task_id/edit', 'Busca informações de uma tarefa para edição'
+  api :GET, '/tasks/:task_id/edit', 'Busca informações de uma tarefa para edição'
   description <<-EOS
 ===Requisição
 ====Retorno com Sucesso:
@@ -136,7 +160,7 @@ HTTP Status: 422
     super
   end
 
-  api :PUT, '/calendars/:calendar_id/tasks/:task_id', 'Atualiza as informações de uma tarefa'
+  api :PUT, '/tasks/:task_id', 'Atualiza as informações de uma tarefa'
   description <<-EOS
 ===Requisição
 
@@ -196,7 +220,7 @@ HTTP Status: 404
   end
 
   # New
-  api :DELETE, '/calendars/:calendar_id/tasks/:task_id', 'Exclui uma tarefa da agenda selecionada.'
+  api :DELETE, '/tasks/:task_id', 'Exclui uma tarefa da agenda selecionada.'
   description <<-EOS
 ===Requisição
 
@@ -217,15 +241,23 @@ HTTP Status: 404
   private
 
     def get_collection
-      current_calendar.tasks
+      tasks_ids = []
+      current_account.calendars.each do |calendar|
+        tasks_ids += calendar.filter_tasks(task_filter_params).map(&:id)
+      end
+      tasks_ids += current_account.filter_tasks(task_filter_params).map(&:id)
+      Task.where(:id.in => tasks_ids)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      t_params = params.fetch(:task, {}).permit(:id, :title, :description, :where, :start_at, :end_at)
-      t_params[:calendar] = current_calendar
+      t_params = params.fetch(:task, {}).permit(:id, :title, :description, :where, :start_at, :end_at, :calendar_id)
       t_params[:created_by] = current_user
       t_params
+    end
+
+    def task_filter_params
+      params.permit(:start_at, :end_at)
     end
 
 end

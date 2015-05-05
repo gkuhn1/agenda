@@ -37,6 +37,13 @@ class Task
     self.status = 1 if self.status.nil?
   end
 
+  def color(current_account)
+    # retorna a cor de um evento
+    if self.calendar.present?
+      current_account.account_users.where(user_id: self.calendar.user_id).first.task_color
+    end
+  end
+
   def f_start_at(format=:short)
     self.start_at.strftime(I18n.t format, scope: [:time, :formats])
   end

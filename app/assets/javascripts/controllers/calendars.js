@@ -78,14 +78,9 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
     $scope.createTask = function(newTask) {
       $scope.resetFormErrors();
 
-      if (newTask.calendar_id === undefined) {
-        $scope.form.calendar.$setValidity('server', false);
-        $scope.errors.calendar = "Deve selecionar um Profissional!";
-        return;
-      }
       var success = function(data) {
         console.log(data);
-        $scope.addOrUpdateTask(newTask.calendar_id, data);
+        $scope.addOrUpdateTask(data);
         $scope.closeModal();
       };
       var error = function(data) {
@@ -95,32 +90,32 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
           $scope.errors[field] = errors.join(', ');
         })
       }
-      promise = TaskService.save(newTask.calendar_id, TaskService.modalToTask(newTask), newTask.updating);
+      promise = TaskService.save(TaskService.modalToTask(newTask), newTask.updating);
       promise.success(success).error(error).finally(function() {
         $scope.laddaLoading = false;
       })
     }
 
-    $scope.addOrUpdateTask = function(calendar_id, data) {
-      var events = $scope.eventSources.findBy("calendar_id", calendar_id).events;
+    $scope.addOrUpdateTask = function(data) {
+      var events = $scope.eventSources[0].events;
       var idx = events.indexOfById(data.id);
       var calendar_task_data = TaskService.toFullCalendar(data);
       if ( idx == -1 ) {
-        events.push(TaskService.toFullCalendar(data));
+        events.push(calendar_task_data);
       } else {
         console.log('updating ', angular.equals(events[idx], calendar_task_data));
         console.log(events[idx], calendar_task_data);
         if ( !angular.equals(events[idx], calendar_task_data) ) {
-          events[idx] = TaskService.toFullCalendar(data);
+          events[idx] = calendar_task_data;
         }
       }
     }
 
     $scope.destroyTask = function(task) {
       console.log(task);
-      TaskService.destroy(task.calendar_id, task.id)
+      TaskService.destroy(task.id)
         .success(function(data) {
-          var events = $scope.eventSources.findBy("calendar_id", task.calendar_id).events;
+          var events = $scope.eventSources[0].events;
           events.splice(events.indexOfById(task), 1);
           $scope.closeModal();
         })
@@ -133,27 +128,18 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
         element = $('#fullcalendar').fullCalendar('getView');
       }
 
-      CalendarService.promise_all(element.start.toISOString(), element.end.toISOString())
+      TaskService.promise_all(element.start, element.end)
         .success(function(data) {
           $scope.eventSources.splice(0,$scope.eventSources.length)
-          $scope.calendars = data;
-          angular.forEach($scope.calendars, function(calendar) {
-            var source = {events: [], color: calendar.user.task_color, calendar_id: calendar.id};
-            angular.forEach(calendar.tasks, function(task) {
-              source.events.push(TaskService.toFullCalendar(task));
-            })
-            $scope.eventSources.push(source);
+          $scope.tasks = data;
+          var source = {events: []};
+          angular.forEach($scope.tasks, function(task) {
+            source.events.push(TaskService.toFullCalendar(task));
           })
-          if ($scope.calendars[0] && $scope.calendars[0].account_tasks.length > 0) {
-            var source = {events: [], color: "#909090"};
-            angular.forEach($scope.calendars[0].account_tasks, function(task) {
-              source.events.push(TaskService.toFullCalendar(task));
-            })
-            $scope.eventSources.push(source);
-          }
+          console.log(source);
+          $scope.eventSources.push(source);
         })
 
-      // $($scope.$fullcalendar).fullCalendar('refetch');
       $scope.$emit("loading_stop", {timeout: false});
     }
 
@@ -167,7 +153,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
     }
 
     $scope.eventClick = function(cal_task, event, calendar) {
-      TaskService.get(cal_task.calendar_id, cal_task.id)
+      TaskService.get(cal_task.id)
         .success(function(data) {
           $scope.newTask = TaskService.taskToModal(data);
           $scope.newTask.updating = true;
@@ -177,8 +163,10 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
         });
     }
 
-    $scope.alertOnResize = function() {
-      console.log(arguments);
+    $scope.dropOrResize = function(event, delta, revertFunc) {
+      event.updating = true
+      console.log(event, delta);
+      TaskService.save(TaskService.eventToTask(event), true);
     }
 
     $scope.calendarOptions = {
@@ -211,8 +199,8 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       select: $scope.onSelectCalendar,
       eventClick: $scope.eventClick,
       dayClick: $scope.alertEventOnClick,
-      eventDrop: $scope.alertOnDrop,
-      eventResize: $scope.alertOnResize
+      eventDrop: $scope.dropOrResize,
+      eventResize: $scope.dropOrResize
     }
 
     $timeout(function() {
@@ -242,11 +230,11 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
 
     Pusher.subscribe($rootScope.current_user.id + '_tasks', 'added', function (item) {
       console.info('coming from pusher');
-      $scope.addOrUpdateTask(item.calendar_id, item);
+      $scope.addOrUpdateTask(item);
     });
     Pusher.subscribe($rootScope.current_user.id + '_tasks', 'changed', function (item) {
       console.info('coming from pusher');
-      $scope.addOrUpdateTask(item.calendar_id, item);
+      $scope.addOrUpdateTask(item);
     });
 
     $rootScope.$on('calendar-week-changed', function(event, startDate, endDate, currentDate) {

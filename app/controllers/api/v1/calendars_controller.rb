@@ -1,7 +1,5 @@
 class Api::V1::CalendarsController < Api::V1::ApiController
 
-  helper_method :task_filter_params
-
   resource_description do
     short  'Recursos para manipulação de Agendas'
     name 'Agendas'
@@ -15,9 +13,6 @@ class Api::V1::CalendarsController < Api::V1::ApiController
 Accept: application/json
 Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDAw
 
-=====Filtros de requisição
-  tasks [true/false] - Exibir também as tarefas de cada celendário
-
 ====Retorno com Sucesso:
   [
     {
@@ -29,7 +24,6 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   ]
   EOS
   def index
-    @tasks = params[:tasks]
     super
   end
 
@@ -131,10 +125,6 @@ HTTP Status: 404
     # Never trust parameters from the scary internet, only allow the white list through.
     def calendar_params
       params.require(:calendar).permit(:id, :system_notify, :email_notify)
-    end
-
-    def task_filter_params
-      params.permit(:start_at, :end_at)
     end
 
 end
