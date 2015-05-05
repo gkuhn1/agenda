@@ -76,4 +76,17 @@ class Account
     Calendar.in(id: accessible_calendar_ids)
   end
 
+  def filter_tasks(filters)
+    tasks = Task.where(account_id: self.id)
+    begin
+      if filters[:start_at] and filters[:end_at]
+        start_at, end_at = [DateTime.parse(filters[:start_at]).utc, DateTime.parse(filters[:end_at]).utc]
+        end_at += 1.day if end_at.hour == 0 and end_at.second == 0
+        return tasks.where(:start_at.gt => start_at, :end_at.lt => end_at)
+      end
+    rescue ArgumentError => e
+    end
+    return tasks
+  end
+
 end

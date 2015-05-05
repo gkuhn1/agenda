@@ -45,20 +45,23 @@ class Task
     self.end_at.strftime(I18n.t format, scope: [:time, :formats])
   end
 
+  def affected_users
+    # retorna os usuarios afetados por essa task
+    if self.calendar.present?
+      [self.calendar.user]
+    elsif self.account_id.present?
+      Account.find(self.account_id).users
+    else
+      []
+    end
+  end
+
   # NOTIFICATIONS
   def create_notification
     # se o criador for diferente do usuário para qual a tarefa é direcionada
     if !self.calendar.present? or self.calendar.user != self.created_by
       # manda notificação para o usuário do calendário
-      if self.calendar.present?
-        user_ids = [self.calendar.user.id]
-      elsif self.account_id.present?
-        user_ids = Account.find(self.account_id).users.map(&:id)
-      else
-        user_ids = []
-      end
-
-      user_ids.each do |user_id|
+      affected_users.map(&:id).each do |user_id|
         NotifyWorker.perform_async(user_id, 'Novo agendamento', "#{f_start_at} até #{f_end_at}")
       end
     end

@@ -8,6 +8,9 @@ if @tasks
   json.tasks do
     json.array!(calendar.filter_tasks(task_filter_params), partial: 'api/v1/tasks/show', as: :task)
   end
+  json.account_tasks do
+    json.array!(current_account.filter_tasks(task_filter_params), partial: 'api/v1/tasks/show', as: :task)
+  end
 end
 
 json.user do

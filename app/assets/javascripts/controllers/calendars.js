@@ -132,6 +132,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       if (element === undefined) {
         element = $('#fullcalendar').fullCalendar('getView');
       }
+
       CalendarService.promise_all(element.start.toISOString(), element.end.toISOString())
         .success(function(data) {
           $scope.eventSources.splice(0,$scope.eventSources.length)
@@ -143,6 +144,13 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
             })
             $scope.eventSources.push(source);
           })
+          if ($scope.calendars[0] && $scope.calendars[0].account_tasks.length > 0) {
+            var source = {events: [], color: "#909090"};
+            angular.forEach($scope.calendars[0].account_tasks, function(task) {
+              source.events.push(TaskService.toFullCalendar(task));
+            })
+            $scope.eventSources.push(source);
+          }
         })
 
       // $($scope.$fullcalendar).fullCalendar('refetch');
@@ -187,6 +195,8 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       editable: true,
       selectable: true,
       selectHelper: true,
+      minTime: '08:00:00',
+      maxTime: '20:00:00',
       header:{
         left: 'month agendaWeek agendaDay',
         center: 'title',
