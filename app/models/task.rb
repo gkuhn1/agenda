@@ -41,7 +41,9 @@ class Task
   def color
     # retorna a cor de um evento
     if self.account_user_id.present?
-      AccountUser.find(self.account_user_id).task_color
+      _id = BSON::ObjectId.from_string(self.account_user_id.to_s)
+      account = Account.where('account_users._id' => _id).first
+      account.account_users.find(_id).task_color
     end
   end
 

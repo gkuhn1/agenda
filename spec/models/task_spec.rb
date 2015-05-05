@@ -59,4 +59,40 @@ RSpec.describe Task, type: :model do
     end
   end
 
+  context "#color" do
+    let(:account) { FactoryGirl.create(:account) }
+    let(:task) { FactoryGirl.build(:task, account_user_id: account.account_users.first.id ) }
+
+    it "should return account_user color" do
+      expect(task.color).to eq account.account_users.first.task_color
+    end
+    it "should return nil if account_user not set" do
+      task.account_user_id = nil
+      expect(task.color).to eq nil
+    end
+  end
+
+  context "#affected_users" do
+    let(:user1) { FactoryGirl.create(:user) }
+    let(:user2) { FactoryGirl.create(:user) }
+    let(:account) { FactoryGirl.create(:account) }
+    let(:calendar) { FactoryGirl.build(:calendar) }
+    let(:task) { FactoryGirl.build(:task, calendar: calendar) }
+    it "should return user from calendar" do
+      expect(task.affected_users).to eq [calendar.user]
+    end
+    it "should return all users from account" do
+      task.calendar = nil
+      task.account_id = account.id
+      account.add_user(user1)
+      account.add_user(user2)
+      expect(task.affected_users).to eq account.users
+    end
+    it "should return empty if task doesnt have calendar and account" do
+      task.calendar = nil
+      task.account_id = nil
+      expect(task.affected_users).to eq []
+    end
+  end
+
 end

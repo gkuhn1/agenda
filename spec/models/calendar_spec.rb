@@ -44,4 +44,24 @@ RSpec.describe Calendar, type: :model do
     end
   end
 
+  context "#date_available?" do
+
+    let(:calendar) { FactoryGirl.create(:calendar) }
+    let!(:t1) { FactoryGirl.create(:task, calendar: calendar,
+      start_at: "2015-04-27T14:00:00.501-00:00", end_at: "2015-04-27T15:00:00.501-00:00") }
+    let!(:t2) { FactoryGirl.create(:task, calendar: calendar,
+      start_at: "2015-04-26T14:00:00.501-00:00", end_at: "2015-04-26T15:00:00.501-00:00") }
+    let!(:t3) { FactoryGirl.create(:task, calendar: calendar,
+      start_at: "2015-04-17T14:00:00.501-00:00", end_at: "2015-04-17T15:00:00.501-00:00") }
+    let!(:t4) { FactoryGirl.create(:task, calendar: calendar,
+      start_at: "2015-05-02T14:00:00.501-00:00", end_at: "2015-05-05T15:00:00.501-00:00") }
+
+    it "should return false if calendar has any task in filtered time" do
+      expect(calendar.date_available?({start_at: "2015-04-27", end_at: "2015-04-27"})).to be false
+    end
+    it "should return true if calendar has no tasks in filtered time" do
+      expect(calendar.date_available?({start_at: "2015-04-25", end_at: "2015-04-25"})).to be true
+    end
+  end
+
 end
