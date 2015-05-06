@@ -90,12 +90,13 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   }
   EOS
   def new_task
-    @task = Task.new task_params
+    @task = Task.new task_current_user_params
     respond_to do |format|
       if @task.save
+        @task_other = Task.create(task_other_user_params)
         format.json { render :new_task, status: :created }
       else
-        format.json { render json: {errors: @task.errors}, status: :unprocessable_entity }
+        format.json { render json: {errors: @task_other.errors}, status: :unprocessable_entity }
       end
     end
   end
@@ -103,7 +104,14 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   private
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def task_params
+    def task_current_user_params
+      t_params = params.fetch(:task, {}).permit(:title, :specialty_id, :description, :where, :start_at, :end_at)
+      t_params[:created_by] = current_user
+      t_params[:calendar_id] = current_user.calendar.id
+      t_params
+    end
+
+    def task_other_user_params
       t_params = params.fetch(:task, {}).permit(:title, :account_id, :specialty_id, :description, :where, :start_at, :end_at)
       t_params[:created_by] = current_user
       t_params

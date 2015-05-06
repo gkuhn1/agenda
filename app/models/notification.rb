@@ -20,7 +20,7 @@ class Notification
   validates_presence_of :title, :text, :user, :read
   validates :type, :inclusion => {:in => TYPES.keys, :message => 'desconhecido' }
 
-  default_scope -> { order_by(:created_at => 'asc') }
+  default_scope -> { order_by(:created_at => 'desc') }
   scope :to_user, ->(user) { where(user_id: user._id) }
   scope :sys, -> { where(type: 1) }
 

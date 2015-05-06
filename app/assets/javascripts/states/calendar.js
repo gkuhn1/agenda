@@ -17,7 +17,7 @@ angular.module('agenda.states-calendars', ['agenda.grandfather'])
         }
       })
       .state('app.header.calendar-sidebar.calendars', {
-        url: "/calendars",
+        url: "/calendars?showDay",
         templateUrl: "/templates/calendars/index.html",
         controller: "CalendarsCtrl",
         resolve: {

@@ -111,6 +111,7 @@ angular.module('agenda.home', ['agenda.grandfather'])
     }
 
     $scope.getBase64Data = function() {
+      $scope.search.specialty = $scope.specialties.findById($scope.search.specialty_id);
       return objToBase64($scope.search);
     }
 
@@ -124,13 +125,12 @@ angular.module('agenda.home', ['agenda.grandfather'])
   }
 ])
 
-.controller("SearchAddTaskCtrl", ['$rootScope', '$scope', '$state', 'SearchService', 'TaskService', 'params',
-  function($rootScope, $scope, $state, SearchService, TaskService, params) {
+.controller("SearchAddTaskCtrl", ['$rootScope', '$scope', '$state', '$location', 'SearchService', 'TaskService', 'params',
+  function($rootScope, $scope, $state, $location, SearchService, TaskService, params) {
 
-    console.log(params);
     $scope.initTask = function() {
       $scope.newTask = {
-        title: params.specialty_id,
+        title: params.specialty.description,
         specialty_id: params.specialty_id,
         account_id: $state.params.account_id,
         startdate: params.date,
@@ -143,8 +143,8 @@ angular.module('agenda.home', ['agenda.grandfather'])
 
     $scope.createTask = function(newTask) {
       var success = function(data) {
-        console.log(data);
-        alert('task incluida. redirecionar para o calendário...')
+        $('#createTaskModal').off('hide.bs.modal');
+        $state.go("app.header.calendar-sidebar.calendars", {showDay: moment(data.start_at).format('DD/MM/YYYY')});
       };
       var error = function(data) {
         console.log(data.errors);

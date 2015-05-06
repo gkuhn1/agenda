@@ -41,9 +41,10 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
   }
 ])
 
-.controller("CalendarsCtrl", ['$scope', '$rootScope', '$timeout', 'Pusher', 'CalendarService', 'TaskService', 'calendars',
-  function($scope, $rootScope, $timeout, Pusher, CalendarService, TaskService, calendars) {
+.controller("CalendarsCtrl", ['$scope', '$rootScope', '$timeout', '$state', 'Pusher', 'CalendarService', 'TaskService', 'calendars',
+  function($scope, $rootScope, $timeout, $state, Pusher, CalendarService, TaskService, calendars) {
 
+    console.log($state);
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
     $scope.calendars = calendars;
     $scope.eventSources = [];
@@ -169,13 +170,17 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       TaskService.save(TaskService.eventToTask(event), true);
     }
 
+    if ($state.params.showDay) {
+      $scope.showDay = moment($state.params.showDay, 'DD/MM/YYYY').toDate();
+    }
+
     $scope.calendarOptions = {
       lang: 'pt-br',
       useNgLocale: false,
       allDaySlot: false,
       editable: true,
       defaultView: 'agendaWeek',
-      defaultDate: new Date(),
+      defaultDate: $scope.showDay || new Date(),
       slotDuration: "00:15:00",
       scrollTime: new Date().getTimeStr(),
       axisFormat: 'HH:mm',
