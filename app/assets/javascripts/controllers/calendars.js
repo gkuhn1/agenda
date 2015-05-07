@@ -170,6 +170,18 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       TaskService.save(TaskService.eventToTask(event), true);
     }
 
+    $scope.eventRender = function(event, element) {
+      console.log(event, element);
+      element.find('.fc-resizer').before("<div class=\"fc-status label "+$scope.eventStatusClass(event)+"\"><span>"+event.status_description+"</span></div>");
+    }
+
+    $scope.eventStatusClass = function(event) {
+      switch (event.status) {
+        case 1:
+          return 'label-default';
+      }
+    }
+
     if ($state.params.showDay) {
       $scope.showDay = moment($state.params.showDay, 'DD/MM/YYYY').toDate();
     }
@@ -200,6 +212,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
           titleRangeSeparator: ' à '
         }
       },
+      eventRender: $scope.eventRender,
       beforeViewRender: $scope.reloadTasks,
       select: $scope.onSelectCalendar,
       eventClick: $scope.eventClick,

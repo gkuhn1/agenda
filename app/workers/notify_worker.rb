@@ -6,6 +6,7 @@ class NotifyWorker
     notification = Notification.to(user, title, text)
     # push notification to pusher
     Pusher.trigger("#{user_id}_notifications", 'added', notification.to_json)
+  rescue Mongoid::Errors::DocumentNotFound
   end
 
 end

@@ -8,6 +8,7 @@ class TasksWorker
     user_ids.each do |user_id|
       Pusher.trigger("#{user_id}_tasks", action, task.to_json)
     end
+  rescue Mongoid::Errors::DocumentNotFound
   end
 
 end

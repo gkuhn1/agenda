@@ -1,0 +1,31 @@
+
+
+.fc-event {
+
+  &:hover {
+    .fc-status {
+      width: 95%;
+      height: 10px;
+    }
+    .fc-status span {
+      opacity: 1;
+    }
+  }
+
+  .fc-status {
+    top: 0;
+    right: 0;
+    position: absolute;
+    z-index: 5;
+    width: 0;
+    height: 5px;
+    transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -webkit-transition: all .25s ease;
+  }
+
+  .fc-status span {
+    opacity: 0;
+  }
+
+}
