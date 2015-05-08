@@ -19,7 +19,9 @@ class Task
   has_and_belongs_to_many :specialties
 
   STATUS = {
-    1 => "Criado"
+    1 => "Aguardando confirmação",
+    2 => "Confirmada",
+    3 => "Cancelada"
   }
 
   validates_presence_of :title, :start_at, :end_at

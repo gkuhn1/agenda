@@ -65,4 +65,17 @@ angular.module('agenda-filters', [])
   };
 })
 
+.filter('taskStatusClass', function() {
+  return function(task) {
+    switch (task.status) {
+      case 1:
+        return 'default';
+      case 2:
+        return 'success';
+      case 3:
+        return 'danger';
+    }
+  }
+})
+
 ;

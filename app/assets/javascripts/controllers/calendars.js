@@ -41,8 +41,8 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
   }
 ])
 
-.controller("CalendarsCtrl", ['$scope', '$rootScope', '$timeout', '$state', 'Pusher', 'CalendarService', 'TaskService', 'calendars',
-  function($scope, $rootScope, $timeout, $state, Pusher, CalendarService, TaskService, calendars) {
+.controller("CalendarsCtrl", ['$scope', '$rootScope', '$timeout', '$state', '$filter', 'Pusher', 'CalendarService', 'TaskService', 'calendars',
+  function($scope, $rootScope, $timeout, $state, $filter, Pusher, CalendarService, TaskService, calendars) {
 
     console.log($state);
     $rootScope.page = {title: "Administração", subtitle: "Contas"};
@@ -97,6 +97,19 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       })
     }
 
+    $scope.updateStatus = function(newTask, status) {
+      var success = function(data) {
+        $scope.addOrUpdateTask(data);
+        $scope.closeModal();
+      }
+      TaskService.save({id: newTask.id, status: status}, true)
+        .success(success)
+        .finally(function() {
+          $scope.laddaLoading = false;
+        })
+      ;
+    }
+
     $scope.addOrUpdateTask = function(data) {
       var events = $scope.eventSources[0].events;
       var idx = events.indexOfById(data.id);
@@ -104,12 +117,12 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       if ( idx == -1 ) {
         events.push(calendar_task_data);
       } else {
-        console.log('updating ', angular.equals(events[idx], calendar_task_data));
-        console.log(events[idx], calendar_task_data);
         if ( !angular.equals(events[idx], calendar_task_data) ) {
-          events[idx] = calendar_task_data;
+          angular.copy(calendar_task_data, events[idx]);
         }
       }
+      $scope.eventSources.splice(0,1);
+      $scope.eventSources.push({events: events});
     }
 
     $scope.destroyTask = function(task) {
@@ -171,15 +184,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
     }
 
     $scope.eventRender = function(event, element) {
-      console.log(event, element);
-      element.find('.fc-resizer').before("<div class=\"fc-status label "+$scope.eventStatusClass(event)+"\"><span>"+event.status_description+"</span></div>");
-    }
-
-    $scope.eventStatusClass = function(event) {
-      switch (event.status) {
-        case 1:
-          return 'label-default';
-      }
+      element.find('.fc-resizer').before("<div class=\"fc-status label label-"+$filter('taskStatusClass')(event)+"\"><span>"+event.status_description+"</span></div>");
     }
 
     if ($state.params.showDay) {

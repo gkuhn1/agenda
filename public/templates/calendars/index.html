@@ -10,7 +10,7 @@
 </div>
 
 
-<div id="createTaskModal" class="modal">
+<div id="createTaskModal" class="modal modal-newtask">
   <div class="modal-dialog">
     <form name="form" class="simple_form new_task" novalidate class="form-horizontal" ng-submit="createTask(newTask)">
       <div class="modal-content">
@@ -67,9 +67,29 @@
             </div>
           </div>
 
+          <div class="row">
+            <div class="col-sm-12 task-status">
+              <div class="label label-{{ newTask | taskStatusClass }}">{{ newTask.status_description }}</div>
+            </div>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal" ng-click="resetFormErrors()">Cancelar</button>
+
+          <div class="task-actions btn-group">
+            <!-- Single button -->
+            <button type="button" class="btn btn-{{ newTask | taskStatusClass }} dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+              ladda="laddaModalLoading" data-spinner-size="30">
+              {{ newTask.status_description }} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href class="" ng-click="updateStatus(newTask, 1)" ng-show="newTask.status != 1">Aguarda confirmação!</a></li>
+              <li><a href class="text-green" ng-click="updateStatus(newTask, 2)" ng-show="newTask.status != 2">Confirmar!</a></li>
+              <li><a href class="text-red" ng-click="updateStatus(newTask, 3)" ng-show="newTask.status != 3">Cancelar!</a></li>
+            </ul>
+          </div>
+
           <a href class="btn btn-danger"
             ladda="laddaModalDeleteLoading" data-spinner-size="30"
             ng-show="newTask.updating"

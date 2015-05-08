@@ -3,7 +3,12 @@ angular.module('agenda.taskservice', ['httpq'])
   function($httpq, $http){
 
     var pub = {
-      base_url: "/api/v1/tasks"
+      base_url: "/api/v1/tasks",
+      statuses: {
+        1: "Aguardando confirmação",
+        2: "Confirmado",
+        3: "Cancelado"
+      }
     };
 
     pub.get_url = function() {

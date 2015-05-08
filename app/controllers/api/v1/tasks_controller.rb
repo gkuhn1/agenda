@@ -251,7 +251,7 @@ HTTP Status: 404
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      t_params = params.fetch(:task, {}).permit(:id, :title, :description, :where, :start_at, :end_at, :calendar_id)
+      t_params = params.fetch(:task, {}).permit(:id, :title, :description, :where, :start_at, :end_at, :calendar_id, :status)
       t_params[:created_by] = current_user
       t_params
     end

@@ -42,8 +42,8 @@ angular.module('ui.calendar', [])
       var eventSerialId = 1;
       // @return {String} fingerprint of the event object and its properties
       this.eventFingerprint = function(e) {
-        if (!e.__uiCalId) {
-          e.__uiCalId = eventSerialId++;
+        if (!e._id) {
+          e._id = eventSerialId++;
         }
         // This extracts all the information we need from the event. http://jsperf.com/angular-calendar-events-fingerprint/3
         return "" + e._id + (e.id || '') + (e.title || '') + (e.url || '') + (+e.start || '') + (+e.end || '') +
@@ -74,7 +74,7 @@ angular.module('ui.calendar', [])
             // event source as object, ie extended form
             var extEvent = {};
             for(var key in source){
-              if(key !== '_uiCalId' && key !== 'events'){
+              if(key !== '_id' && key !== 'events'){
                  extEvent[key] = source[key];
               }
             }
@@ -260,6 +260,9 @@ angular.module('ui.calendar', [])
 
         scope.init = function(){
           calendar.fullCalendar(options);
+          if(attrs.calendar) {
+            uiCalendarConfig.calendars[attrs.calendar] = calendar;
+          }
         };
 
         eventSourcesWatcher.onAdded = function(source) {
@@ -278,18 +281,16 @@ angular.module('ui.calendar', [])
         };
 
         eventsWatcher.onAdded = function(event) {
-          calendar.fullCalendar('renderEvent', event, event.stick);
+          calendar.fullCalendar('renderEvent', event, (event.stick ? true : false));
         };
 
         eventsWatcher.onRemoved = function(event) {
-          calendar.fullCalendar('removeEvents', function(e) {
-            return e.id === event.id;
-          });
+          calendar.fullCalendar('removeEvents', event._id);
         };
 
         eventsWatcher.onChanged = function(event) {
-          event._start = $.fullCalendar.moment(event.start);
-          event._end = $.fullCalendar.moment(event.end);
+          event._start = jQuery.fullCalendar.moment(event.start);
+          event._end = jQuery.fullCalendar.moment(event.end);
           calendar.fullCalendar('updateEvent', event);
         };
 
