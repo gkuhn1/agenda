@@ -73,7 +73,7 @@ RSpec.describe Api::V1::TasksController, type: :controller do
           "description"=>"My Task description",
           "where"=>"My task location",
           "status"=>1,
-          "status_description"=>"Criado",
+          "status_description"=>"Aguardando confirmação",
           "start_at"=>"2015-04-27T14:00:00.501-03:00",
           "created_by_id"=>user.id,
           "end_at"=>"2015-04-27T15:00:00.501-03:00",
@@ -104,7 +104,8 @@ RSpec.describe Api::V1::TasksController, type: :controller do
     it "should ignore status passed to param" do
       task_params[:task].merge!("status"=>"99")
       post :create, task_params
-      expect(assigns(:task).status).to eq(1)
+      expect(assigns(:task).valid?).to be(false)
+      expect(assigns(:task).status).to eq(99)
     end
   end
 
