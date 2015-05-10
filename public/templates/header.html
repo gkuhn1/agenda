@@ -40,7 +40,10 @@
             </a>
             <ul class="dropdown-menu">
 
-              <li class="header">Você tem {{ ntf.unread_count }} avisos não lidos</li>
+              <li class="header">
+                Você tem {{ ntf.unread_count }} avisos não lidos
+                <a href title="Marcar tudo como lido" class="btn btn-xs btn-default pull-right" ng-click="setAllAsRead()"><i class="fa fa-eye"></i></a>
+              </li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">

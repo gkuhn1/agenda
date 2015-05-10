@@ -31,6 +31,7 @@ class Task
   before_validation :set_status
   after_create :create_notification
   after_create :send_task_add_notification
+  after_save :send_status_changed_notification
 
   def status!
     STATUS[self.status]
@@ -81,6 +82,17 @@ class Task
 
   def send_task_add_notification
     TasksWorker.perform_async(self.id)
+  end
+
+  def send_task_change_notification
+    TasksWorker.perform_async(self.id, 'changed')
+  end
+
+  def send_status_changed_notification
+    # enviar a notificação caso o status tenha mudado para 2 ou 3
+    if !(self.status == 1 and self._id_changed?) and self.status_changed?
+      send_task_change_notification
+    end
   end
 
 end

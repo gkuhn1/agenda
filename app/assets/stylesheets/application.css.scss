@@ -99,3 +99,16 @@ table.table-ellipsis > tbody > tr > td {
     padding: 0 5px;
   }
 }
+
+
+.messages-menu {
+  li.header {
+    a {
+      i.fa {
+        margin: 0;
+      }
+
+      padding: 3px 10px;
+    }
+  }
+}

@@ -54,6 +54,14 @@ angular.module('agenda.home', ['agenda.grandfather'])
       });
     }
 
+    $scope.setAllAsRead = function() {
+      angular.forEach($scope.notifications, function(notification) {
+        if (!notification.read) {
+          $scope.toggleRead(notification);
+        }
+      })
+    }
+
     $scope.changeCurrentAccount = function(account) {
       console.log("change_account()");
       Auth.select_current_account(account);

@@ -45,20 +45,6 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  context "#create_notification" do
-    let(:task) { FactoryGirl.build(:task, status: 1) }
-    it "should not create a notification if user is the same" do
-      task.created_by = FactoryGirl.create(:user)
-      task.calendar = task.created_by.calendar
-      expect { task.save }.not_to change(Notification, :count)
-    end
-    it "should send notification to calendar task user's if task was created by another user" do
-      task.created_by = FactoryGirl.create(:user)
-      task.calendar = FactoryGirl.create(:user).calendar
-      expect { task.save }.to change(Notification, :count).by(1)
-    end
-  end
-
   context "#color" do
     let(:account) { FactoryGirl.create(:account) }
     let(:task) { FactoryGirl.build(:task, account_user_id: account.account_users.first.id ) }
@@ -93,6 +79,97 @@ RSpec.describe Task, type: :model do
       task.account_id = nil
       expect(task.affected_users).to eq []
     end
+  end
+
+  context "notifications" do
+
+    context "#create_notification" do
+      let(:task) { FactoryGirl.build(:task, status: 1) }
+      it "should not create a notification if user is the same" do
+        task.created_by = FactoryGirl.create(:user)
+        task.calendar = task.created_by.calendar
+        expect { task.save }.not_to change(Notification, :count)
+      end
+      it "should send notification to calendar task user's if task was created by another user" do
+        task.created_by = FactoryGirl.create(:user)
+        task.calendar = FactoryGirl.create(:user).calendar
+        expect { task.save }.to change(Notification, :count).by(1)
+      end
+    end
+
+    context "#send_status_changed_notification" do
+      let(:task1) { FactoryGirl.create(:task, status: 1) }
+      let(:task2) { FactoryGirl.create(:task, status: 2) }
+      let(:task3) { FactoryGirl.create(:task, status: 3) }
+
+      it "should send notifications when status changed from 1 to 2" do
+        task1.status = 2
+        expect(task1).to receive(:send_task_change_notification).and_call_original
+        expect_any_instance_of(TasksWorker).to receive(:perform).with(task1.id, 'changed').and_return(nil)
+        task1.save
+      end
+
+      it "should send notification when status change from 1 to 3" do
+        task1.status = 3
+        expect(task1).to receive(:send_task_change_notification).and_call_original
+        expect_any_instance_of(TasksWorker).to receive(:perform).with(task1.id, 'changed').and_return(nil)
+        task1.save
+      end
+
+      it "should send notification when status changed from 2 to 1" do
+        task2.status = 1
+        expect(task2).to receive(:send_task_change_notification).and_call_original
+        expect_any_instance_of(TasksWorker).to receive(:perform).with(task2.id, 'changed').and_return(nil)
+        task2.save
+      end
+
+      it "should send notification when status changed from 2 to 3" do
+        task2.status = 3
+        expect(task2).to receive(:send_task_change_notification).and_call_original
+        expect_any_instance_of(TasksWorker).to receive(:perform).with(task2.id, 'changed').and_return(nil)
+        task2.save
+      end
+
+      it "should send notification when status changed from 3 to 1" do
+        task3.status = 1
+        expect(task3).to receive(:send_task_change_notification).and_call_original
+        expect_any_instance_of(TasksWorker).to receive(:perform).with(task3.id, 'changed').and_return(nil)
+        task3.save
+      end
+
+      it "should send notification when status changed from 3 to 2" do
+        task3.status = 2
+        expect(task3).to receive(:send_task_change_notification).and_call_original
+        expect_any_instance_of(TasksWorker).to receive(:perform).with(task3.id, 'changed').and_return(nil)
+        task3.save
+      end
+
+      it "should not send notification when status is the same" do
+        # expect_any_instance_of(TasksWorker).not_to receive(:perform).with('changed')
+        task2.status = 2
+        expect(task2).not_to receive(:send_task_change_notification)
+        task2.save
+      end
+
+      it "should not send notification when task is created as status 1" do
+        expect_any_instance_of(TasksWorker).not_to receive(:perform).with('changed')
+        FactoryGirl.create(:task, status: 1)
+      end
+
+      it "should send notification when task is created with status 2" do
+        t2 = FactoryGirl.build(:task, status: 2)
+        expect(t2).to receive(:send_task_change_notification).once
+        t2.save
+      end
+
+      it "should send notification when task is created with status 3" do
+        t3 = FactoryGirl.build(:task, status: 3)
+        expect(t3).to receive(:send_task_change_notification).once
+        t3.save
+      end
+
+    end
+
   end
 
 end
