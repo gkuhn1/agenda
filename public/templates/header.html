@@ -14,16 +14,16 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li ui-sref-active-eq="open">
-          <a href ui-sref="app.header.sidebar.home">Dashboard</a>
+          <a href ui-sref="app.header.sidebar.home.search">Pesquisar</a>
         </li>
         <li ui-sref-active-eq="open">
-          <a href ui-sref="app.header.calendar-sidebar.calendars">Calendário</a>
+          <a href ui-sref="app.header.calendar-sidebar.calendars">Meu Calendário</a>
         </li>
         <li ng-show="false">
           <a href>Clientes</a>
         </li>
         <li ui-sref-active-eq="open">
-          <a href ui-sref="app.header.config-sidebar.home">Configurações</a>
+          <a href ui-sref="app.header.config-sidebar.home.edit">Configurações</a>
         </li>
         <li ng-show="current_user.admin" ui-sref-active-eq="open">
           <a href ui-sref="app.header.admin-sidebar.home">Administração</a>
@@ -102,8 +102,8 @@
               </li>
               <!-- Menu Body -->
               <li class="user-body">
-                <div class="col-xs-12 css-truncate" ng-repeat="account in accounts">
-                  <a href ng-click="changeCurrentAccount(account)" title="{{ account.name }}">{{ account.name }}</a>
+                <div class="col-xs-12" ng-repeat="account in accounts">
+                  <a href class="btn btn-sm btn-success css-truncate" style="width: 100%" ng-click="changeCurrentAccount(account)" title="{{ account.name }}">{{ account.name }}</a>
                 </div>
               </li>
               <!-- Menu Footer -->

@@ -97,6 +97,7 @@ angular.module('agenda.authservice', [])
         console.info("access denied ->", to.data.access)
         event.preventDefault();
         $rootScope.$emit('$statePermissionError');
+        $rootScope.$broadcast("loading_stop");
         var errorStateTo = to.name == loginState ? homeState : loginState;
         console.log($state, errorStateTo);
         $state.go(errorStateTo, {}, {reload: true,inherit: false});

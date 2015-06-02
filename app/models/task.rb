@@ -10,6 +10,7 @@ class Task
   field :status, type: Integer
   field :start_at, type: Time
   field :end_at, type: Time
+
   field :account_id, type: String
   field :specialty_id, type: String
   field :account_user_id, type: String

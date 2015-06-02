@@ -4,6 +4,7 @@ angular.module('agenda.login', ['agenda.grandfather'])
   $rootScope.login = true;
 
   $scope.error = "";
+  $scope.credential = {};
 
   $scope.login = function(credentials) {
     console.log(credentials);
