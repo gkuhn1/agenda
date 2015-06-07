@@ -48,6 +48,8 @@ class Task
       _id = BSON::ObjectId.from_string(self.account_user_id.to_s)
       account = Account.where('account_users._id' => _id).first
       account.account_users.find(_id).task_color
+    elsif self.calendar.present?
+      self.calendar.user.account_user_for(self.calendar.user.accounts.first).task_color
     end
   end
 
