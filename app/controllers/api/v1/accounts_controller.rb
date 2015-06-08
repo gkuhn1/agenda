@@ -272,11 +272,32 @@ Apenas é possível excluir contas caso o usuário autenticado tenha acesso a es
     render :show
   end
 
+  api :PUT, '/accounts/add_user', 'Adiciona um usuário existente a conta autenticada'
+  description <<-EOS
+  EOS
+  def add_user
+    @account_user = current_account.add_user(User.find(account_user_params[:user_id]))
+    raise ActionController::ParameterMissing if @account_user.nil?
+    @account_user.update_attributes(account_user_params)
+  end
+
+  api :DELETE, '/accounts/remove_user', 'Remove um usuário da conta autenticada'
+  description <<-EOS
+  EOS
+  def remove_user
+    current_account.account_users.destroy_all(user_id: params[:user_id])
+    head :no_content
+  end
+
   def get_collection
     current_user.accounts
   end
 
   private
+
+    def account_user_params
+      params.require(:user).permit(:user_id, :has_calendar, :permission, :task_color)
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params

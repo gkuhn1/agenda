@@ -25,7 +25,7 @@
               <td style="background-color: {{ user.task_color }}">{{ user.task_color }}</td>
               <td>
                 <a href ui-sref="app.header.config-sidebar.home.users.edit(user)"><i class="fa fa-pencil"></i></a>
-                <a href ng-really-message="Confirmar remoção deste usuário da conta?" ng-really-click="destroyUser()"><i class="fa fa-trash-o"></i></a>
+                <a href ng-really-message="Confirmar remoção deste usuário da conta?" ng-really-click="destroyUser(user)"><i class="fa fa-trash-o"></i></a>
               </td>
             </tr>
           </tbody>

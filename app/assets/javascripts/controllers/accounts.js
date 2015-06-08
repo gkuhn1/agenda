@@ -25,7 +25,9 @@ angular.module('agenda.accounts', ['agenda.grandfather'])
     $scope.laddaLoading = false;
     $scope.form_title = "Adicionar Conta";
     $scope.account = newAccount;
-    if ($scope.account.user_ids == undefined) {
+    if ($scope.account.account_users) {
+      $scope.account.user_ids = $scope.account.account_users.map(function(e) { return e.user_id });
+    } else {
       $scope.account.user_ids = [];
     }
     $scope.users = users;

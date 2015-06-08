@@ -24,6 +24,10 @@ angular.module('agenda.userservice', ['httpq'])
       return $httpq.get(pub.base_url+'/'+id+'.json');
     }
 
+    pub.getByEmail = function(email) {
+      return $http.get(pub.base_url+'/all.json', {params: {email: email}});
+    }
+
     pub.new = function() {
       return $httpq.get(pub.base_url+'/new.json')
     }

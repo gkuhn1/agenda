@@ -381,11 +381,37 @@ HTTP Status: 401
     render :show
   end
 
+  api :GET, '/users/all', 'Busca informações sobre um determinado usuário na base de dados global'
+  description <<-EOS
+===Requisição
+====Retorno com Sucesso: Dados do usuário encontrado
+HTTP Status: 200
+  {
+    "id": "552997ca676b750e74000000",
+    "email": "zeca@agenda.com"
+  }
+==== Retorno de erro:
+HTTP Status: 404
+  {
+    "error": "Not Found"
+  }
+  EOS
+  def all
+    email = user_all_params[:email]
+    raise ActionController::ParameterMissing if email.blank?
+    @user = User.where(email: email).first
+    raise Mongoid::Errors::DocumentNotFound.new(User,{email: email}) if @user.nil?
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:id, :name, :email, :password, :password_confirmation,
         :generate_password)
+    end
+
+    def user_all_params
+      params.permit(:email)
     end
 
     def user_account_params

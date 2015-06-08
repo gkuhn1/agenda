@@ -1,4 +1,5 @@
 angular.module('agenda.account-configs', ['agenda.grandfather'])
+
 .controller("AccountConfigHomeCtrl", ['$scope', '$rootScope',
     'current_account', 'AccountService',
   function($scope, $rootScope, current_account, AccountService) {
@@ -43,14 +44,24 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
     '$state', 'users', 'AccountService', 'Auth',
   function($scope, $rootScope, $state, users, AccountService, Auth) {
     $scope.users = users;
+
+    $scope.destroyUser = function(user) {
+      AccountService.remove_user(user.id)
+        .success(function() {
+          $scope.users.splice($scope.users.indexOfById(user), 1);
+        });
+    }
   }
 ])
 
 .controller("AccountUsersEditCtrl", ['$scope', '$rootScope',
-    '$state', 'user', 'UserService',
-  function($scope, $rootScope, $state, user, UserService) {
+    '$state', 'user', 'UserService', 'AccountService',
+  function($scope, $rootScope, $state, user, UserService, AccountService) {
     $scope.user = user;
     $scope.errors = {};
+    $scope.addNewUser = false;
+    $scope.addExistingUser = false;
+    $scope.laddaSearchLoading = false;
 
     $('#task_colorpicker').colorpicker({
       color: user.task_color,
@@ -60,7 +71,44 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
       }
     });
 
+    $scope.searchUser = function(email) {
+      $scope.laddaSearchLoading = true;
+
+      UserService.getByEmail(email)
+        .success(function(data) {
+          $scope.addNewUser = false;
+          $scope.addExistingUser = true;
+          $scope.user.user_id = data.id;
+        })
+        .error(function(data) {
+          console.log("error", data);
+          $scope.addExistingUser = false;
+          $scope.addNewUser = true;
+        })
+        .finally(function() {
+          $scope.laddaSearchLoading = false;
+        })
+    }
+
     $scope.saveUser = function(user) {
+      if ($scope.addNewUser || $state.current.data.edit) $scope.addNewAccountUser(user);
+      if ($scope.addExistingUser) $scope.addAccountUser(user);
+    }
+
+    $scope.addAccountUser = function(user) {
+      $scope.laddaLoading = true;
+      $scope.errors = {};
+
+      AccountService.add_user(user)
+        .success(function(data) {
+          $state.go('^', {}, {reload: true});
+        })
+        .finally(function() {
+          $scope.laddaLoading = false;
+        })
+    }
+
+    $scope.addNewAccountUser = function(user){
       $scope.laddaLoading = true;
       $scope.errors = {};
 

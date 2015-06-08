@@ -43,6 +43,14 @@ angular.module('agenda.accountservice', ['httpq'])
      return $http.put(pub.base_url+'/'+account.id+'.json', {account: account});
     }
 
+    pub.add_user = function(user_params) {
+      return $http.put(pub.base_url+'/add_user.json', {user: user_params})
+    }
+
+    pub.remove_user = function(user_id) {
+      return $http.delete(pub.base_url+'/remove_user.json', {params: {user_id: user_id}});
+    }
+
     pub.destroy = function(id) {
       return $http.delete(pub.base_url+'/'+id+'.json');
     }

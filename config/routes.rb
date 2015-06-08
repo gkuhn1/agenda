@@ -23,10 +23,13 @@ Rails.application.routes.draw do
       resources :accounts do
         collection do
           get :current
+          put :add_user
+          delete :remove_user
         end
       end
       resources :users do
         collection do
+          get :all
           get :current
           post :login
         end
