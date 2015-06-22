@@ -51,6 +51,8 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
     }
   ]
   EOS
+  param :start_at, DateTime, "Período inicial para consulta de tarefas", :required => false
+  param :end_at, DateTime, "Período final para consulta de tarefas", :required => false
   def index
     super
   end

@@ -1,7 +1,7 @@
 class Api::V1::SearchesController < Api::V1::ApiController
 
   # Index
-  api :GET, '/searches', 'Busca'
+  api :GET, '/searches', 'Busca em agendas públicas'
   description <<-EOS
 ====Requisição
 Accept: application/json

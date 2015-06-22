@@ -142,7 +142,7 @@ HTTP Status: 422
   EOS
   param :name, String, "Nome para a conta a ser criada", :required => true
   param :description, String, "Descrição longa para a conta", :required => false
-  param :address, String, "Senha que o usuário irá utilizar para logar no aplicativo", :required => false
+  param :address, String, "Endereço do local de atendimento quando houver", :required => false
   param :phone, String, "Telefone principal", :required => false
   param :phone2, String, "Telefone secundário", :required => false
   param :website, String, "Website", :required => false
