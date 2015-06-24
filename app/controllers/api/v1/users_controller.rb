@@ -344,7 +344,7 @@ HTTP Status: 422
   end
 
   # current
-  api :POST, '/users/current', 'Busca as informações do usuário autenticado por basic auth'
+  api :GET, '/users/current', 'Busca as informações do usuário autenticado por basic auth'
   description <<-EOS
 ===Requisição
 ====Retorno com Sucesso: Dados do usuário logado

@@ -62,7 +62,16 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   description <<-EOS
 ====Requisição
 ====Retorno com Sucesso:
-  TODO
+  {
+    "id": "5532e323676b7518ca020000",
+    "title": "Corte de cabelo Masculino",
+    "description": "Descrição editada!",
+    "where": "Localização editada!",
+    "status": 1,
+    "status_description": "Criado",
+    "start_at": "2015-04-18T10:10:00.000-03:00",
+    "end_at": "2015-04-18T10:25:00.000-03:00"
+  }
   EOS
   def show
     super
@@ -174,16 +183,16 @@ TODO
   Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDAw
 
 ===== Exemplo de requisição para alteração de dados de tarefa
-{
-  "task": {
-    "id": "5532e323676b7518ca020000",
-    "title": "Corte de cabelo Masculino",
-    "description": "Descrição editada!",
-    "where": "Localização editada!",
-    "start_at": "2015-04-18T10:10:00:00",
-    "end_at": "2015-04-18T10:25:00:00"
+  {
+    "task": {
+      "id": "5532e323676b7518ca020000",
+      "title": "Corte de cabelo Masculino",
+      "description": "Descrição editada!",
+      "where": "Localização editada!",
+      "start_at": "2015-04-18T10:10:00:00",
+      "end_at": "2015-04-18T10:25:00:00"
+    }
   }
-}
 
 ====Retorno com Sucesso:
 Dados da tarefa alterada

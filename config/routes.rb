@@ -47,7 +47,6 @@ Rails.application.routes.draw do
 
       resources :searches, only: [:index] do
         collection do
-          get :places
           get :specialties
           post :new_task
         end

@@ -22,6 +22,8 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
         .success(function(data) {
           angular.copy(account, current_account);
           Auth.select_current_account(account);
+          // force stop loading
+          $rootScope.$broadcast("loading_stop");
           $state.go('^');
         })
         .error(function(data) {

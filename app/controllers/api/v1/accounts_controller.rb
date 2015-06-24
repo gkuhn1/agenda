@@ -274,6 +274,33 @@ Apenas é possível excluir contas caso o usuário autenticado tenha acesso a es
 
   api :PUT, '/accounts/add_user', 'Adiciona um usuário existente a conta autenticada'
   description <<-EOS
+===Requisição
+A identificação do usuário passada atraves do parâmetro `user_id` deve corresponder a um usuário válido.
+
+  {
+    user: {
+      "user_id": "552fdcad676b7520e2020000",
+      "has_calendar": true,
+      "permission": "admin",
+      "task_color": "#909090"
+    }
+  }
+
+====Retorno com Sucesso:
+  HTTP Status: 204
+
+====Retorno com erro de validação dos dados:
+  {
+    "errors": {
+      "permission": "permissão desconhecida."
+    }
+  }
+
+====Retorno com erro por não encontrar o usuário:
+  HTTP Status: 404
+  {
+    "error": "Not Found"
+  }
   EOS
   def add_user
     @account_user = current_account.add_user(User.find(account_user_params[:user_id]))
@@ -283,6 +310,21 @@ Apenas é possível excluir contas caso o usuário autenticado tenha acesso a es
 
   api :DELETE, '/accounts/remove_user', 'Remove um usuário da conta autenticada'
   description <<-EOS
+===Requisição
+Remove um usuário desde que o mesmo esteja presenta na conta autenticada.
+
+  {
+    "user_id": "552fdcad676b7520e2020000"
+  }
+
+====Retorno com Sucesso:
+  HTTP Status: 204
+
+====Retorno com erro por não encontrar o usuário:
+  HTTP Status: 404
+  {
+    "error": "Not Found"
+  }
   EOS
   def remove_user
     current_account.account_users.destroy_all(user_id: params[:user_id])
