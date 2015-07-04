@@ -22,19 +22,19 @@
           </div>
 
           <div class="form-group string optional account_address"  ng-class="{'has-error' : form.address.$error.server}">
-            <label for="account_address" class="string optional control-label">Address</label>
+            <label for="account_address" class="string optional control-label">Endereço</label>
             <input type="text" id="account_address" ng-model="account.address" class="string optional form-control" name="address" server-error>
             <p class="help-block" ng-show="form.address.$error.server">{{ errors.address }}</p>
           </div>
 
           <div class="form-group tel optional account_phone"  ng-class="{'has-error' : form.phone.$error.server}">
-            <label for="account_phone" class="tel optional control-label">Phone</label>
+            <label for="account_phone" class="tel optional control-label">Telefone</label>
             <input type="tel" id="account_phone" ng-model="account.phone" class="string tel optional form-control" name="phone" server-error ui-br-phone-number>
             <p class="help-block" ng-show="form.phone.$error.server">{{ errors.phone }}</p>
           </div>
 
           <div class="form-group tel optional account_phone2" ng-class="{'has-error' : form.phone2.$error.server}">
-            <label for="account_phone2" class="tel optional control-label">Phone2</label>
+            <label for="account_phone2" class="tel optional control-label">Telefone Secundário</label>
             <input type="tel" id="account_phone2" ng-model="account.phone2" class="string tel optional form-control" name="phone2" server-error ui-br-phone-number>
             <p class="help-block" ng-show="form.phone2.$error.server">{{ errors.phone2 }}</p>
           </div>
@@ -45,8 +45,8 @@
             <p class="help-block" ng-show="form.website.$error.server">{{ errors.website }}</p>
           </div>
 
-          <div class="form-group string optional account_plan" ng-class="{'has-error' : form.plan.$error.server}">
-            <label for="account_plan" class="string optional control-label">Plan</label>
+          <div class="form-group string optional account_plan" ng-class="{'has-error' : form.plan.$error.server}" ng-show="false">
+            <label for="account_plan" class="string optional control-label">Plano</label>
             <input type="text" id="account_plan" ng-model="account.plan" class="string optional form-control" name="plan" server-error>
             <p class="help-block" ng-show="form.plan.$error.server">{{ errors.plan }}</p>
           </div>

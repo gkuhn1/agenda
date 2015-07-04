@@ -15,6 +15,8 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
     angular.copy(current_account, $scope.account);
     $scope.errors = {};
 
+    $rootScope.breadcrumb = "Minha conta";
+
     $scope.saveAccount = function(account) {
       $scope.laddaLoading = true;
       $scope.errors = {};
@@ -47,6 +49,8 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
   function($scope, $rootScope, $state, users, AccountService, Auth) {
     $scope.users = users;
 
+    $rootScope.breadcrumb = "Profissionais";
+
     $scope.destroyUser = function(user) {
       AccountService.remove_user(user.id)
         .success(function() {
@@ -64,6 +68,7 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
     $scope.addNewUser = false;
     $scope.addExistingUser = false;
     $scope.laddaSearchLoading = false;
+    $rootScope.breadcrumb = "Profissionais";
 
     $('#task_colorpicker').colorpicker({
       color: user.task_color,
@@ -152,6 +157,8 @@ angular.module('agenda.account-configs', ['agenda.grandfather'])
   function($scope, $rootScope, $state, specialties) {
     console.log(specialties);
     $scope.specialties = specialties;
+
+    $rootScope.breadcrumb = "Especialidades";
 
     $scope.destroy = function() {
       console.log('destroy');

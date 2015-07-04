@@ -9,7 +9,8 @@
         </small>
       </h1>
       <ol class="breadcrumb">
-
+        <li><a href="#"><i class="fa fa-hand-o-right"></i> Home</a></li>
+        <li class="active">{{ breadcrumb }}</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -27,6 +28,12 @@
 
       <!-- Info boxes -->
       <div ui-view>
+
+
+        <div class="callout callout-warning">
+          <h4>Bem vindo(a) {{ current_user.name }}!!</h4>
+          <p>Use o menu superior para navegar na sua agenda.</p>
+        </div>
 
       </div>
     </section>

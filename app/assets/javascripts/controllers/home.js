@@ -3,10 +3,11 @@ angular.module('agenda.home', ['agenda.grandfather'])
 .controller("HomeCtrl", ['$rootScope', '$scope',
   function($rootScope, $scope) {
 
+    $rootScope.breadcrumb = 'Bem vindo(a)';
+
     console.log('HomeCtrl');
 
-    $scope.page = {};
-    $scope.page.title = "Home";
+    // $scope.current_user = $rootScope.current_user;
   }
 ])
 
@@ -94,6 +95,8 @@ angular.module('agenda.home', ['agenda.grandfather'])
     $scope.places = places;
     $scope.specialties = specialties;
     $scope.sercheabled = false;
+
+    $rootScope.breadcrumb = 'Pesquisar profissional';
 
     $scope.doSearch = function() {
       $scope.errors = {};
