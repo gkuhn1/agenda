@@ -151,4 +151,43 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
     end
   end
 
+  context "#add_user" do
+    let!(:user3) { FactoryGirl.create(:user) }
+
+    it_behaves_like "require current_account" do
+      let(:action) {:add_user}
+      let(:method) {:post}
+      let(:extra_params) { {user: {user_id: user3.id}} }
+      let(:success_status) {"200"}
+    end
+
+    it_behaves_like "require current_user" do
+      let(:action) {:add_user}
+      let(:method) {:post}
+      let(:extra_params) { {user: {user_id: user3.id}} }
+      let(:success_status) {"200"}
+    end
+  end
+
+  context "#remove_user" do
+    let!(:user3) { FactoryGirl.create(:user) }
+
+    before(:each) {
+      account.add_user(user3)
+    }
+    it_behaves_like "require current_account" do
+      let(:action) {:remove_user}
+      let(:method) {:delete}
+      let(:extra_params) { {user_id: user3.id} }
+      let(:success_status) {"204"}
+    end
+
+    it_behaves_like "require current_user" do
+      let(:action) {:remove_user}
+      let(:method) {:delete}
+      let(:extra_params) { {user_id: user3.id} }
+      let(:success_status) {"204"}
+    end
+  end
+
 end

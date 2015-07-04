@@ -171,4 +171,20 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
   end
 
+  context "#all" do
+    it_behaves_like "require current_account" do
+      let(:action) {:all}
+      let(:method) {:get}
+      let(:extra_params) { {email: user.email} }
+      let(:success_status) {"200"}
+    end
+
+    it_behaves_like "require current_user" do
+      let(:action) {:all}
+      let(:method) {:get}
+      let(:extra_params) { {email: user.email} }
+      let(:success_status) {"200"}
+    end
+  end
+
 end

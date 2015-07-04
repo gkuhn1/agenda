@@ -49,7 +49,7 @@ class Task
       account = Account.where('account_users._id' => _id).first
       account.account_users.find(_id).task_color
     elsif self.calendar.present?
-      self.calendar.user.account_user_for(self.calendar.user.accounts.first).task_color
+      self.calendar.user.account_user_for(self.calendar.user.accounts.first).try(:task_color)
     end
   end
 

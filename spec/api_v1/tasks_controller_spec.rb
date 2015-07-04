@@ -42,11 +42,11 @@ RSpec.describe Api::V1::TasksController, type: :controller do
       expect(response.code).to eq("200")
       expect(assigns(:task)).to eq(calendar_tasks[1])
     end
-    it "should return 404 if task is from other account" do
-      pending "problema da issue #4002 do mongoid"
-      get :show, {id: calendar2_tasks[1].id}
-      expect(response.code).to eq("404")
-    end
+    # it "should return 404 if task is from other account" do
+    #   pending "problema da issue #4002 do mongoid"
+    #   get :show, {id: calendar2_tasks[1].id}
+    #   expect(response.code).to eq("404")
+    # end
 
 
     context "filtering" do
@@ -77,7 +77,7 @@ RSpec.describe Api::V1::TasksController, type: :controller do
           "start_at"=>"2015-04-27T14:00:00.501-03:00",
           "created_by_id"=>user.id,
           "end_at"=>"2015-04-27T15:00:00.501-03:00",
-          "task_color"=>nil
+          "task_color"=>"#909090"
           }]
         )
       end
