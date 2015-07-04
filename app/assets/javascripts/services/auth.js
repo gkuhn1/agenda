@@ -20,21 +20,27 @@ angular.module('agenda.authservice', [])
       }
     };
 
+    priv.check_autenticated_date = function() {
+      return new Date(priv.user.data.autenticated_until) >= new Date();
+    }
+
     priv.refresh_user_data = function() {
       priv.account.data = angular.fromJson(localStorage.getItem(storageCurrentAccountKey));
 
       priv.user.data = angular.fromJson(localStorage.getItem(storageUserKey));
-      if (priv.user.data !== null) {
+
+      if (priv.user.data !== null && priv.check_autenticated_date()) {
         is_loaded = true;
         priv.user.role = priv.user.data.admin ? accessLevels.admin : accessLevels.user;
       } else {
+        priv.user.data = null;
         is_loaded = false;
         priv.user.role = accessLevels.public;
       }
     }
 
     priv.loaded = function() {
-      if (!is_loaded) {
+      if (!is_loaded || priv.check_autenticated_date()) {
         priv.refresh_user_data();
       }
     }
@@ -56,6 +62,8 @@ angular.module('agenda.authservice', [])
     }
 
     pub.select_current_user = function(user) {
+      user.autenticated_until = new Date( (new Date()).setDate( (new Date()).getDate()+ 1));
+      console.log(user);
       localStorage.setItem(storageUserKey, angular.toJson(user));
       priv.refresh_user_data();
       $rootScope.$broadcast("currentUserSelected", user);
@@ -89,7 +97,6 @@ angular.module('agenda.authservice', [])
       }
 
       priv.loaded()
-      console.log(to);
       if (to.data.access.bitMask & priv.user.role.bitMask) {
         console.info("access granted ->", to.data.access)
         angular.noop(); // requested state can be transitioned to.
@@ -99,7 +106,6 @@ angular.module('agenda.authservice', [])
         $rootScope.$emit('$statePermissionError');
         $rootScope.$broadcast("loading_stop");
         var errorStateTo = to.name == loginState ? homeState : loginState;
-        console.log($state, errorStateTo);
         $state.go(errorStateTo, {}, {reload: true,inherit: false});
       }
 

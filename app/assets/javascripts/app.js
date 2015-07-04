@@ -118,7 +118,8 @@ angular.module('agenda', [
         $rootScope.$broadcast("loading_start");
 
         var selectAccountState = 'app.select_account';
-        if (Auth.current_account() === null && Auth.current_user() !== null && to.name != selectAccountState) {
+        var logoutState = 'app.logout';
+        if (Auth.current_account() === null && Auth.current_user() !== null && to.name != selectAccountState && to.name != logoutState) {
           // Se current account for null deve redirecionar para a busca de conta
           event.preventDefault();
           $rootScope.$broadcast("loading_stop");

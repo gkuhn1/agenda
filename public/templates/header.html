@@ -14,16 +14,16 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li ui-sref-active-eq="open">
-          <a href ui-sref="app.header.sidebar.home.search">Pesquisar</a>
+          <a href ui-sref="app.header.sidebar.home.search"><i class="fa fa-search"></i> Pesquisar</a>
         </li>
         <li ui-sref-active-eq="open">
-          <a href ui-sref="app.header.calendar-sidebar.calendars">Meu Calendário</a>
+          <a href ui-sref="app.header.calendar-sidebar.calendars"><i class="fa fa-calendar"></i> Meu Calendário</a>
         </li>
         <li ng-show="false">
           <a href>Clientes</a>
         </li>
         <li ui-sref-active-eq="open">
-          <a href ui-sref="app.header.config-sidebar.home.edit">Configurações</a>
+          <a href ui-sref="app.header.config-sidebar.home.edit"><i class="fa fa-cogs"></i> Configurações</a>
         </li>
         <li ng-show="current_user.admin" ui-sref-active-eq="open">
           <a href ui-sref="app.header.admin-sidebar.home">Administração</a>
@@ -91,8 +91,7 @@
                 <p>
                   {{ current_user.name }}
                   <small>
-                    Membro desde
-                    2015-03-15 12:18:06 -0300
+                    Membro desde 08/07/2015
                   </small>
                   <small>
                     Conta Atual
