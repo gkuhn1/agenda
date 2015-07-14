@@ -214,7 +214,7 @@ angular.module('agenda.calendars', ['agenda.grandfather','ui.calendar'])
       },
       views: {
         agendaWeek: {
-          titleRangeSeparator: ' à '
+          titleRangeSeparator: ' a '
         }
       },
       eventRender: $scope.eventRender,
