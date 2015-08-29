@@ -10,6 +10,12 @@ CodeShip Status
 
 It is a full functional calendar API backend with an AngularJS app as a client
 
+Live Demo
+---------
+
+- https://tcc-agenda.herokuapp.com/
+
+
 Installations
 -------------
 
