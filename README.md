@@ -5,6 +5,8 @@ CodeShip Status
 ---------------
 
 ![Code Ship](https://codeship.com/projects/3d4b3420-bd7e-0132-6764-62522b742a1f/status?branch=master)
+[![Code Climate](https://codeclimate.com/github/gkuhn1/agenda/badges/gpa.svg)](https://codeclimate.com/github/gkuhn1/agenda)
+[![Test Coverage](https://codeclimate.com/github/gkuhn1/agenda/badges/coverage.svg)](https://codeclimate.com/github/gkuhn1/agenda/coverage)
 
 It is a full functional calendar API backend with an AngularJS app as a client
 
