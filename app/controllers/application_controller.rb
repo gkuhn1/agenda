@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   rescue_from AdminRequiredException, with: :permission_denied
   rescue_from ActionController::UnknownFormat, with: :not_acceptable
   rescue_from ActionController::ParameterMissing, with: :unprocessable_entity
-  rescue_from Moped::Errors::OperationFailure, with: :unprocessable_entity
+  # rescue_from Moped::Errors::OperationFailure, with: :unprocessable_entity
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
 
   attr_accessor :current_account, :current_user

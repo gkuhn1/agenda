@@ -11,3 +11,13 @@ RSpec.configure do |config|
     DatabaseCleaner[:mongoid].clean
   end
 end
+
+module Mongo
+  class Collection
+    class View
+      def remove_all
+        remove(0)
+      end
+    end
+  end
+end

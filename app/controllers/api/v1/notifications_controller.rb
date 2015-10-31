@@ -24,8 +24,8 @@ Authorization: Basic TEFlOU5HVUNFUUhpekx4ZDNDREs6NTUyOTk3Y2E2NzZiNzUwZTc0MDEwMDA
   EOS
   def index
     @notifications = get_collection
-    @reads = @notifications.read
-    @unreads = @notifications.unread
+    @reads = @notifications.reads
+    @unreads = @notifications.unreads
   end
 
   # Show

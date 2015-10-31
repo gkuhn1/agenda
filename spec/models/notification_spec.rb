@@ -61,8 +61,8 @@ RSpec.describe Notification, type: :model do
       end
     end
 
-    describe "read" do
-      it "should return only read notifications" do
+    describe "reads" do
+      it "should return only reads notifications" do
         FactoryGirl.create(:notification_read, type: 1, user: user, read_at: Time.now)
         n = FactoryGirl.create(:notification_read, type: 1, user: user, read_at: nil)
         FactoryGirl.create(:notification_read, type: 2, user: user, read_at: Time.now)
@@ -71,12 +71,12 @@ RSpec.describe Notification, type: :model do
         n.mark_as_read
         n.mark_as_unread
 
-        expect(Notification.read.count).to eq(2)
+        expect(Notification.reads.count).to eq(2)
       end
     end
 
-    describe "unread" do
-      it "should return only unread notifications" do
+    describe "unreads" do
+      it "should return only unreads notifications" do
         FactoryGirl.create(:notification_read, type: 1, user: user)
         FactoryGirl.create(:notification, type: 1, user: user)
         FactoryGirl.create(:notification_read, type: 2, user: user, read_at: nil)
@@ -84,7 +84,7 @@ RSpec.describe Notification, type: :model do
         n.mark_as_read
         n.mark_as_unread
 
-        expect(Notification.unread.count).to eq(2)
+        expect(Notification.unreads.count).to eq(2)
       end
     end
   end

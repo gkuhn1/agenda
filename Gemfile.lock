@@ -78,7 +78,7 @@ GEM
       countries (>= 0.9.3, < 0.10.0)
     currencies (0.4.2)
     daemons (1.2.3)
-    database_cleaner (1.4.1)
+    database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     devise (3.5.2)
       bcrypt (~> 3.0)
@@ -311,7 +311,7 @@ DEPENDENCIES
   breadcrumbs_on_rails (= 2.3.0)
   codeclimate-test-reporter
   country_select (~> 2.1.1)
-  database_cleaner (~> 1.4.1)
+  database_cleaner (~> 1.5, >= 1.5.1)
   devise
   factory_girl_rails (~> 4.5.0)
   foreman (~> 0.78.0)

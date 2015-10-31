@@ -24,8 +24,8 @@ class Notification
   scope :to_user, ->(user) { where(user_id: user._id) }
   scope :sys, -> { where(type: 1) }
 
-  scope :unread, -> { where(read: false) }
-  scope :read, -> { where(read: true) }
+  scope :unreads, -> { where(read: false) }
+  scope :reads, -> { where(read: true) }
 
   def self.to(user, title, text)
     n = new(user: user, title: title, text:text, type: 1)

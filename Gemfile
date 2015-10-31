@@ -65,7 +65,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'mongoid-rspec'
   # gem 'email_spec', '~> 1.6.0'
-  gem 'database_cleaner', '~> 1.4.1'
+  gem 'database_cleaner', '~> 1.5', '>= 1.5.1'
   # gem 'simplecov', '~> 0.9.2'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'pry', '~> 0.10.1'
