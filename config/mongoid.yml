@@ -1,20 +1,20 @@
 development:
-  sessions:
+  clients:
     default:
       database: tcc_development
       hosts:
-        - 192.168.56.99:27017
+        - 127.0.0.1:27017
 
 test:
-  sessions:
+  clients:
     default:
       database: tcc_test
       hosts:
-        - 192.168.56.99:27017
+        - 127.0.0.1:27017
 
 
 production:
-  sessions:
+  clients:
     default:
       uri: mongodb://heroku_app35360665:vhu086cjpjufmvk5jh4ejmmhou@ds053439.mongolab.com:53439/heroku_app35360665
       options:

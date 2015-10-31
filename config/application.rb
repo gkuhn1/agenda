@@ -22,7 +22,7 @@ module Tcc
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-    config.i18n.default_locale = :pt_BR
+    config.i18n.default_locale = :'pt-BR'
     config.encoding = "utf-8"
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
@@ -33,7 +33,7 @@ module Tcc
       g.view_specs false
     end
 
-    config.i18n.available_locales = :pt_BR
+    config.i18n.available_locales = :'pt-BR'
 
     config.autoload_paths += %W(#{config.root}/app/models/validators)
 
